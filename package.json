@@ -1,0 +1,36 @@
+{
+  "name": "tux",
+  "version": "0.0.0",
+  "description": "Framework built in React and Flux",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "watchify -d src/index.js -o tux.js -v"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TuxedoJS/TuxedoJS"
+  },
+  "keywords": [
+    "TuxedoJs",
+    "Tux",
+    "tux",
+    "tuxedoJS",
+    "tuxedo",
+    "Tuxedo"
+  ],
+  "author": "drabinowitz, cheerazar, plauer, sjstebbins",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TuxedoJS/TuxedoJS/issues"
+  },
+  "homepage": "https://github.com/TuxedoJS/TuxedoJS",
+  "dependencies": {
+    "browserify": "^8.0.2",
+    "envify": "^3.2.0",
+    "flux": "^2.0.1",
+    "react": "^0.12.2",
+    "reactify": "^0.17.1",
+    "watchify": "^2.2.1"
+  }
+}
