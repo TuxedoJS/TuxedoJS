@@ -8,7 +8,11 @@ var Tux = Object.create(React);
 Tux.Dispatcher = Flux.Dispatcher;
 
 //Tux Components
-Tux.components.form = require('react-validating-form');
-Tux.components.router = require('react-router');
+Tux.Components = {};
+Tux.Components.Form = require('react-validating-form');
+Tux.Components.Router = require('react-router');
+
+//Tux actions
+Tux.Actions = require('./TuxActions');
 
 module.exports = Tux;

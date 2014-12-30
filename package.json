@@ -4,7 +4,7 @@
   "description": "Framework built in React and Flux",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "watchify -d src/index.js -o tux.js -v"
   },
   "repository": {
@@ -33,5 +33,16 @@
     "react-validating-form": "^0.1.1",
     "reactify": "^0.17.1",
     "watchify": "^2.2.1"
+  },
+  "devDependencies": {
+    "jest": "^0.1.37",
+    "jest-cli": "^0.2.1",
+    "react-tools": "^0.12.2"
+  },
+  "jest": {
+    "scriptPreprocessor": "jest-preprocessor.js",
+    "unmockedModulePathPatterns": [
+      "node_modules/react/"
+    ]
   }
 }
