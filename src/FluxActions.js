@@ -19,11 +19,14 @@ Actions.register = function (storeToRegister, categoriesToRegister) {
   //registers actions to dispatcher CB under object, invoked when corresponding action is passed in
   //define listener
   var listener = {};
+
   //get categories
   var categories = Object.keys(categoriesToRegister);
   var catLength = categories.length;
-  //loop through categories
+
   var category, categoryToRegister, action, actions, actLength, i, j, createdCategory, createdAction;
+
+  //loop through categories
   for (i = 0; i < catLength; i++){
     //loop through actions in category
     category = categories[i];
@@ -32,9 +35,11 @@ Actions.register = function (storeToRegister, categoriesToRegister) {
     //get actions in category to register
     actions = Object.keys(categoryToRegister);
     actLength = actions.length;
+
     //loop through actions
     for (j = 0; j < actLength; j++){
       action = actions[j];
+
       //get action string from Actions[category][action] store key in listener with value of cb
       //throw errors if category has not been created or does not have desired actions
       createdCategory = Actions[category];
@@ -53,7 +58,7 @@ Actions.register = function (storeToRegister, categoriesToRegister) {
       }
     }
   }
-  //register to Dispatcher
+  //register to Dispatcher and add registration key to store
   storeToRegister.__registerId__ = Dispatcher.register(function(payload){
     //look for actionType in listener
     var registeredAction = listener[payload.action.actionType];
@@ -71,10 +76,12 @@ Actions.register = function (storeToRegister, categoriesToRegister) {
 Actions.createActionClass = function (actionClass) {
   //creates object under Actions at the key of the category
   var category = actionClass.category;
+
   //throw error if category has already been defined
   if (Actions[category]) throw new Error('Action Category is already defined');
+
+  //assign actionCategory to Actions and return it
   var actionCategory = Actions[category] = new ActionCategory(actionClass);
-  //return actionCategory
   return actionCategory;
 };
 
@@ -88,18 +95,22 @@ var ActionCategory = function (props) {
   //grab props for use in function
   var category = props.category;
   var source = props.source;
-  //assign passed in properties to object
+
+  //assign passed in properties to actionCategory instance
   this.__category__ = category;
   this.__source__ = source;
+
   //loop through actions and bind a separate function for each
-  //bind actionType and assign actionType to action at key type
   var action, actionType;
   var propActions = props.actions;
   var propActLength = propActions.length;
   for (var i = 0; i < propActLength; i++) {
     action = propActions[i];
+
     //construct full action name from CATEGORY_ACTION
     actionType = category + '_' + action;
+
+    //bind actionType and assign actionType to action at key type
     this[action] = dispatchAction.bind(this, actionType, source);
     this[action].type = actionType;
   }
