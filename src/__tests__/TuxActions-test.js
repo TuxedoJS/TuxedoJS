@@ -1,11 +1,11 @@
 'use strict';
 
-var moduleToTest = '../FluxActions.js';
+var moduleToTest = '../TuxActions.js';
 
 jest.dontMock(moduleToTest);
 
-describe('FluxActions', function () {
-  var FluxActions, fluxActionCategory, mockStore, mockBody;
+describe('TuxActions', function () {
+  var TuxActions, tuxActionCategory, mockStore, mockBody;
 
   //action class to use for testing
   var weirdCharAction = '\'{}/187&%__  .,.#""';
@@ -16,101 +16,86 @@ describe('FluxActions', function () {
   };
 
   beforeEach(function () {
-    //reset FluxActions and mocks before each test
-    FluxActions = require(moduleToTest);
+    //reset TuxActions and mocks before each test
+    TuxActions = require(moduleToTest);
     mockStore = {};
     mockBody = {};
 
     //create new action category for each test
-    fluxActionCategory = FluxActions.createActionClass(actionClass);
+    tuxActionCategory = TuxActions.createActionClass(actionClass);
   });
 
   describe('createActionClass', function () {
-
     it('should return an action category with defined props', function () {
-
       //category properties
-      expect(fluxActionCategory.__category__).toEqual('tests');
-      expect(fluxActionCategory.__source__).toEqual('test_source');
+      expect(tuxActionCategory.__category__).toEqual('tests');
+      expect(tuxActionCategory.__source__).toEqual('test_source');
 
       //individiual actions in category
-      expect(fluxActionCategory.get).toEqual(jasmine.any(Function));
-      expect(fluxActionCategory.get.type).toEqual('tests_get');
+      expect(tuxActionCategory.get).toEqual(jasmine.any(Function));
+      expect(tuxActionCategory.get.type).toEqual('tests_get');
 
-      expect(fluxActionCategory.set).toEqual(jasmine.any(Function));
-      expect(fluxActionCategory.set.type).toEqual('tests_set');
+      expect(tuxActionCategory.set).toEqual(jasmine.any(Function));
+      expect(tuxActionCategory.set.type).toEqual('tests_set');
 
-      expect(fluxActionCategory.test_action).toEqual(jasmine.any(Function));
-      expect(fluxActionCategory.test_action.type).toEqual('tests_test_action');
+      expect(tuxActionCategory.test_action).toEqual(jasmine.any(Function));
+      expect(tuxActionCategory.test_action.type).toEqual('tests_test_action');
 
-      expect(fluxActionCategory[weirdCharAction]).toEqual(jasmine.any(Function));
-      expect(fluxActionCategory[weirdCharAction].type).toEqual('tests_' + weirdCharAction);
-
+      expect(tuxActionCategory[weirdCharAction]).toEqual(jasmine.any(Function));
+      expect(tuxActionCategory[weirdCharAction].type).toEqual('tests_' + weirdCharAction);
     });
 
-    it('should assign the action category to FluxActions at the key of the category string', function () {
-
-      expect(FluxActions.tests).toEqual(fluxActionCategory);
-
+    it('should assign the action category to TuxActions at the key of the category string', function () {
+      expect(TuxActions.tests).toEqual(tuxActionCategory);
     });
 
     it('should throw an error if the same category is created twice', function () {
-
       expect(function () {
-        FluxActions.createActionClass(actionClass);
+        TuxActions.createActionClass(actionClass);
       }).toThrow(new Error('Action Category "tests" is already defined'));
-
     });
 
     describe('actionCategory', function () {
-
       it('should dispatch an action when the associated action is invoked', function () {
-
         var testBody = {};
-        fluxActionCategory.get(testBody);
+        tuxActionCategory.get(testBody);
 
         //method should invoke the dispatch method on the Dispatcher
-        var payload = FluxActions.__Dispatcher__.dispatch.mock.calls[0][0];
+        var payload = TuxActions.__Dispatcher__.dispatch.mock.calls[0][0];
         expect(payload.source).toEqual('test_source');
         expect(payload.action.actionType).toEqual('tests_get');
         expect(payload.action.body).toEqual(testBody);
 
         var newTestBody = {};
-        fluxActionCategory.set(newTestBody);
+        tuxActionCategory.set(newTestBody);
 
         //method should invoke the dispatch method with a new set of parameters
-        payload = FluxActions.__Dispatcher__.dispatch.mock.calls[1][0];
+        payload = TuxActions.__Dispatcher__.dispatch.mock.calls[1][0];
         expect(payload.source).toEqual('test_source');
         expect(payload.action.actionType).toEqual('tests_set');
         expect(payload.action.body).toEqual(newTestBody);
-
       });
 
       it('should register its own action category when register is invoked', function () {
-
         //mocking out register method since actionCategory register is just a wrapper for Actions.register
-        FluxActions.register = jest.genMockFunction();
+        TuxActions.register = jest.genMockFunction();
 
         var actionListeners = {
           get: function(){},
           set: function(){}
         };
 
-        fluxActionCategory.register(mockStore, actionListeners);
+        tuxActionCategory.register(mockStore, actionListeners);
 
-        expect(FluxActions.register.mock.calls[0][0]).toEqual(mockStore);
+        expect(TuxActions.register.mock.calls[0][0]).toEqual(mockStore);
         //expecting to find actionListeners under the CATEGORY key
-        expect(FluxActions.register.mock.calls[0][1].tests).toEqual(actionListeners);
-
+        expect(TuxActions.register.mock.calls[0][1].tests).toEqual(actionListeners);
       });
-
     });
-
   });
 
   describe('register', function () {
-    var mockGet, mockGetTwo, mockWeird, mockWeirdTwo;
-    var categoriesToRegister;
+    var mockGet, mockGetTwo, mockWeird, mockWeirdTwo, categoriesToRegister;
 
     //register mock category
     beforeEach(function () {
@@ -127,25 +112,22 @@ describe('FluxActions', function () {
         }
       };
       categoriesToRegister.tests[weirdCharAction] = mockWeird;
-      FluxActions.register(mockStore, categoriesToRegister);
+      TuxActions.register(mockStore, categoriesToRegister);
     });
 
     it('should attach the registration Id to the passed in store as the key of __registerId__', function () {
-
       expect(mockStore.hasOwnProperty('__registerId__')).toBeTruthy();
-
     });
 
     it('should invoke the corresponding function when an action is passed in', function () {
-
       //invoke dispatch
-      FluxActions.tests.get(mockBody);
+      TuxActions.tests.get(mockBody);
 
       //pull dispatched payload out of dispatcher
-      var payload = FluxActions.__Dispatcher__.dispatch.mock.calls[0][0];
+      var payload = TuxActions.__Dispatcher__.dispatch.mock.calls[0][0];
 
       //directly invoke registered cb with payload
-      FluxActions.__Dispatcher__.register.mock.calls[0][0](payload);
+      TuxActions.__Dispatcher__.register.mock.calls[0][0](payload);
 
       //expect mocked function to have received payload body and payload
       expect(mockGet.mock.calls[0][0]).toEqual(mockBody);
@@ -155,9 +137,9 @@ describe('FluxActions', function () {
       expect(mockWeird.mock.calls.length).toEqual(0);
 
       //test weirdCharAction
-      FluxActions.tests[weirdCharAction](mockBody);
-      payload = FluxActions.__Dispatcher__.dispatch.mock.calls[1][0];
-      FluxActions.__Dispatcher__.register.mock.calls[0][0](payload);
+      TuxActions.tests[weirdCharAction](mockBody);
+      payload = TuxActions.__Dispatcher__.dispatch.mock.calls[1][0];
+      TuxActions.__Dispatcher__.register.mock.calls[0][0](payload);
 
       //expect mocked weird function to have received payload body and payload
       expect(mockWeird.mock.calls[0][0]).toEqual(mockBody);
@@ -165,13 +147,11 @@ describe('FluxActions', function () {
 
       //make sure mockGet was not called again
       expect(mockGet.mock.calls.length).toEqual(1);
-
     });
 
     it('should handle registering multiple categories at once', function () {
-
       //create a new action class
-      FluxActions.createActionClass({
+      TuxActions.createActionClass({
         category: 'testsTwo',
         source: 'testTwo_source',
         actions: ['getTwo', 'setTwo', 'test_action', weirdCharAction]
@@ -188,12 +168,12 @@ describe('FluxActions', function () {
       };
       categoriesToRegister.tests[weirdCharAction] = mockWeird;
       categoriesToRegister.testsTwo[weirdCharAction] = mockWeirdTwo;
-      FluxActions.register(mockStore, categoriesToRegister);
+      TuxActions.register(mockStore, categoriesToRegister);
 
       //dispatch a get for tests
-      FluxActions.__Dispatcher__.register.mock.calls[1][0]({
+      TuxActions.__Dispatcher__.register.mock.calls[1][0]({
         action: {
-          actionType: FluxActions.tests.get.type
+          actionType: TuxActions.tests.get.type
         }
       });
 
@@ -204,9 +184,9 @@ describe('FluxActions', function () {
       expect(mockWeirdTwo.mock.calls.length).toEqual(0);
 
       //dispatch a weird for tests
-      FluxActions.__Dispatcher__.register.mock.calls[1][0]({
+      TuxActions.__Dispatcher__.register.mock.calls[1][0]({
         action: {
-          actionType: FluxActions.tests[weirdCharAction].type
+          actionType: TuxActions.tests[weirdCharAction].type
         }
       });
 
@@ -217,9 +197,9 @@ describe('FluxActions', function () {
       expect(mockWeirdTwo.mock.calls.length).toEqual(0);
 
       //dispatch a getTwo for testsTwo
-      FluxActions.__Dispatcher__.register.mock.calls[1][0]({
+      TuxActions.__Dispatcher__.register.mock.calls[1][0]({
         action: {
-          actionType: FluxActions.testsTwo.getTwo.type
+          actionType: TuxActions.testsTwo.getTwo.type
         }
       });
 
@@ -230,9 +210,9 @@ describe('FluxActions', function () {
       expect(mockWeirdTwo.mock.calls.length).toEqual(0);
 
       //dispatch a weird for testsTwo
-      FluxActions.__Dispatcher__.register.mock.calls[1][0]({
+      TuxActions.__Dispatcher__.register.mock.calls[1][0]({
         action: {
-          actionType: FluxActions.testsTwo[weirdCharAction].type
+          actionType: TuxActions.testsTwo[weirdCharAction].type
         }
       });
 
@@ -241,26 +221,22 @@ describe('FluxActions', function () {
       expect(mockWeird.mock.calls.length).toEqual(1);
       expect(mockGetTwo.mock.calls.length).toEqual(1);
       expect(mockWeirdTwo.mock.calls.length).toEqual(1);
-
     });
 
     it('should throw an error when the category does not have the desired action', function () {
-
       expect(function () {
-        FluxActions.register(mockStore, {
+        TuxActions.register(mockStore, {
           'tests': {
             'get': function () {},
             'doesntHave': function () {}
           }
         });
       }).toThrow(new Error('"tests" category does not have action "doesntHave"'));
-
     });
 
     it('should throw an error when the action category does not exist', function () {
-
       expect(function () {
-        FluxActions.register(mockStore, {
+        TuxActions.register(mockStore, {
           'tests': {
             'get': function () {}
           },
@@ -269,9 +245,6 @@ describe('FluxActions', function () {
           }
         });
       }).toThrow(new Error('"doesntHave" category has not been created yet'));
-
     });
-
   });
-
 });
