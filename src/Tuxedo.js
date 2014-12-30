@@ -9,5 +9,6 @@ Tux.Dispatcher = Flux.Dispatcher;
 
 //Tux Components
 Tux.components.form = require('react-validating-form');
+Tux.components.router = require('react-router');
 
 module.exports = Tux;
