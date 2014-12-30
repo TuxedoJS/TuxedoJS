@@ -23,16 +23,34 @@ Actions.register = function (storeToRegister, categoriesToRegister) {
   var categories = Object.keys(categoriesToRegister);
   var catLength = categories.length;
   //loop through categories
-  var category, action, actions, actLength, i, j;
+  var category, categoryToRegister, action, actions, actLength, i, j, createdCategory, createdAction;
   for (i = 0; i < catLength; i++){
     //loop through actions in category
     category = categories[i];
-    actions = Object.keys(category);
+    //get category object to register
+    categoryToRegister = categoriesToRegister[category];
+    //get actions in category to register
+    actions = Object.keys(categoryToRegister);
     actLength = actions.length;
+    //loop through actions
     for (j = 0; j < actLength; j++){
-      action = actions[i];
+      action = actions[j];
       //get action string from Actions[category][action] store key in listener with value of cb
-      listener[Actions[category][action].type] = categoriesToRegister[category][action];
+      //throw errors if category has not been created or does not have desired actions
+      createdCategory = Actions[category];
+      if (createdCategory) {
+
+        createdAction = createdCategory[action];
+        if (createdAction) {
+
+          listener[createdAction.type] = categoryToRegister[action];
+
+        } else {
+          throw new Error(category + ' category does not have action ' + action);
+        }
+      } else {
+        throw new Error(category + ' category has not been created yet');
+      }
     }
   }
   //register to Dispatcher
