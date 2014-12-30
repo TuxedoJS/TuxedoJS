@@ -51,10 +51,10 @@ Actions.register = function (storeToRegister, categoriesToRegister) {
           listener[createdAction.type] = categoryToRegister[action];
 
         } else {
-          throw new Error(category + ' category does not have action ' + action);
+          throw new Error('"' + category + '" category does not have action "' + action + '"');
         }
       } else {
-        throw new Error(category + ' category has not been created yet');
+        throw new Error('"' + category + '" category has not been created yet');
       }
     }
   }
@@ -78,7 +78,7 @@ Actions.createActionClass = function (actionClass) {
   var category = actionClass.category;
 
   //throw error if category has already been defined
-  if (Actions[category]) throw new Error('Action Category is already defined');
+  if (Actions[category]) throw new Error('Action Category "' + category + '" is already defined');
 
   //assign actionCategory to Actions and return it
   var actionCategory = Actions[category] = new ActionCategory(actionClass);
