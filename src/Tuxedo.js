@@ -3,9 +3,11 @@
 var React = require('react');
 
 var Flux = require('flux');
+var TuxStore = require ('./TuxStore');
 
 var Tux = Object.create(React);
 Tux.Dispatcher = Flux.Dispatcher;
+Tux.createStore = TuxStore;
 
 //Tux Components
 Tux.Components = {};

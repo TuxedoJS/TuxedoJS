@@ -28,7 +28,9 @@
   "dependencies": {
     "browserify": "^8.0.2",
     "envify": "^3.2.0",
+    "events": "^1.0.2",
     "flux": "^2.0.1",
+    "object-assign": "^2.0.0",
     "react": "^0.12.2",
     "react-validating-form": "^0.1.1",
     "reactify": "^0.17.1",
