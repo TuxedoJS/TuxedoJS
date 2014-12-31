@@ -16,5 +16,6 @@ Tux.Components.Router = require('react-router');
 
 //Tux actions
 Tux.Actions = require('./TuxActions');
+Tux.createActionCategory = Tux.Actions.createActionCategory;
 
 module.exports = Tux;
