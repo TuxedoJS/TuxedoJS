@@ -9,7 +9,7 @@ describe('TuxActions', function () {
 
   //action class to use for testing
   var weirdCharAction = '\'{}/187&%__  .,.#""';
-  var actionClass = {
+  var actionCategory = {
     category: 'tests',
     source: 'test_source',
     actions: ['get', 'set', 'test_action', weirdCharAction]
@@ -22,10 +22,10 @@ describe('TuxActions', function () {
     mockBody = {};
 
     //create new action category for each test
-    tuxActionCategory = TuxActions.createActionClass(actionClass);
+    tuxActionCategory = TuxActions.createActionCategory(actionCategory);
   });
 
-  describe('createActionClass', function () {
+  describe('createActionCategory', function () {
     it('should return an action category with defined props', function () {
       //category properties
       expect(tuxActionCategory.__category__).toEqual('tests');
@@ -51,7 +51,7 @@ describe('TuxActions', function () {
 
     it('should throw an error if the same category is created twice', function () {
       expect(function () {
-        TuxActions.createActionClass(actionClass);
+        TuxActions.createActionCategory(actionCategory);
       }).toThrow(new Error('Action Category "tests" is already defined'));
     });
 
@@ -151,7 +151,7 @@ describe('TuxActions', function () {
 
     it('should handle registering multiple categories at once', function () {
       //create a new action class
-      TuxActions.createActionClass({
+      TuxActions.createActionCategory({
         category: 'testsTwo',
         source: 'testTwo_source',
         actions: ['getTwo', 'setTwo', 'test_action', weirdCharAction]

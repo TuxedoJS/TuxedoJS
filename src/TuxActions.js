@@ -75,15 +75,15 @@ Actions.register = function (storeToRegister, categoriesToRegister) {
   });
 };
 
-//Actions.createActionClass FUNCTION
-//@param actionClass OBJECT
+//Actions.createActionCategory FUNCTION
+//@param actionCategoryProps OBJECT
   //expected keys:
     //category STRING: type of data actions will refer to, for example: 'messages', 'todos'
     //source STRING: source of action, for example: 'view_component', 'server_api'
     //actions ARRAY: verbs that will act on the category, for example: 'read', 'create', 'update', 'destroy'
-Actions.createActionClass = function (actionClass) {
+Actions.createActionCategory = function (actionCategoryProps) {
   //creates object under Actions at the key of the category
-  var category = actionClass.category;
+  var category = actionCategoryProps.category;
 
   //throw error if category has already been defined
   if (Actions[category]) {
@@ -91,7 +91,7 @@ Actions.createActionClass = function (actionClass) {
   }
 
   //assign actionCategory to Actions and return it
-  var actionCategory = Actions[category] = new ActionCategory(actionClass);
+  var actionCategory = Actions[category] = new ActionCategory(actionCategoryProps);
   return actionCategory;
 };
 
