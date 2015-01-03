@@ -5,6 +5,7 @@ module.exports = {
     var owner = this._owner;
     //if the owner is an OwnerComponent get its ownerProps, otherwise get its nearestOwnerProps
     if (owner) {
+      //approach takes advantage of cascading order of componentWillMount invocations.  Since componentWillMount is called on an owner before its ownee, a component can just read from its owner to get the needed props
       if (owner.__tuxIsOwnerComponent__) {
         this.nearestOwnerProps = owner.ownerProps;
       } else {

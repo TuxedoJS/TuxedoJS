@@ -3,8 +3,10 @@ var getOwnerPropsMixin = require('./TuxGetOwnerPropsMixin');
 var StoreMixinGenerator = require('./TuxStoreMixinGenerator');
 var assign = require('object-assign');
 
-//createOwnerClass FUNCTION creates an owner Tux Class which is a type of React class designed to manage application state, interact with stores, manage route params, and pass props into its ownee components
+//createOwnerClass FUNCTION: creates an owner Tux Class which is a type of React class designed to manage application state, interact with stores, manage route params, and pass props into its ownee components
 //@param ownerClassProps OBJECT: properties that the new ownerClass will possess, should be a standard React.createClass object with properties such as componentWillMount, componentDidMount, etc.  Please see http://facebook.github.io/react/docs/component-specs.html for a full list of React props
+  //required keys:
+  // render FUNCTION: since this is an implementation of React.createClass a render method is required
   //additional keys
     //connectOwnerToStore OBJECT: TuxStore for which actions will be registered [ALTERNATE ARRAY: array of objects with same keys as listed below]
       //expected keys:
@@ -21,7 +23,7 @@ var createOwnerClass = function (ownerClassProps) {
   if (connectOwnerToStore) {
     mixinsToAdd.push(StoreMixinGenerator(connectOwnerToStore));
   }
-  //concat any mixins passed in through ownerClassProps to mixinsToAdd.  Note that mixins is concatted on to mixinsToAdd (not the other way around) so that all Tux mixins will be invoked first
+  //concat any mixins passed in through ownerClassProps to mixinsToAdd.  Note that mixins is concated on to mixinsToAdd (not the other way around) so that all Tux mixins will be invoked first
   mixins = ownerClassProps.mixins;
   if (mixins) {
     mixinsToAdd = mixinsToAdd.concat(mixins);
