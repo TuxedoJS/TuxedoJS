@@ -15,7 +15,7 @@ describe('TuxOwnerClass', function () {
     mockStoreMixinGenerator = require('../TuxStoreMixinGenerator.js');
     mockGetOwnerPropsMixin = require('../TuxGetOwnerPropsMixin.js');
     mockStoreMixin = {};
-    mockMixins = [{},{}];
+    mockMixins = [{}, {}];
     mockConnectOwnerToStore = {};
     mockOwnerClassProps = {
       someMockProp: {}
@@ -36,7 +36,7 @@ describe('TuxOwnerClass', function () {
       expect(ownerClassProps).not.toEqual(mockOwnerClassProps);
     });
 
-    it('should attach the __tuxIsOwnerComponent__', function () {
+    it('should attach the __tuxIsOwnerComponent__ prop', function () {
       var __tuxIsOwnerComponent__ = React.createClass.mock.calls[0][0].__tuxIsOwnerComponent__;
       expect(__tuxIsOwnerComponent__).toBeTruthy();
     });

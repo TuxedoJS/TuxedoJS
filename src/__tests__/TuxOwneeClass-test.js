@@ -14,7 +14,7 @@ describe('TuxOwneeClass', function () {
     createOwneeClass = require(moduleToTest);
     mockGetOwnerPropsMixin = require('../TuxGetOwnerPropsMixin.js');
     mockStoreMixin = {};
-    mockMixins = [{},{}];
+    mockMixins = [{}, {}];
     mockOwneeClassProps = {
       someMockProp: {}
     };
@@ -34,7 +34,7 @@ describe('TuxOwneeClass', function () {
       expect(owneeClassProps).not.toEqual(mockOwneeClassProps);
     });
 
-    it('should add the getOwnerPropsMixin', function () {
+    it('should add the getOwneePropsMixin', function () {
       var getOwneePropsMixin = React.createClass.mock.calls[0][0].mixins[0];
       expect(getOwneePropsMixin).toEqual(mockGetOwnerPropsMixin);
     });
