@@ -1,11 +1,11 @@
 var React = require('react');
 var assign = require('object-assign');
-var GetOwnerStaticPropsMixin = require('./TuxGetOwnerStaticPropsMixin');
+var GetOwnerPropsMixin = require('./TuxGetOwnerPropsMixin');
 var assign = require('object-assign');
 
 var mixinsToAdd, mixins;
 var createOwneeClass = function (owneeClassProps) {
-  mixinsToAdd = [GetOwnerStaticPropsMixin];
+  mixinsToAdd = [GetOwnerPropsMixin];
 
   mixins = owneeClassProps.mixins;
   if (mixins) {
