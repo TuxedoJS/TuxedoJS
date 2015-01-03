@@ -1,11 +1,11 @@
 var React = require('react');
-var GetOwnerStaticPropsMixin = require('./TuxGetOwnerStaticPropsMixin');
+var GetOwnerPropsMixin = require('./TuxGetOwnerPropsMixin');
 var StoreMixinGenerator = require('./TuxStoreMixinGenerator');
 var assign = require('object-assign');
 
 var connectOwnerToStore, mixinsToAdd, mixins;
 var createOwnerClass = function (ownerClassProps) {
-  mixinsToAdd = [GetOwnerStaticPropsMixin];
+  mixinsToAdd = [GetOwnerPropsMixin];
 
   connectOwnerToStore = ownerClassProps.connectOwnerToStore;
   if (connectOwnerToStore) {
