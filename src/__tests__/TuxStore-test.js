@@ -1,6 +1,4 @@
 jest.dontMock('../TuxStore');
-// This is needed to build a store object as expected
-jest.dontMock('../../node_modules/object-assign/index');
 
 describe('TuxStore', function () {
   var TuxStore, methods, newStore, emitChange, callbackFunc, CHANGE_EVENT, NEW_CHANGE_EVENT;
