@@ -3,11 +3,12 @@
 var React = require('react');
 
 var Flux = require('flux');
-var TuxStore = require ('./TuxStore');
 
 var Tux = Object.create(React);
 Tux.Dispatcher = Flux.Dispatcher;
-Tux.createStore = TuxStore;
+
+Tux.createStore = require('./TuxStore');
+Tux.architect = require('./TuxArchitectStores');
 
 //Tux React
 Tux.createOwnerClass = require('./src/TuxOwnerClass');
