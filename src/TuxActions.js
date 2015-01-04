@@ -66,6 +66,12 @@ Actions.register = function (storeToRegister, categoriesToRegister) {
   }
   //register to Dispatcher and add registration key to store
   storeToRegister.__registerId__ = Dispatcher.register(function (payload) {
+    //look for store architecture
+    var tuxArchitecture = storeToRegister.__tuxArchitecture__;
+    //if found invoke waitFor with registerested architecture for store
+    if (tuxArchitecture) {
+      Dispatcher.waitFor(tuxArchitecture);
+    }
     //look for actionType in listener
     var registeredAction = listener[payload.action.actionType];
     //if found invoke callback CONTEXT: store, ARGUMENTS: body, [payload if needed]

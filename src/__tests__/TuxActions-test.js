@@ -223,6 +223,20 @@ describe('TuxActions', function () {
       expect(mockWeirdTwo.mock.calls.length).toEqual(1);
     });
 
+    it('should invoke a waitFor if the store has a __tuxArchitecture__ property', function () {
+      //add tuxArchitecture property to store and register it
+      mockStore.__tuxArchitecture__ = {};
+      TuxActions.register(mockStore, {
+        'tests': {
+          get: function () {}
+        }
+      });
+      //invoke registered cb
+      TuxActions.__Dispatcher__.register.mock.calls[1][0]({action: ''});
+      //expect waitFor to be called with the tuxArchitecture
+      expect(TuxActions.__Dispatcher__.waitFor.mock.calls[0][0]).toEqual(mockStore.__tuxArchitecture__);
+    });
+
     it('should throw an error when the category does not have the desired action', function () {
       expect(function () {
         TuxActions.register(mockStore, {
