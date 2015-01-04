@@ -9,6 +9,10 @@ var Tux = Object.create(React);
 Tux.Dispatcher = Flux.Dispatcher;
 Tux.createStore = TuxStore;
 
+//Tux React
+Tux.createOwnerClass = require('./src/TuxOwnerClass');
+Tux.createOwneeClass = require('./src/TuxOwneeClass');
+
 //Tux Components
 Tux.Components = {};
 Tux.Components.Form = require('react-validating-form');
