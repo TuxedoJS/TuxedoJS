@@ -1,3 +1,6 @@
+'use strict';
+
+var invariant = require('./TuxInvariant');
 //require in instance of Flux Dispatcher
 var Dispatcher = require('./Dispatcher.js');
 
@@ -48,20 +51,14 @@ Actions.register = function (storeToRegister, categoriesToRegister) {
       //throw errors if category has not been created or does not have desired actions
       //get category
       createdCategory = Actions[category];
-      if (createdCategory) {
-        //get action in category
-        createdAction = createdCategory[action];
-        if (createdAction) {
-          //register listener at key of action.type with value of callback
-          listener[createdAction.type] = categoryToRegister[action];
-        } else {
-          //throw error that category does not have action
-          throw new Error('"' + category + '" category does not have action "' + action + '"');
-        }
-      } else {
-        //throw error that category does is not exist
-        throw new Error('"' + category + '" category has not been created yet');
-      }
+      //if category does not exist throw error
+      invariant(createdCategory, '"%s" category has not been created yet', category);
+      //get action in category
+      createdAction = createdCategory[action];
+      //if category does not have action throw error
+      invariant(createdAction, '"%s" category does not have action "%s"', category, action);
+      //register listener at key of action.type with value of callback
+      listener[createdAction.type] = categoryToRegister[action];
     }
   }
   //register to Dispatcher and add registration key to store
@@ -92,9 +89,7 @@ Actions.createActionCategory = function (actionCategoryProps) {
   var category = actionCategoryProps.category;
 
   //throw error if category has already been defined
-  if (Actions[category]) {
-    throw new Error('Action Category "' + category + '" is already defined');
-  }
+  invariant(!Actions[category], 'Action Category "%s" is already defined', category);
 
   //assign actionCategory to Actions and return it
   var actionCategory = Actions[category] = new ActionCategory(actionCategoryProps);
