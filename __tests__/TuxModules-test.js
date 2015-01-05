@@ -1,8 +1,9 @@
 'use strict';
 
+//since we are testing our module structure by requiring modules we dont want those modules to be mocked out
 jest.autoMockOff();
-
-describe('Individual Tux Modules', function () {
+//leaving this test commented out because the test takes an extremely long time to run and could interrupt normally workflow
+xdescribe('Individual Tux Modules', function () {
   describe('Actions', function () {
     it('should expose the module in tux/src/TuxActions.js', function () {
       expect(require('tux/Actions')).toEqual(require('tux/src/TuxActions'));
