@@ -52,7 +52,7 @@ describe('TuxActions', function () {
     it('should throw an error if the same category is created twice', function () {
       expect(function () {
         TuxActions.createActionCategory(actionCategory);
-      }).toThrow(new Error('Action Category "tests" is already defined'));
+      }).toThrow(new Error('Invariant Violation: Action Category "tests" is already defined'));
     });
 
     describe('actionCategory', function () {
@@ -245,7 +245,7 @@ describe('TuxActions', function () {
             'doesntHave': function () {}
           }
         });
-      }).toThrow(new Error('"tests" category does not have action "doesntHave"'));
+      }).toThrow(new Error('Invariant Violation: "tests" category does not have action "doesntHave"'));
     });
 
     it('should throw an error when the action category does not exist', function () {
@@ -258,7 +258,7 @@ describe('TuxActions', function () {
             'get': function () {}
           }
         });
-      }).toThrow(new Error('"doesntHave" category has not been created yet'));
+      }).toThrow(new Error('Invariant Violation: "doesntHave" category has not been created yet'));
     });
   });
 });

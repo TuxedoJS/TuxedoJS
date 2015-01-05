@@ -1,5 +1,6 @@
 'use strict';
 
+var invariant = require('./TuxInvariant');
 //architecture OBJECT: stores will register their outputs to this object so that store inputs can lookup those outputs later
 var architecture = {};
 
@@ -70,33 +71,25 @@ ArchitectChain.prototype._getRegisterId = function (inputOrStore) {
     //lookup corresponding store in the architecture object
     storeToWaitFor = architecture[inputOrStore];
     //if no store maps to this input throw error
-    if (!storeToWaitFor) {
-      throw new Error('store is waiting for an input: "' + inputOrStore + '" that no store outputs.  If this store needs no inputs than only call "itOutputs" method.');
-    }
+    invariant(storeToWaitFor, 'store is waiting for an input: "%s" that no store outputs.  If this store needs no inputs than only call "itOutputs" method.', inputOrStore);
   } else {
     //if inputOrStore is a store use that
     storeToWaitFor = inputOrStore;
   }
   //return __registerId__ from storeToWaitFor
   storeRegistrationId = storeToWaitFor.__registerId__;
-  if (storeRegistrationId) {
-    return storeRegistrationId;
-  } else {
-    //if store does not have __registerId__ than it has not been registered to the dispatcher so throw an error
-    throw new Error('store is waiting for a store that has not been registered to any actions.');
-  }
+  //if store does not have __registerId__ than it has not been registered to the dispatcher so throw an error
+  invariant(storeRegistrationId, 'store is waiting for a store that has not been registered to any actions.');
+  return storeRegistrationId;
 };
 
 //_registerOutputToArchitecture FUNCTION: internal function, registers an output STRING key to the architecture OBJECT with the value of storeToArchitect so that the storeToArchitect can later be looked up by passing the same output STRING to itNeeds
 //@param output STRING: output STRING to which storeToArchitect will be mapped to on the architecture OBJECT
 ArchitectChain.prototype._registerOutputToArchitecture = function (output) {
   //if this output is already registered to architecture OBJECT, throw error
-  if (architecture[output]) {
-    throw new Error('output: "' + output + '" is already registered to a store.');
-  } else {
-    //map output STRING to storeToArchitect
-    architecture[output] = this.storeToArchitect;
-  }
+  invariant(!architecture[output], 'output: "%s" is already registered to a store.', output);
+  //map output STRING to storeToArchitect
+  architecture[output] = this.storeToArchitect;
 };
 
 //architect FUNCTION: accepts a storeToArchitect and returns an instance of architectChain which will register the inputs and outputs for the passsed in store

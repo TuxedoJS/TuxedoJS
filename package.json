@@ -44,6 +44,7 @@
   "jest": {
     "scriptPreprocessor": "jest-preprocessor.js",
     "unmockedModulePathPatterns": [
+      "src/TuxInvariant",
       "node_modules/react/",
       "node_modules/object-assign/"
     ]
