@@ -55,6 +55,7 @@
   },
   "jest": {
     "scriptPreprocessor": "jest-preprocessor.js",
+    "moduleFileExtensions": ["js", "json", "jsx"],
     "unmockedModulePathPatterns": [
       "src/TuxInvariant",
       "node_modules/react/",
