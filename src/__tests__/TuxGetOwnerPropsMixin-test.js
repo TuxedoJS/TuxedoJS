@@ -16,8 +16,9 @@ describe('getOwnerPropsMixin', function () {
               /            \
        [branch1 tO]     [branch2]
         /       \             \
-    [leaf11] [leaf12 tO]    [leaf12]
+    [leaf11] [leaf12 tO]    [leaf21]
     */
+    //reset Owners and Ownees
     root1Owner = {
       __tuxIsOwnerComponent__: true,
       ownerProps: {}
