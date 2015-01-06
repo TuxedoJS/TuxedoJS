@@ -1,6 +1,8 @@
-var Animation = require('../Animations.js');
+var makeAnimation = require('../Animation');
 //Default FadeRight animation component
 var FadeRight = {
+  //Class name given to the animation component once mounted.
+  className: 'fadeRight',
   //CSS for wrapped component on entry
   enter: {
     'opacity': '0.01',
@@ -26,5 +28,5 @@ var FadeRight = {
     'transform': 'translateX(20px)'
   }
 };
-//Use makeTransition function from main Tux Animation module to create wrapping animation componenet and pass in the default params
-module.exports = Animation.makeTransition('FadeRight', FadeRight);
+//Use makeAnimation function from main Tux Animation module to create wrapping animation componenet and pass in the default params
+module.exports = makeAnimation('FadeRight', FadeRight);

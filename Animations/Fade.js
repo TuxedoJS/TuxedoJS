@@ -1,6 +1,8 @@
-var Animation = require('./Animations.js');
+var makeAnimation = require('./Animation');
 //Defult Fade animation component
 var Fade = {
+  //Class name given to the animation component once mounted
+  className: 'fade',
   //CSS for wrapped component on entry
   enter: {
     'opacity': '0.01',
@@ -22,5 +24,5 @@ var Fade = {
     'opacity': '0.01'
   }
 };
-//Use makeTransition function from main Tux Animation module to create wrapping animation componenet and pass in the default params
-module.exports = Animation.makeTransition('Fade', Fade);
+//Use makeAnimation function from main Tux Animation module to create wrapping animation componenet and pass in the default params
+module.exports = makeAnimation(Fade);

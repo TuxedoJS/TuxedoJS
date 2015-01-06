@@ -1,6 +1,8 @@
-var Animation = require('../Animations.js');
+var makeAnimation = require('../Animation');
 //Default ZoomUp animation component
 var ZoomUp = {
+  //Class name given to the animation component once mounted
+  className: 'zoomUp',
   //CSS for wrapped component on entry
   enter: {
     'opacity': '0.01',
@@ -26,5 +28,5 @@ var ZoomUp = {
     'transform': 'scale(.1) translateY(20px)'
   }
 };
-//Use makeTransition function from main Tux Animation module to create wrapping animation componenet and pass in the default params
-module.exports = Animation.makeTransition('ZoomUp', ZoomUp);
+//Use makeAnimation function from main Tux Animation module to create wrapping animation componenet and pass in the default params
+module.exports = makeAnimation('ZoomUp', ZoomUp);

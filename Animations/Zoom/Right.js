@@ -1,6 +1,8 @@
-var Animation = require('../Animations.js');
+var makeAnimation = require('../Animation');
 //Default ZoomRight animation component
 var ZoomRight = {
+  //Class name given to the animation component once mounted
+  className: 'zoomRight',
   //CSS for wrapped component on entry
   enter: {
     'opacity': '0.01',
@@ -26,5 +28,5 @@ var ZoomRight = {
     'transform': 'scale(.1) translateX(20px)'
   }
 };
-//Use makeTransition function from main Tux Animation module to create wrapping animation componenet and pass in the default params
-module.exports = Animation.makeTransition('ZoomRight', ZoomRight);
+//Use makeAnimation function from main Tux Animation module to create wrapping animation componenet and pass in the default params
+module.exports = makeAnimation('ZoomRight', ZoomRight);

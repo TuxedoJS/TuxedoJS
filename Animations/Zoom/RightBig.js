@@ -1,6 +1,8 @@
-var Animation = require('../Animations.js');
+var makeAnimation = require('../Animation');
 //Default ZoomRightBig animation component
 var ZoomRightBig = {
+  //Class name given to the animation component once mounted
+  className: 'zoomRightBig',
   //CSS for wrapped component on entry
   enter: {
     'opacity': '0.01',
@@ -26,5 +28,5 @@ var ZoomRightBig = {
     'transform': 'scale(.1) translateX(2000px)'
   }
 };
-//Use makeTransition function from main Tux Animation module to create wrapping animation componenet and pass in the default params
-module.exports = Animation.makeTransition('ZoomRightBig', ZoomRightBig);
+//Use makeAnimation function from main Tux Animation module to create wrapping animation componenet and pass in the default params
+module.exports = makeAnimation('ZoomRightBig', ZoomRightBig);

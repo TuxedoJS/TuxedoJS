@@ -1,6 +1,8 @@
-var Animation = require('../Animations.js');
+var makeAnimation = require('../Animation');
 //Default FadeDownBig animation component
 var FadeDownBig = {
+  //Class name given to the animation component once mounted.
+  className: 'fadeDownBig',
   //CSS for wrapped component on entry
   enter: {
     'opacity': '0.01',
@@ -26,5 +28,5 @@ var FadeDownBig = {
     'transform': 'translateY(-2000px)'
   }
 };
-//Use makeTransition function from main Tux Animation module to create wrapping animation componenet and pass in the default params
-module.exports = Animation.makeTransition('FadeDownBig', FadeDownBig);
+//Use makeAnimation function from main Tux Animation module to create wrapping animation componenet and pass in the default params
+module.exports = makeAnimation('FadeDownBig', FadeDownBig);
