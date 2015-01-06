@@ -129,19 +129,19 @@ describe('architect', function () {
   it('should throw an error if a store is waiting for an input that no store outputs', function () {
     expect(function () {
       architect(root1Store).itNeeds('test');
-    }).toThrow(new Error('store is waiting for an input: "test" that no store outputs.  If this store needs no inputs than only call "itOutputs" method.'));
+    }).toThrow(new Error('Invariant Violation: store is waiting for an input: "test" that no store outputs.  If this store needs no inputs than only call "itOutputs" method.'));
   });
 
   it('should throw an error if a store is waiting for a store that does not have a __registerId__', function () {
     delete root1Store.__registerId__;
     expect(function () {
       architect(branch1Store).itNeeds('root1Output');
-    }).toThrow(new Error('store is waiting for a store that has not been registered to any actions.'));
+    }).toThrow(new Error('Invariant Violation: store is waiting for a store that has not been registered to any actions.'));
   });
 
   it('should throw an error if a store attempts to output the same string another store is already outputing', function () {
     expect(function () {
       architect(branch1Store).itOutputs('root1Output');
-    }).toThrow(new Error('output: "root1Output" is already registered to a store.'));
+    }).toThrow(new Error('Invariant Violation: output: "root1Output" is already registered to a store.'));
   });
 });
