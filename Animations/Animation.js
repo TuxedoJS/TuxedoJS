@@ -2,30 +2,15 @@
 
 var React = require("react/addons");
 var Arrival = require('Arrival');
-var Easings = require("./AnimationEasings.js");
-var ReactTransitionGroup = React.addons.TransitionGroup;
+var Easings = require("./AnimationEasings");
 
-//makeTransition FUNCTION: creates animation for wrapped component based on props of wrapper component
-  //@param displayName STRING: intended name of the wrapper animation component
+//makeAnimation FUNCTION: creates animation for wrapped component based on props of wrapper component
   //@param transitions OBJECT: properties that define the default animation properties for the animation component wrapper
-var makeTransition = function (displayName, transitions) {
-
-  // setAnimationDomNode FUNCTION: function to handle manipulating and setting a TransitionGroup in the DOM.
-    //@param mount STRING: the transition key you are looking to affect
-    //@param callback FUNCTION: callback attribute passed in from the containing function to act on function completion.
-  var setAnimationDomNode = function (mount, callback) {
-      this.el = this.getDOMNode();
-      this.$el = $(this.el);
-
-      // requestAnimationFrame FUNCTION: Calls the specified function updating an animation before the next browser repaint. Defined in window.
-      requestAnimationFrame(function () {
-        this.$el.css(transitions[mount]);
-        requestAnimationFrame(function () {
-          this.$el.css(transitions[mount + 'Active']);
-          Arrival(this.$el, callback);
-        }.bind(this));
-      }.bind(this));
-  };
+var makeAnimation = function (transitions) {
+  //If a second parameter is passed in as the desired class name for the animation, set this as className, othewise, use the animation's default class name
+  var className;
+  var args = Array.prototype.slice.call(arguments);
+  className = args.length === 1 ? transitions.className : args[1];
 
   //React.createClass FUNCTION: function to create animation component class
     //@param OBJECT: componentMounting and render
@@ -37,20 +22,36 @@ var makeTransition = function (displayName, transitions) {
       // componentDidEnter FUNCTION: use to define actions to run after an animation has entry completed
       // componentDidLeave FUNCTION: use to define actions to run after an animation has leave completed
   return React.createClass({
+    // setAnimationDomNode FUNCTION: function to handle manipulating and setting a TransitionGroup in the DOM
+      //@param action STRING: the transition key you are looking to affect
+      //@param callback FUNCTION: callback attribute passed in from the containing function to act on function completion
+    setAnimationDomNode: function (action, callback) {
+      this.el = this.getDOMNode();
+      this.$el = $(this.el);
+
+      // requestAnimationFrame FUNCTION: Calls the specified function updating an animation before the next browser repaint. Defined in window
+      requestAnimationFrame(function () {
+        this.$el.css(transitions[action]);
+        requestAnimationFrame(function () {
+          this.$el.css(transitions[action + 'Active']);
+          Arrival(this.$el, callback);
+        }.bind(this));
+      }.bind(this));
+    },
     componentWillEnter: function (callback) {
-      setAnimationDomNode('enter', callback);
+      this.setAnimationDomNode('enter', callback);
     },
 
     componentDidEnter: function () {
-      // This is called after the callback function that was passed to componentWillEnter is called.
+      // This is called after the callback function that was passed to componentWillEnter is called
     },
 
     componentWillLeave: function (callback) {
-      setAnimationDomNode('leave', callback);
+      this.setAnimationDomNode('leave', callback);
     },
 
     componentDidLeave: function () {
-      //This is called when the willLeave callback is called (at the same time as componentWillUnmount).
+      //This is called when the willLeave callback is called (at the same time as componentWillUnmount)
     },
 
     render: function () {
@@ -64,7 +65,7 @@ var makeTransition = function (displayName, transitions) {
           if (duration) {
             //Case to accept if duration prop is a number
             if (typeof duration === "number") {
-              duration = duration + "ms"
+              duration = duration + "ms";
             }
             transitions[action]['transition-duration'] = duration;
           }
@@ -87,7 +88,7 @@ var makeTransition = function (displayName, transitions) {
           if (delay) {
             //Case to accept if delay prop is a number
             if (typeof delay === "number") {
-              delay = delay + "ms"
+              delay = delay + "ms";
             }
             transitions[action]['transition-delay'] =  delay;
           }
@@ -107,14 +108,14 @@ var makeTransition = function (displayName, transitions) {
       return (
         React.DOM.div(
           {
-            className: displayName,
+            className: className,
             key: this.props.key
           },
            this.props.children
         )
-      )
+      );
     }
    });
 };
 
-module.exports = makeTransition;
+module.exports = makeAnimation;
