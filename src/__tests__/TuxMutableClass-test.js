@@ -6,7 +6,7 @@ jest.mock('react');
 jest.dontMock(moduleToTest);
 
 describe('TuxMutableClass', function () {
-  var React, createMutableClass, tuxMutableClass, mockMutableClassProps, mockMixins, mockConnectMutableToStore, mockStoreMixinGenerator, mockStoreMixin, mockGetMutablePropsMixin, someMutableMockProps;
+  var React, createMutableClass, tuxMutableClass, mockMutableClassProps, mockMixins, mockGetOwnerPropsMixin, mockMutableRenderMixin, mockPureRenderMixin;
 
   beforeEach(function () {
     // Reset TuxMutableClass and mocks before each test

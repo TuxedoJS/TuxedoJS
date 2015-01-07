@@ -58,11 +58,11 @@ describe('TuxMutableRenderMixin', function () {
       var mockComponent = {};
       mockComponent.constructor = {};
       mockComponent.constructor.__tuxMutableTraits__ = tuxMutableTraits;
-      tuxMutableRenderMixin.constructor = mockComponent.constructor;
 
-      // Call componentWillMount a second time, expecting the value of __tuxMutableTraits__ to be equal to the value from the first invocation
-      tuxMutableRenderMixin.componentWillMount();
-      expect(tuxMutableRenderMixin.constructor.__tuxMutableTraits__).toEqual(tuxMutableTraits);
+      // Call componentWillMount a second time using the mockComponent as the context.
+      // Expect the value of __tuxMutableTraits__ to be equal to the value from the first invocation.
+      tuxMutableRenderMixin.componentWillMount.call(mockComponent);
+      expect(mockComponent.constructor.__tuxMutableTraits__).toEqual(tuxMutableTraits);
     });
   });
 
@@ -72,19 +72,23 @@ describe('TuxMutableRenderMixin', function () {
         message: {
           text: 'test text'
         },
-        value: 2
+        value: 2,
+        updated: false
       };
       nextState = {
-        editing: false
+        editing: false,
+        updated: false
       };
       tuxMutableRenderMixin.constructor = {
         __tuxMutableTraits__: [['props', 'message', 'text'], ['props', 'value'], ['state', 'editing']]
       };
     });
 
-    it('should return false when __tuxMutableTraits__ is not defined', function () {
+    it('should throw and error when __tuxMutableTraits__ prop is not defined on the component', function () {
       tuxMutableRenderMixin.constructor.__tuxMutableTraits__ = undefined;
-      expect(tuxMutableRenderMixin.shouldComponentUpdate(nextProps, nextState)).toBeFalsy();
+      expect(function() {
+        tuxMutableRenderMixin.shouldComponentUpdate(nextProps, nextState)
+      }).toThrow(new Error('Invariant Violation: The __tuxMutableTraits__ property is not defined on the component.'));
     });
 
     it('should return false when there are no differences between current state and props and next props and state', function () {
@@ -99,6 +103,12 @@ describe('TuxMutableRenderMixin', function () {
     it('should return true when there is a difference between current state and next state', function () {
       nextState.editing = true;
       expect(tuxMutableRenderMixin.shouldComponentUpdate(nextProps, nextState)).toBeTruthy();
+    });
+
+    it('should return false if a trait that is not being tracked changes', function () {
+      nextProps.updated = true;
+      nextState.updated = true;
+      expect(tuxMutableRenderMixin.shouldComponentUpdate(nextProps, nextState)).toBeFalsy();
     });
   });
 });
