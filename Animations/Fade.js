@@ -1,24 +1,22 @@
 var makeAnimation = require('./Animation');
-//Defult Fade animation component
+var objectAssign = require('object-assign');
+var CommonAnimationProps = require('./CommonAnimationProps');
+//Default Fade animation component
 var Fade = {
   //Class name given to the animation component once mounted
   className: 'fade',
   //CSS for wrapped component on entry
-  enter: {
-    'opacity': '0.01',
-    'transition-duration': '.5s',
-    'transition-timing-function': 'linear'
-  },
+  enter: objectAssign(CommonAnimationProps.enter, {
+    'opacity': '0.01'
+  }),
   //CSS for wrapped component when entry animation completes
   enterActive: {
     'opacity': '1'
   },
   //CSS for wrapped component on leave
-  leave: {
-    'opacity': '1',
-    'transition-duration': '.5s',
-    'transition-timing-function': 'linear'
-  },
+  leave: objectAssign(CommonAnimationProps.leave, {
+    'opacity': '1'
+  }),
   //CSS for wrapped component when leave animation completes
   leaveActive: {
     'opacity': '0.01'

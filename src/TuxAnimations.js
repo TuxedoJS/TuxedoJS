@@ -1,8 +1,8 @@
 'use strict';
 
-var React = require("react/addons");
+var React = require('react/addons');
 var Arrival = require('Arrival');
-var Easings = require("./AnimationEasings");
+var Easings = require('./AnimationEasings');
 
 //makeAnimation FUNCTION: creates animation for wrapped component based on props of wrapper component
   //@param transitions OBJECT: properties that define the default animation properties for the animation component wrapper
@@ -27,13 +27,15 @@ var makeAnimation = function (transitions) {
       //@param callback FUNCTION: callback attribute passed in from the containing function to act on function completion
     setAnimationDomNode: function (action, callback) {
       this.el = this.getDOMNode();
-      this.$el = $(this.el);
-
       // requestAnimationFrame FUNCTION: Calls the specified function updating an animation before the next browser repaint. Defined in window
-      requestAnimationFrame(function () {
-        this.$el.css(transitions[action]);
-        requestAnimationFrame(function () {
-          this.$el.css(transitions[action + 'Active']);
+      window.requestAnimationFrame(function () {
+        for (var key in transitions[action]) {
+          this.el.style[key] = transitions[action][key];
+        }
+        window.requestAnimationFrame(function () {
+          for (var key in transitions[action]) {
+            this.el.style[key] = transitions[action + 'Active'][key];
+          }
           Arrival(this.$el, callback);
         }.bind(this));
       }.bind(this));
@@ -42,16 +44,8 @@ var makeAnimation = function (transitions) {
       this.setAnimationDomNode('enter', callback);
     },
 
-    componentDidEnter: function () {
-      // This is called after the callback function that was passed to componentWillEnter is called
-    },
-
     componentWillLeave: function (callback) {
       this.setAnimationDomNode('leave', callback);
-    },
-
-    componentDidLeave: function () {
-      //This is called when the willLeave callback is called (at the same time as componentWillUnmount)
     },
 
     render: function () {
@@ -108,8 +102,7 @@ var makeAnimation = function (transitions) {
       return (
         React.DOM.div(
           {
-            className: className,
-            key: this.props.key
+            className: className
           },
            this.props.children
         )
