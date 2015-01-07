@@ -2,7 +2,7 @@
 
 var React = require('react');
 var getOwnerPropsMixin = require('./TuxGetOwnerPropsMixin');
-var pureRenderMixin = require('react').addons.PureRenderMixin;
+var pureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
 var mutableRenderMixin = require('./TuxMutableRenderMixin');
 var assign = require('object-assign');
 

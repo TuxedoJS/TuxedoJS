@@ -11,13 +11,10 @@ describe('TuxMutableClass', function () {
   beforeEach(function () {
     // Reset TuxMutableClass and mocks before each test
     React = require('react');
-    React.addons = {
-      PureRenderMixin: jest.genMockFn()
-    };
     createMutableClass = require(moduleToTest);
     mockGetOwnerPropsMixin = require('../TuxGetOwnerPropsMixin');
     mockMutableRenderMixin = require('../TuxMutableRenderMixin');
-    mockPureRenderMixin = React.addons.PureRenderMixin;
+    mockPureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
     mockMixins = [{}, {}];
     mockMutableClassProps = {
       someMockProp: {}

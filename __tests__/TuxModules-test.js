@@ -34,6 +34,10 @@ xdescribe('Individual Tux Modules', function () {
     it('should expose the module in tux/src/TuxOwneeClass under the method createOwneeClass', function () {
       expect(require('tux/React').createOwneeClass).toEqual(require('tux/src/TuxOwneeClass'));
     });
+
+    it('should expose the module in tux/src/TuxMutableClass under the method createMutableClass', function () {
+      expect(require('tux/React').createMutableClass).toEqual(require('tux/src/TuxMutableClass'));
+    });
   });
 
   describe('Router', function () {
