@@ -2,15 +2,18 @@
 
 var React = require('react/addons');
 var Arrival = require('Arrival');
-var Easings = require('./AnimationEasings');
+var Easings = require('./TuxAnimationEasings');
 
 //makeAnimation FUNCTION: creates animation for wrapped component based on props of wrapper component
   //@param transitions OBJECT: properties that define the default animation properties for the animation component wrapper
-var makeAnimation = function (transitions) {
+var makeAnimation = function (transitions, customClassName) {
   //If a second parameter is passed in as the desired class name for the animation, set this as className, othewise, use the animation's default class name
   var className;
-  var args = Array.prototype.slice.call(arguments);
-  className = args.length === 1 ? transitions.className : args[1];
+  if (customClassName) {
+    className = customClassName;
+  } else {
+    className = transitions.className;
+  }
 
   //React.createClass FUNCTION: function to create animation component class
     //@param OBJECT: componentMounting and render
@@ -26,17 +29,19 @@ var makeAnimation = function (transitions) {
       //@param action STRING: the transition key you are looking to affect
       //@param callback FUNCTION: callback attribute passed in from the containing function to act on function completion
     setAnimationDomNode: function (action, callback) {
-      this.el = this.getDOMNode();
+      var componentToAnimate = this.getDOMNode();
+      var startingAction = transitions[action];
+      var endingAction = transitions[action + '-active'];
       // requestAnimationFrame FUNCTION: Calls the specified function updating an animation before the next browser repaint. Defined in window
       window.requestAnimationFrame(function () {
-        for (var key in transitions[action]) {
-          this.el.style[key] = transitions[action][key];
+        for (var key in startingAction) {
+          componentToAnimate.style[key] = startingAction[key];
         }
         window.requestAnimationFrame(function () {
-          for (var key in transitions[action]) {
-            this.el.style[key] = transitions[action + 'Active'][key];
+          for (var key in endingAction) {
+            componentToAnimate.style[key] = endingAction[key];
           }
-          Arrival(this.$el, callback);
+          Arrival(componentToAnimate, callback);
         }.bind(this));
       }.bind(this));
     },
