@@ -23,5 +23,5 @@ var Zoom = {
     'transform': 'scale(.1)'
   })
 };
-//Use makeAnimation function from main Tux Animation module to create wrapping animation componenet and pass in the default params
+//Use makeAnimation function from main Tux Animation module to create wrapping animation component and pass in the default params
 module.exports = makeAnimation(Zoom);
