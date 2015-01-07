@@ -1,26 +1,24 @@
 var makeAnimation = require('./Animation');
+var objectAssign = require('object-assign');
+var CommonAnimationProps = require('./CommonAnimationProps');
 //Default Fly animation component
 var Fly = {
   //Class name given to the animation component once mounted
   className: 'fly',
   //CSS for wrapped component on entry
-  enter: {
+  enter: objectAssign(CommonAnimationProps.enter, {
     'opacity': '0.01',
-    'transform': 'translateY(-2000px)',
-    'transition-duration': '.5s',
-    'transition-timing-function': 'linear'
-  },
+    'transform': 'translateY(-2000px)'
+  }),
   //CSS for wrapped component when entry animation completes
   enterActive: {
     'opacity': '1',
     'transform': 'translateY(0px)'
   },
   //CSS for wrapped component on leave
-  leave: {
-    'transform': 'translateY(0px)',
-    'transition-duration': '.5s',
-    'transition-timing-function': 'linear'
-  },
+  leave: objectAssign(CommonAnimationProps.leave, {
+    'transform': 'translateY(0px)'
+  }),
   //CSS for wrapped component when leave animation completes
   leaveActive: {
     'opacity': '1',
