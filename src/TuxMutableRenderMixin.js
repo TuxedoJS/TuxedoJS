@@ -2,51 +2,38 @@
 
 var invariant = require('./TuxInvariant');
 
-// findPath FUNCTION: recursive function to discover the first path to the provided @param mutableTrait from deepSearch function
-// @param mutableTrait STRING trait to find the path of keys to within the searchObject
-// @param searchObject OBJECT:
-  // expected keys ANY: this object can contain any keys, but is expected to contain the key specified in mutableTrait
-// @param currentPath ARRAY: array of strings that lead to the specified mutableTrait within searchObject
-// @param mutablePath ARRAY: empty array that the valid path will be added to once found
-var findPath = function (mutableTrait, searchObject, currentPath, mutablePath) {
-  // if the searchObject is undefined or null, return mutablePath as the path isn't down this branch and
-  // mutablePath is set to the result of the return statement
-  if (searchObject === undefined || searchObject === null) {
-    return mutablePath;
-  } else if (searchObject.hasOwnProperty(mutableTrait)) {
-    // concat mutableTrait onto currentPath and return the result
-    return currentPath.concat(mutableTrait);
-  }
-
-  // declare reused variables
-  var key, newPath;
-
-  for (key in searchObject) {
-    // add the new key onto currentPath
-    newPath = currentPath.concat(key);
-    // recurse over the item at searchObject[key] with newPath as the currentPath input
-    mutablePath = findPath(mutableTrait, searchObject[key], newPath, mutablePath);
-    // break out of loop if a single valid path has been found
-    if (mutablePath.length > 0) {
-      break;
-    }
-  }
-
-  return mutablePath;
-};
-
-// deepSearch FUNCTION: creates an array of string keys to transverse the object specified by the @param type key. Currently matches only the first path found.
+// deepSearch FUNCTION: recursive function that creates an array of string keys to transverse the object specified by the @param mutableTrait key. Currently matches only the first path found.
 // @param mutableTrait STRING: trait to find the path of keys to within the objectToSearch
 // @param objectToSearch OBJECT:
   // expected keys ANY: this object can contain any keys, but is expected to contain the key specified in mutableTrait
-// @param type STRING: either the string 'props' or 'state'
-var deepSearch = function (mutableTrait, objectToSearch, type) {
-  var properType = type === 'props' || type === 'state';
+// @param currentPath STRING: either the string 'props' or 'state' [ALTERNATE ARRAY that contains either 'props' or 'state' at index 0]
+var deepSearch = function (mutableTrait, objectToSearch, currentPath) {
+  if (!Array.isArray(currentPath)) {
+    currentPath = [currentPath];
+  }
 
-  invariant(properType, 'Input param "type" needs to be either \'props\' or \'state\'')
+  if (typeof objectToSearch === 'object' && objectToSearch !== undefined && objectToSearch !== null) {
+    if (objectToSearch.hasOwnProperty(mutableTrait)) {
+      // concat mutableTrait onto currentPath and return the result
+      return currentPath.concat(mutableTrait);
+    }
 
-  // Call recursive function findPath. Pass in type as an array to match expected input type (array) and an empty array to store valid path
-  return findPath(mutableTrait, objectToSearch, [type], []);
+    // declare reused variables
+    var key, newPath, possibleResultPath;
+
+    for (key in objectToSearch) {
+      if(objectToSearch.hasOwnProperty(key)) {
+        // add the new key onto currentPath
+        newPath = currentPath.concat(key);
+        // recurse over the item at objectToSearch[key] with newPath as the currentPath input
+        possibleResultPath = deepSearch(mutableTrait, objectToSearch[key], newPath);
+        // break out of loop if a single valid path has been found
+        if (possibleResultPath) {
+          return possibleResultPath;
+        }
+      }
+    }
+  }
 };
 
 // TuxMutableRenderMixin OBJECT: adds mixin to React class that will add componentWillMount and shouldComponentUpdate life cycle events to the component
@@ -57,7 +44,7 @@ module.exports = {
   componentWillMount: function () {
     var mutableTraits = this.mutableTraits;
     var mutableTraitsPaths = [];
-    var type, isArray, isString, mutableTraitsLength, i, mutableType;
+    var type, isArray, isString, mutableTraitsTypeLength, i, mutableType;
 
     // if __tuxMutableTraits__ is not defined
     if (!this.constructor.__tuxMutableTraits__) {
