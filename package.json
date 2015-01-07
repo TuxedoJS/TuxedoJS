@@ -1,11 +1,22 @@
 {
   "name": "tux",
   "version": "0.0.0",
-  "description": "Framework built in React and Flux",
-  "main": "index.js",
+  "description": "Framework built on React and Flux",
+  "main": "Tuxedo.js",
   "scripts": {
     "test": "jest",
-    "start": "watchify -d src/index.js -o tux.js -v"
+    "start": "watchify --extension=.jsx -d Tuxedo.js -o bundle.js -v"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "reactify",
+        {
+          "es6": true
+        }
+      ],
+      "envify"
+    ]
   },
   "repository": {
     "type": "git",
@@ -26,12 +37,14 @@
   },
   "homepage": "https://github.com/TuxedoJS/TuxedoJS",
   "dependencies": {
+    "arrival": "^1.0.0",
     "browserify": "^8.0.2",
     "envify": "^3.2.0",
     "events": "^1.0.2",
     "flux": "^2.0.1",
     "object-assign": "^2.0.0",
     "react": "^0.12.2",
+    "react-router": "^0.11.6",
     "react-validating-form": "^0.1.1",
     "reactify": "^0.17.1",
     "watchify": "^2.2.1"
@@ -43,6 +56,11 @@
   },
   "jest": {
     "scriptPreprocessor": "jest-preprocessor.js",
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "jsx"
+    ],
     "unmockedModulePathPatterns": [
       "src/TuxInvariant",
       "node_modules/react/",
