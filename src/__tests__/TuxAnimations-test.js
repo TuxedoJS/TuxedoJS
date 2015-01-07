@@ -1,6 +1,6 @@
 'use strict';
 
-jest.dontMock('../../Animations/Animation');
+jest.dontMock('../TuxAnimations');
 jest.dontMock('../../Animations/Fade');
 jest.dontMock('../../Animations/Fly');
 jest.dontMock('../../Animations/Zoom');
@@ -11,17 +11,13 @@ describe('Animations', function () {
   beforeEach(function () {
     //Reset animation components and modules before each test
     React = require('react/addons');
-    makeAnimation = require('../../Animations/Animation');
+    makeAnimation = require('../TuxAnimations');
     Idea = require('./testComponents');
     Fade = require('../../Animations/Fade');
     Fly = require('../../Animations/Fly');
     Zoom = require('../../Animations/Zoom');
     TestUtils = React.addons.TestUtils;
     TestUtils.mockComponent(Idea);
-    var mockAnimation = {};
-
-    var mockAnimation1 = makeAnimation(mockAnimation);
-
     //Reset mocks before each test
     mocks = {
       ideas: [
@@ -38,10 +34,10 @@ describe('Animations', function () {
   });
 
   it("applies a class of 'fly' for a fly transition", function () {
-   ideaFlyComponent = TestUtils.renderIntoDocument(
-    <Fly key={mocks.ideas[0].id}>
-      <Idea key={mocks.ideas[0].id} />
-    </Fly>
+    ideaFlyComponent = TestUtils.renderIntoDocument(
+      <Fly key={mocks.ideas[0].id}>
+        <Idea key={mocks.ideas[0].id} />
+      </Fly>
     );
     var ideaFly = TestUtils.findRenderedDOMComponentWithClass(ideaFlyComponent, 'fly');
     expect(ideaFly).toBeDefined();
@@ -52,7 +48,7 @@ describe('Animations', function () {
       <Fade key={mocks.ideas[1].id}>
         <Idea key={mocks.ideas[1].id} />
       </Fade>
-      );
+    );
     var ideaFade = TestUtils.findRenderedDOMComponentWithClass(ideaFadeComponent, 'fade');
     expect(ideaFade).toBeDefined();
   });
@@ -62,7 +58,7 @@ describe('Animations', function () {
       <Zoom key={mocks.ideas[1].id}>
         <Idea key={mocks.ideas[1].id} />
       </Zoom>
-      );
+    );
     var ideaZoom = TestUtils.findRenderedDOMComponentWithClass(ideaZoomComponent, 'zoom');
     expect(ideaZoom).toBeDefined();
   });
@@ -73,9 +69,8 @@ describe('Animations', function () {
       <MyFade key={mocks.ideas[1].id}>
         <Idea key={mocks.ideas[1].id} />
       </MyFade>
-      );
+    );
     var ideaFade = TestUtils.findRenderedDOMComponentWithClass(ideaFadeComponent, 'myFade');
     expect(ideaFade).toBeDefined();
   });
-
 });

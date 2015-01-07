@@ -1,17 +1,18 @@
+var assign = require('object-assign');
 var CommonAnimationProps = require('../CommonAnimationProps');
 
 //Holds CSS properties which are shared among all Fade animations
 var CommonFadeProps = {
-  enter: objectAssign(CommonAnimationProps.enter, {
+  enter: assign(CommonAnimationProps.enter, {
     'opacity': '0.01'
   }),
-  enterActive: {
+  'enter-active': {
     'opacity': '1'
   },
-  leave: objectAssign(CommonAnimationProps.leave, {
+  leave: assign(CommonAnimationProps.leave, {
     'opacity': '1'
   }),
-  leaveActive: {
+  'leave-active': {
     'opacity': '0.01'
   }
 };
