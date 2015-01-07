@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react/addons');
-var Arrival = require('Arrival');
+var Arrival = require('arrival');
 var Easings = require('./TuxAnimationEasings');
 
 //makeAnimation FUNCTION: creates animation for wrapped component based on props of wrapper component

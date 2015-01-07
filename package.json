@@ -37,6 +37,7 @@
   },
   "homepage": "https://github.com/TuxedoJS/TuxedoJS",
   "dependencies": {
+    "arrival": "^1.0.0",
     "browserify": "^8.0.2",
     "envify": "^3.2.0",
     "events": "^1.0.2",
@@ -55,7 +56,11 @@
   },
   "jest": {
     "scriptPreprocessor": "jest-preprocessor.js",
-    "moduleFileExtensions": ["js", "json", "jsx"],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "jsx"
+    ],
     "unmockedModulePathPatterns": [
       "src/TuxInvariant",
       "node_modules/react/",
