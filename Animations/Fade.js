@@ -14,5 +14,5 @@ var Fade = {
   //CSS for wrapped component when leave animation completes
   'leave-active': assign(CommonFadeProps['leave-active'])
 };
-//Use makeAnimation function from main Tux Animation module to create wrapping animation componenet and pass in the default params
+//Use makeAnimation function from main Tux Animation module to create wrapping animation component and pass in the default params
 module.exports = makeAnimation(Fade);
