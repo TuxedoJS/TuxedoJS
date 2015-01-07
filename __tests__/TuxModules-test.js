@@ -1,8 +1,8 @@
 'use strict';
 
-//since we are testing our module structure by requiring modules we dont want those modules to be mocked out
+//since these tests are for module structure and are based on requiring modules, those modules should not be mocked out in order to make sure that the comparisons are valid
 jest.autoMockOff();
-//leaving this test commented out because the test takes an extremely long time to run and could interrupt normally workflow
+//this test is commented out because the test takes an extremely long time to run and could interrupt normal workflow
 xdescribe('Individual Tux Modules', function () {
   describe('Actions', function () {
     it('should expose the module in tux/src/TuxActions.js', function () {
@@ -45,6 +45,20 @@ xdescribe('Individual Tux Modules', function () {
   describe('Stores', function () {
     it('should expose the module in tux/Store under the method createStore', function () {
       expect(require('tux/Stores').createStore).toEqual(require('tux/src/TuxStore'));
+    });
+  });
+
+  describe('Animations', function () {
+    it('should expose the TuxAnimations module under the createAnimation method', function () {
+      expect(require('tux/Animations').createAnimation).toEqual(require('tux/src/TuxAnimations'));
+    });
+
+    it('should expose only the specific animation component that the user requires in', function () {
+      expect(require('tux/Animations/Fly')).toBeDefined();
+    });
+
+    it('should expose only the specific sub animation component that the user requires in', function () {
+      expect(require('tux/Animations/Fade/DownBig')).toBeDefined();
     });
   });
 
