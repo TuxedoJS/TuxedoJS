@@ -1,29 +1,28 @@
-var Animation = require('./Animations.js');
+var makeAnimation = require('../src/TuxAnimations');
+var assign = require('object-assign');
+var CommonFadeProps = require('./Fade/CommonFadeProps');
+var CommonAnimationProps = require('./CommonAnimationProps');
 //Default Fly animation component
 var Fly = {
+  //Class name given to the animation component once mounted
+  className: 'fly',
   //CSS for wrapped component on entry
-  enter: {
-    'opacity': '0.01',
-    'transform': 'translateY(-2000px)',
-    'transition-duration': '.5s',
-    'transition-timing-function': 'linear'
-  },
+  enter: assign(CommonFadeProps.enter, {
+    'transform': 'translateY(-2000px)'
+  }),
   //CSS for wrapped component when entry animation completes
-  enterActive: {
-    'opacity': '1',
+  'enter-active': assign(CommonFadeProps['enter-active'], {
     'transform': 'translateY(0px)'
-  },
+  }),
   //CSS for wrapped component on leave
-  leave: {
-    'transform': 'translateY(0px)',
-    'transition-duration': '.5s',
-    'transition-timing-function': 'linear'
-  },
+  leave: assign(CommonAnimationProps.leave, {
+    'transform': 'translateY(0px)'
+  }),
   //CSS for wrapped component when leave animation completes
-  leaveActive: {
+  'leave-active': {
     'opacity': '1',
     'transform': 'translateY(-2000px)'
   }
 };
-//Use makeTransition function from main Tux Animation module to create wrapping animation componenet and pass in the default params
-module.exports = Animation.makeTransition('Fly', Fly);
+//Use makeAnimation function from main Tux Animation module to create wrapping animation componenet and pass in the default params
+module.exports = makeAnimation(Fly);
