@@ -3,7 +3,7 @@
 var invariant = require('./TuxInvariant');
 
 // deepSearch FUNCTION: recursive function that creates an array of string keys to transverse the object specified by the @param mutableTrait key. Currently matches only the first path found.
-// @param mutableTrait STRING: trait to find the path of keys to within the objectToSearch
+// @param mutableTrait STRING: trait to find the path of keys within the objectToSearch
 // @param objectToSearch OBJECT:
   // expected keys ANY: this object can contain any keys, but is expected to contain the key specified in mutableTrait
 // @param currentPath STRING: either the string 'props' or 'state' [ALTERNATE ARRAY that contains either 'props' or 'state' at index 0]
@@ -22,7 +22,7 @@ var deepSearch = function (mutableTrait, objectToSearch, currentPath) {
     var key, newPath, possibleResultPath;
 
     for (key in objectToSearch) {
-      if(objectToSearch.hasOwnProperty(key)) {
+      if (objectToSearch.hasOwnProperty(key)) {
         // add the new key onto currentPath
         newPath = currentPath.concat(key);
         // recurse over the item at objectToSearch[key] with newPath as the currentPath input
@@ -83,6 +83,8 @@ module.exports = {
     // get mutableTraits
     var mutableTraits = this.constructor.__tuxMutableTraits__;
 
+    invariant(mutableTraits, 'The __tuxMutableTraits__ property is not defined on the component.');
+
     // if mutableTraits is present
     if (mutableTraits) {
       var mutableTraitsLength = mutableTraits.length;
@@ -108,7 +110,7 @@ module.exports = {
           nextPathValue = nextPathValue[traitValue];
         }
 
-        // if the currentPathValues doesn't equal nextPathValue the component should re-render.
+        // if the currentPathValue doesn't equal nextPathValue the component should re-render.
         if (currentPathValue !== nextPathValue) {
           return true;
         }
