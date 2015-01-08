@@ -10,7 +10,6 @@ module.exports = {
        easeInBack: 'cubic-bezier(0.600, -0.280, 0.735, 0.045)',
       easeOutQuad: 'cubic-bezier(0.250, 0.460, 0.450, 0.940)',
      easeOutCubic: 'cubic-bezier(0.215, 0.610, 0.355, 1.000)',
-     easeOutQuart: 'cubic-bezier(0.165, 0.840, 0.440, 1.000)',
      easeOutQuart: 'cubic-bezier(0.230, 1.000, 0.320, 1.000)',
       easeOutSine: 'cubic-bezier(0.390, 0.575, 0.565, 1.000)',
       easeOutExpo: 'cubic-bezier(0.190, 1.000, 0.220, 1.000)',
