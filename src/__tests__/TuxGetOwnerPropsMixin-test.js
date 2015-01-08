@@ -72,21 +72,6 @@ describe('getOwnerPropsMixin', function () {
     expect(leaf21Ownee.nearestOwnerProps).toEqual(root1Owner.__tuxOwnerProps__);
   });
 
-  it('should bind the context on all top level methods in the object returned by registerOwnerProps', function () {
-    //define getThisMockProp to return mockProp under root1Owner.  Context of getThisMockProp will need to be root1Owner in order for this test to pass
-    root1Owner.mockProp = {};
-    root1Owner.mockOwnerProps = {
-      getThisMockProp: function () {
-        return this.mockProp;
-      }
-    };
-    //mount root1Owner and branch1Owner
-    getOwnerPropsMixin.componentWillMount.call(root1Owner);
-    getOwnerPropsMixin.componentWillMount.call(branch1Owner);
-    //expect getThisMockProp under branch1Owner.nearestOwnerProps to return mockProp
-    expect(branch1Owner.nearestOwnerProps.getThisMockProp()).toEqual(root1Owner.mockProp);
-  });
-
   it('should be able to get the nearestOwnerProps even if an intermediary component does not have a nearestOwnerProps or __tuxOwnerProps__ key', function () {
     //mount the root1Owner and leaf21Ownee
     getOwnerPropsMixin.componentWillMount.call(root1Owner);

@@ -58,21 +58,6 @@ describe('TuxStoreMixinGenerator', function () {
         expect(mockStore1.addChangeListener.mock.calls.length).toEqual(1);
       });
 
-      it('should invoke the listener with the context of the componentDidMount lifecycle event', function () {
-        //create a custom mock function that will set its context when invoked
-        var mockContext = {};
-        var listenerContext;
-        mockConnectComposerToStoreReturn1.listener = function () {
-          listenerContext = this;
-        };
-        mockMixin = TuxStoreMixinGenerator(mockConnectComposerToStore1);
-        mockMixin.componentDidMount.call(mockContext);
-        //invoke the callback that was passed in to addCHangeListener
-        mockStore1.addChangeListener.mock.calls[0][0]();
-        //expect the context of the listener to be the same as the context of componentDidMount
-        expect(listenerContext).toEqual(mockContext);
-      });
-
       it('should remove a change listener for provided event on componentWillUnmount', function () {
         mockMixin.componentDidMount();
         mockMixin.componentWillUnmount();
