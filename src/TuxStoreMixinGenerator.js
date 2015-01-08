@@ -1,7 +1,7 @@
 'use strict';
 
 //TuxStoreMixinGenerator FUNCTION: creates an object with the componentDidMount and componentWillUnmount methods that will add and remove the specified event listeners from the provided store
-//@param props FUNCTION: returns an OBJECT defining the TuxStore for which callbacks will be registered. "this" will be bound to the component in this function. [ALTERNATE ARRAY: array of functions with the component as "this" that return objects with same keys as listed below]
+//@param props FUNCTION: returns an OBJECT defining the TuxStore for which callbacks will be registered. "this" will be bound to the component in this function. [ALTERNATE ARRAY: array of functions with the component bound as "this" that return objects with same keys as listed below]
   //expected keys:
   // store OBJECT: store object that the event and listener should be attached to
   // listener FUNCTION: callback function to be invoked upon associated event [ALTERNATE ARRAY: array of callback functions]
@@ -17,7 +17,6 @@ var TuxStoreMixinGenerator = function (props) {
         var prop = props[i];
         //invoke the passed in function with the component's context and store the returned object back into the array and variable
         prop = props[i] = prop.call(this);
-        prop.listener = bindContextToCallback(this, prop.listener);
         // map addChangeListeners, due to the second input argument set to true, to store, listeners, and events passed in
         mapListenersAndEventsToStore(prop, true);
       }
@@ -33,7 +32,6 @@ var TuxStoreMixinGenerator = function (props) {
   } else if (typeof props === 'function') {
     storeConnections.componentDidMount = function () {
       props = props.call(this);
-      props.listener = bindContextToCallback(this, props.listener);
       mapListenersAndEventsToStore(props, true);
     };
 
@@ -43,21 +41,6 @@ var TuxStoreMixinGenerator = function (props) {
   }
 
   return storeConnections;
-};
-
-//bindContextToCallback FUNCTION: binds the passed in context to the passed in callback function or array of callbacks
-//@param context OBJECT: context that will be bound to the passed in callback(s)
-//@param callback FUNCTION: function that context will be bound to [ALTERNATE ARRAY of callbacks that context will be bound to, if an array is passed in than the callbacks will be bound in place]
-var bindContextToCallback = function (context, callback) {
-  if (Array.isArray(callback)) {
-    var callbackLength = callback.length;
-    for (var i = 0; i < callbackLength; i++) {
-      callback[i] = callback[i].bind(context);
-    }
-  } else {
-    callback = callback.bind(context);
-  }
-  return callback;
 };
 
 //mapListenersAndEventsToStore FUNCTION maps adding or removing change listeners from a store

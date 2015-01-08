@@ -13,6 +13,7 @@ var assign = require('object-assign');
       // store OBJECT: store object that the event and listener should be attached to
       // listener FUNCTION: callback function to be invoked upon associated event [ALTERNATE ARRAY: array of callback functions]
       // event STRING: event type to trigger listener callback function [ALTERNATE ARRAY: array of event type strings]
+    //registerOwnerProps FUNCTION: returns an OBJECT defining the properties the owner will expose to its direct Ownees. The function will be invoked with the context of the owner component and all top level methods in the object will be bound to the component context
 var connectOwnerToStore, mixinsToAdd, mixins;
 var createOwnerClass = function (ownerClassProps) {
   //add mixins that do not need to be generated via passed in props

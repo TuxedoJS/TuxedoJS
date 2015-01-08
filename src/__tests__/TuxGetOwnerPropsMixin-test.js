@@ -21,12 +21,18 @@ describe('getOwnerPropsMixin', function () {
     //reset Owners and Ownees
     root1Owner = {
       __tuxIsOwnerComponent__: true,
-      ownerProps: {}
+      mockOwnerProps: {},
+      registerOwnerProps: function () {
+        return this.mockOwnerProps;
+      }
     };
     branch1Owner = {
       _owner: root1Owner,
       __tuxIsOwnerComponent__: true,
-      ownerProps: {}
+      mockOwnerProps: {},
+      registerOwnerProps: function () {
+        return this.mockOwnerProps;
+      }
     };
     branch2Ownee = {
       _owner: root1Owner
@@ -37,7 +43,10 @@ describe('getOwnerPropsMixin', function () {
     leaf12Owner = {
       _owner: branch1Owner,
       __tuxIsOwnerComponent__: true,
-      ownerProps: {}
+      mockOwnerProps: {},
+      registerOwnerProps: function () {
+        return this.mockOwnerProps;
+      }
     };
     leaf21Ownee = {
       _owner: branch2Ownee
@@ -54,12 +63,20 @@ describe('getOwnerPropsMixin', function () {
     getOwnerPropsMixin.componentWillMount.call(leaf21Ownee);
     //check for props
     //branches should each inherit from the root owner
-    expect(branch1Owner.nearestOwnerProps).toEqual(root1Owner.ownerProps);
-    expect(branch2Ownee.nearestOwnerProps).toEqual(root1Owner.ownerProps);
+    expect(branch1Owner.nearestOwnerProps).toEqual(root1Owner.__tuxOwnerProps__);
+    expect(branch2Ownee.nearestOwnerProps).toEqual(root1Owner.__tuxOwnerProps__);
     //leaves under branch1 owner should inherit from branch1 owner
-    expect(leaf11Ownee.nearestOwnerProps).toEqual(branch1Owner.ownerProps);
-    expect(leaf12Owner.nearestOwnerProps).toEqual(branch1Owner.ownerProps);
+    expect(leaf11Ownee.nearestOwnerProps).toEqual(branch1Owner.__tuxOwnerProps__);
+    expect(leaf12Owner.nearestOwnerProps).toEqual(branch1Owner.__tuxOwnerProps__);
     //leaf under branch2 ownee should inherit from root owner
-    expect(leaf21Ownee.nearestOwnerProps).toEqual(root1Owner.ownerProps);
+    expect(leaf21Ownee.nearestOwnerProps).toEqual(root1Owner.__tuxOwnerProps__);
+  });
+
+  it('should be able to get the nearestOwnerProps even if an intermediary component does not have a nearestOwnerProps or __tuxOwnerProps__ key', function () {
+    //mount the root1Owner and leaf21Ownee
+    getOwnerPropsMixin.componentWillMount.call(root1Owner);
+    getOwnerPropsMixin.componentWillMount.call(leaf21Ownee);
+    //expect the leaft21Ownee to have the root1Owner __tuxOwnerProps__ even though branch2Ownee has not been mounted
+    expect(leaf21Ownee.nearestOwnerProps).toEqual(root1Owner.__tuxOwnerProps__);
   });
 });
