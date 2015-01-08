@@ -62,6 +62,7 @@
       "jsx"
     ],
     "unmockedModulePathPatterns": [
+      "src/TuxBindContextToCallback",
       "src/TuxInvariant",
       "node_modules/react/",
       "node_modules/object-assign/"

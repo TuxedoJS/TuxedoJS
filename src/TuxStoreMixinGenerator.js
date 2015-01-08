@@ -1,5 +1,7 @@
 'use strict';
 
+var bindContextToCallback = require('./TuxBindContextToCallback');
+
 //TuxStoreMixinGenerator FUNCTION: creates an object with the componentDidMount and componentWillUnmount methods that will add and remove the specified event listeners from the provided store
 //@param props FUNCTION: returns an OBJECT defining the TuxStore for which callbacks will be registered. "this" will be bound to the component in this function. [ALTERNATE ARRAY: array of functions with the component as "this" that return objects with same keys as listed below]
   //expected keys:
@@ -43,21 +45,6 @@ var TuxStoreMixinGenerator = function (props) {
   }
 
   return storeConnections;
-};
-
-//bindContextToCallback FUNCTION: binds the passed in context to the passed in callback function or array of callbacks
-//@param context OBJECT: context that will be bound to the passed in callback(s)
-//@param callback FUNCTION: function that context will be bound to [ALTERNATE ARRAY of callbacks that context will be bound to, if an array is passed in than the callbacks will be bound in place]
-var bindContextToCallback = function (context, callback) {
-  if (Array.isArray(callback)) {
-    var callbackLength = callback.length;
-    for (var i = 0; i < callbackLength; i++) {
-      callback[i] = callback[i].bind(context);
-    }
-  } else {
-    callback = callback.bind(context);
-  }
-  return callback;
 };
 
 //mapListenersAndEventsToStore FUNCTION maps adding or removing change listeners from a store
