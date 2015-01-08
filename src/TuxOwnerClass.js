@@ -8,7 +8,7 @@ var assign = require('object-assign');
   //required keys:
   // render FUNCTION: since this is an implementation of React.createClass a render method is required
   //additional keys
-    //connectOwnerToStore OBJECT: TuxStore for which actions will be registered [ALTERNATE ARRAY: array of objects with same keys as listed below]
+    //connectOwnerToStore FUNCTION: returns an OBJECT defining the TuxStore for which callbacks will be registered. "this" will be bound to the component in this function. [ALTERNATE ARRAY: array of functions with the component as "this" that return objects with same keys as listed below]
       //expected keys:
       // store OBJECT: store object that the event and listener should be attached to
       // listener FUNCTION: callback function to be invoked upon associated event [ALTERNATE ARRAY: array of callback functions]
