@@ -123,12 +123,38 @@ var ActionCategory = function (props) {
 
     //bind actionType and assign actionType to action at key type
     //this is done to allow for semantically invoking actions directly
-    this[action] = dispatchAction.bind(this, actionType, source);
-    this[action].type = actionType;
+    var thisAction = this[action] = dispatchAction.bind(this, actionType, source);
+    //store actionType on our function for reference in dispatching
+    thisAction.type = actionType;
   }
 };
 
-//ActionCategory.register FUNCTION
+//ActionCategory.before FUNCTION: replaces the current method at the passed in actionVerb with the callbackToInvokeBeforeDispatch and binds the previous actionVerb method to the first input of the callbackToInvokeBeforeDispatch
+//@param actionVerb STRING: action verb to replace with callbackToInvokeBeforeDispatch, callbackToInvokeBeforeDispatch will be invoked before dispatching or before the previous 'before' callback on this action verb [ALTERNATE ARRAY: array of string action verbs to add callback onto, callback will be invoked before dispatching or before the previous 'before' callback on each action verb in the array]
+//@param callbackToInvokeBeforeDispatch FUNCTION: callback to invoke before dispatching the action. Callback will receive two inputs:
+  //1st input FUNCTION: the next callback to invoke in the callback chain. Pass an object into the function to invoke it with an actionBody
+  //2nd input OBJECT: the actionBody. This will either be from the first invocation of the action or from the previous callback in the chain
+ActionCategory.prototype.before = function (actionVerb, callbackToInvokeBeforeDispatch) {
+  //if the actionverb is an array than invoke the before method with each element in the array and the callbackToInvokeBeforeDispatch
+  if (Array.isArray(actionVerb)) {
+    var actionVerbLength = actionVerb.length;
+    for (var i = 0; i < actionVerbLength; i++) {
+      this.before(actionVerb[i], callbackToInvokeBeforeDispatch);
+    }
+  } else {
+    //if the actionVerb does not correspond to any action in this category throw an error
+    var thisAction = this[actionVerb];
+    invariant(thisAction, 'could not find action: "%s" within category: "%s" when attempting to register the before callback', actionVerb, this.__category__);
+
+    //bind the current action method to the first input of the callbackToInvokeBeforeDispatch and store that as the new action method
+    this[actionVerb] = callbackToInvokeBeforeDispatch.bind(this, thisAction);
+
+    //reassign the type property which is needed for registering listeners
+    this[actionVerb].type = thisAction.type;
+  }
+};
+
+//ActionCategory.register FUNCTION: registers store with Actions and maps action verbs within this action category to callbacks
 //@param storeToRegister OBJECT: TuxStore for which actions will be registered, needed for waitFor syntax [ALTERNATE FUNCTION: function will be directly registered to dispatcher]
 //@param actionsToRegister OBJECT keys are action verbs, values are callbacks to be invoked when action is dispatched
 ActionCategory.prototype.register = function (storeToRegister, actionsToRegister) {
