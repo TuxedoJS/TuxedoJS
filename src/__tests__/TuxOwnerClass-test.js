@@ -26,12 +26,12 @@ describe('TuxOwnerClass', function () {
   describe('createOwnerClass', function () {
     it('should invoke owneeClass with the passed in props', function () {
       var someMockProp = owneeClass.mock.calls[0][0].someMockProp;
-      expect(someMockProp).toEqual(mockOwnerClassProps.someMockProp);
+      expect(someMockProp).toBe(mockOwnerClassProps.someMockProp);
     });
 
     it('should invoke owneeClass with a copy of the passed in object but not the object itself', function () {
       var ownerClassProps = owneeClass.mock.calls[0][0];
-      expect(ownerClassProps).not.toEqual(mockOwnerClassProps);
+      expect(ownerClassProps).not.toBe(mockOwnerClassProps);
     });
 
     it('should attach the __tuxIsOwnerComponent__ prop', function () {
@@ -46,9 +46,9 @@ describe('TuxOwnerClass', function () {
       mockOwnerClassProps.connectOwnerToStore = mockConnectOwnerToStore;
       tuxOwnerClass = createOwnerClass(mockOwnerClassProps);
       //expect the mock for store mixin generator to have been called and expect the result to have been mixed in to the return React class
-      expect(mockStoreMixinGenerator.mock.calls[0][0]).toEqual(mockConnectOwnerToStore);
+      expect(mockStoreMixinGenerator.mock.calls[0][0]).toBe(mockConnectOwnerToStore);
       var mixins = owneeClass.mock.calls[1][0].mixins;
-      expect(mixins[0]).toEqual(mockStoreMixin);
+      expect(mixins[0]).toBe(mockStoreMixin);
     });
 
     it('should not invoke storeMixinGenerator if the key connectOwnerToStore is not passed in', function () {
@@ -63,9 +63,9 @@ describe('TuxOwnerClass', function () {
       tuxOwnerClass = createOwnerClass(mockOwnerClassProps);
       var mixins = owneeClass.mock.calls[1][0].mixins;
       //it should not be the original mixin array but should have its properties
-      expect(mixins).not.toEqual(mockMixins);
-      expect(mixins[mixins.length - 2]).toEqual(mockMixins[0]);
-      expect(mixins[mixins.length - 1]).toEqual(mockMixins[1]);
+      expect(mixins).not.toBe(mockMixins);
+      expect(mixins[mixins.length - 2]).toBe(mockMixins[0]);
+      expect(mixins[mixins.length - 1]).toBe(mockMixins[1]);
     });
   });
 });

@@ -62,7 +62,7 @@ describe('TuxMutableRenderMixin', function () {
       // Call componentWillMount a second time using the mockComponent as the context.
       // Expect the value of __tuxMutableTraits__ to be equal to the value from the first invocation.
       tuxMutableRenderMixin.componentWillMount.call(mockComponent);
-      expect(mockComponent.constructor.__tuxMutableTraits__).toEqual(tuxMutableTraits);
+      expect(mockComponent.constructor.__tuxMutableTraits__).toBe(tuxMutableTraits);
     });
   });
 
@@ -87,7 +87,7 @@ describe('TuxMutableRenderMixin', function () {
     it('should throw and error when __tuxMutableTraits__ prop is not defined on the component', function () {
       tuxMutableRenderMixin.constructor.__tuxMutableTraits__ = undefined;
       expect(function() {
-        tuxMutableRenderMixin.shouldComponentUpdate(nextProps, nextState)
+        tuxMutableRenderMixin.shouldComponentUpdate(nextProps, nextState);
       }).toThrow(new Error('Invariant Violation: The __tuxMutableTraits__ property is not defined on the component.'));
     });
 
