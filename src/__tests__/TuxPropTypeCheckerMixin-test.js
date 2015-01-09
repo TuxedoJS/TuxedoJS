@@ -23,9 +23,9 @@ describe('propTypeCheckerMixin', function () {
     propTypeCheckerMixin.componentWillMount.call(mockComponent);
     //check inputs to _checkPropTypes
     var checkPropTypesCall = mockComponent._checkPropTypes.mock.calls[0];
-    expect(checkPropTypesCall[0]).toEqual(mockComponent.nearestOwnerPropTypes);
-    expect(checkPropTypesCall[1]).toEqual(mockComponent.nearestOwnerProps);
-    expect(checkPropTypesCall[2]).toEqual('nearestOwnerProps');
+    expect(checkPropTypesCall[0]).toBe(mockComponent.nearestOwnerPropTypes);
+    expect(checkPropTypesCall[1]).toBe(mockComponent.nearestOwnerProps);
+    expect(checkPropTypesCall[2]).toBe('nearestOwnerProps');
   });
 
   it('should submit component.anyPropTypes and nearestOwnerProps extended with props to _checkPropTypes on componentWillMount if anyPropTypes is defined on the component', function () {
@@ -44,10 +44,10 @@ describe('propTypeCheckerMixin', function () {
     propTypeCheckerMixin.componentWillMount.call(mockComponent);
     //check inputs to _checkPropTypes
     var checkPropTypesCall = mockComponent._checkPropTypes.mock.calls[0];
-    expect(checkPropTypesCall[0]).toEqual(mockComponent.anyPropTypes);
-    expect(checkPropTypesCall[1].prop1).toEqual(mockComponent.nearestOwnerProps.prop1);
+    expect(checkPropTypesCall[0]).toBe(mockComponent.anyPropTypes);
+    expect(checkPropTypesCall[1].prop1).toBe(mockComponent.nearestOwnerProps.prop1);
     //props should overwrite nearestOwnerProps
-    expect(checkPropTypesCall[1].prop2).toEqual(mockComponent.props.prop2);
-    expect(checkPropTypesCall[2]).toEqual('props or nearestOwnerProps');
+    expect(checkPropTypesCall[1].prop2).toBe(mockComponent.props.prop2);
+    expect(checkPropTypesCall[2]).toBe('props or nearestOwnerProps');
   });
 });

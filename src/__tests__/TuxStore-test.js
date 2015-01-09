@@ -29,7 +29,7 @@ describe('TuxStore', function () {
         };
 
         newStore = TuxStore(methods);
-        expect(newStore.destroy).toEqual(methods.destroy);
+        expect(newStore.destroy).toBe(methods.destroy);
       });
 
       it('should overwrite original methods that have the same name with input methods', function () {
@@ -43,8 +43,8 @@ describe('TuxStore', function () {
         };
 
         newStore = TuxStore(methods);
-        expect(newStore.emitChange).not.toEqual(emitChange);
-        expect(newStore.emitChange).toEqual(methods.emitChange);
+        expect(newStore.emitChange).not.toBe(emitChange);
+        expect(newStore.emitChange).toBe(methods.emitChange);
       });
     });
 

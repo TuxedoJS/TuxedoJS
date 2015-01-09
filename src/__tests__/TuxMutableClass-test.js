@@ -25,24 +25,24 @@ describe('TuxMutableClass', function () {
   describe('createMutableClass', function () {
     it('should invoke owneeClass with the passed in props', function () {
       var someMockProp = owneeClass.mock.calls[0][0].someMockProp;
-      expect(someMockProp).toEqual(mockMutableClassProps.someMockProp);
+      expect(someMockProp).toBe(mockMutableClassProps.someMockProp);
     });
 
     it('should invoke owneeClass with a copy of the passed in object but not the object itself', function () {
       var mutableClassProps = owneeClass.mock.calls[0][0];
-      expect(mutableClassProps).not.toEqual(mockMutableClassProps);
+      expect(mutableClassProps).not.toBe(mockMutableClassProps);
     });
 
     it('should add PureRenderMixin if mutableTraits is not defined', function () {
       var pureRenderMixin = owneeClass.mock.calls[0][0].mixins[0];
-      expect(pureRenderMixin).toEqual(mockPureRenderMixin);
+      expect(pureRenderMixin).toBe(mockPureRenderMixin);
     });
 
     it('should add MutableRenderMixin if mutableTraits is defined', function () {
       mockMutableClassProps.mutableTraits = {};
       tuxMutableClass = createMutableClass(mockMutableClassProps);
       var mutableRenderMixin = owneeClass.mock.calls[1][0].mixins[0];
-      expect(mutableRenderMixin).toEqual(mockMutableRenderMixin);
+      expect(mutableRenderMixin).toBe(mockMutableRenderMixin);
     });
 
     it('should add any passed in mixins after the mixins it provides', function () {
@@ -51,9 +51,9 @@ describe('TuxMutableClass', function () {
       tuxMutableClass = createMutableClass(mockMutableClassProps);
       var mixins = owneeClass.mock.calls[1][0].mixins;
       // It should not be the original mixin array but should have its properties
-      expect(mixins).not.toEqual(mockMixins);
-      expect(mixins[mixins.length - 2]).toEqual(mockMixins[0]);
-      expect(mixins[mixins.length - 1]).toEqual(mockMixins[1]);
+      expect(mixins).not.toBe(mockMixins);
+      expect(mixins[mixins.length - 2]).toBe(mockMixins[0]);
+      expect(mixins[mixins.length - 1]).toBe(mockMixins[1]);
     });
   });
 });
