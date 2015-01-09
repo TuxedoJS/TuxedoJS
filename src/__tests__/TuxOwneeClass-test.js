@@ -1,18 +1,19 @@
 'use strict';
 
-var moduleToTest = '../TuxOwneeClass.js';
+var moduleToTest = '../TuxOwneeClass';
 
 jest.dontMock(moduleToTest);
 jest.mock('react');
 
 describe('TuxOwneeClass', function () {
-  var React, createOwneeClass, tuxOwneeClass, mockOwneeClassProps, mockMixins, mockStoreMixin, mockGetOwnerPropsMixin;
+  var React, createOwneeClass, tuxOwneeClass, mockOwneeClassProps, mockMixins, mockStoreMixin, mockGetOwnerPropsMixin, mockPropTypeCheckerMixin;
 
   beforeEach(function () {
     //reset TuxOwneeClass and mocks before each test
     React = require('react');
     createOwneeClass = require(moduleToTest);
-    mockGetOwnerPropsMixin = require('../TuxGetOwnerPropsMixin.js');
+    mockGetOwnerPropsMixin = require('../TuxGetOwnerPropsMixin');
+    mockPropTypeCheckerMixin = require('../TuxPropTypeCheckerMixin');
     mockStoreMixin = {};
     mockMixins = [{}, {}];
     mockOwneeClassProps = {
@@ -34,9 +35,23 @@ describe('TuxOwneeClass', function () {
       expect(owneeClassProps).not.toEqual(mockOwneeClassProps);
     });
 
-    it('should add the getOwneePropsMixin', function () {
-      var getOwneePropsMixin = React.createClass.mock.calls[0][0].mixins[0];
-      expect(getOwneePropsMixin).toEqual(mockGetOwnerPropsMixin);
+    it('should add the getOwnerPropsMixin', function () {
+      var getOwnerPropsMixin = React.createClass.mock.calls[0][0].mixins[0];
+      expect(getOwnerPropsMixin).toEqual(mockGetOwnerPropsMixin);
+    });
+
+    it('should add the propTypeCheckerMixin if nearestOwnerPropTypes key is defined', function () {
+      mockOwneeClassProps.nearestOwnerPropTypes = {};
+      createOwneeClass(mockOwneeClassProps);
+      var propTypeCheckerMixin = React.createClass.mock.calls[1][0].mixins[1];
+      expect(propTypeCheckerMixin).toEqual(mockPropTypeCheckerMixin);
+    });
+
+    it('should add the propTypeCheckerMixin if anyPropTypes key is defined', function () {
+      mockOwneeClassProps.anyPropTypes = {};
+      createOwneeClass(mockOwneeClassProps);
+      var propTypeCheckerMixin = React.createClass.mock.calls[1][0].mixins[1];
+      expect(propTypeCheckerMixin).toEqual(mockPropTypeCheckerMixin);
     });
 
     it('should add any passed in mixins after the mixins it provides', function () {

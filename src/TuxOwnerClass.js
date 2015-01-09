@@ -1,5 +1,6 @@
-var React = require('react');
-var getOwnerPropsMixin = require('./TuxGetOwnerPropsMixin');
+'use strict';
+
+var owneeClass = require('./TuxOwneeClass');
 var StoreMixinGenerator = require('./TuxStoreMixinGenerator');
 var assign = require('object-assign');
 
@@ -16,9 +17,7 @@ var assign = require('object-assign');
     //registerOwnerProps FUNCTION: returns an OBJECT defining the properties the owner will expose to its direct Ownees. The function will be invoked with the context of the owner component and all top level methods in the object will be bound to the component context
 var connectOwnerToStore, mixinsToAdd, mixins;
 var createOwnerClass = function (ownerClassProps) {
-  //add mixins that do not need to be generated via passed in props
-  //getOwnerPropsMixin: allows Ownee to access the ownerProps of the nearest Owner through the key nearestOwnerProps
-  mixinsToAdd = [getOwnerPropsMixin];
+  mixinsToAdd = [];
   //if connectOwnerToStore is defined than add a storeMixin with it
   connectOwnerToStore = ownerClassProps.connectOwnerToStore;
   if (connectOwnerToStore) {
@@ -29,8 +28,8 @@ var createOwnerClass = function (ownerClassProps) {
   if (mixins) {
     mixinsToAdd = mixinsToAdd.concat(mixins);
   }
-  //return React.createClass with augmented class properties
-  return React.createClass(assign({}, ownerClassProps, {
+  //pass in props to owneeClass to get base tux mixins
+  return owneeClass(assign({}, ownerClassProps, {
     //add marker prop to indicate this class will be an owner component
     __tuxIsOwnerComponent__: true,
     mixins: mixinsToAdd

@@ -1,19 +1,17 @@
 'use strict';
 
-var moduleToTest = '../TuxOwnerClass.js';
+var moduleToTest = '../TuxOwnerClass';
 
 jest.dontMock(moduleToTest);
-jest.mock('react');
 
 describe('TuxOwnerClass', function () {
-  var React, createOwnerClass, tuxOwnerClass, mockOwnerClassProps, mockMixins, mockConnectOwnerToStore, mockStoreMixinGenerator, mockStoreMixin, mockGetOwnerPropsMixin;
+  var owneeClass, createOwnerClass, tuxOwnerClass, mockOwnerClassProps, mockMixins, mockConnectOwnerToStore, mockStoreMixinGenerator, mockStoreMixin;
 
   beforeEach(function () {
     //reset TuxOwnerClass and mocks before each test
-    React = require('react');
+    owneeClass = require('../TuxOwneeClass');
     createOwnerClass = require(moduleToTest);
-    mockStoreMixinGenerator = require('../TuxStoreMixinGenerator.js');
-    mockGetOwnerPropsMixin = require('../TuxGetOwnerPropsMixin.js');
+    mockStoreMixinGenerator = require('../TuxStoreMixinGenerator');
     mockStoreMixin = {};
     mockMixins = [{}, {}];
     mockConnectOwnerToStore = {};
@@ -26,24 +24,19 @@ describe('TuxOwnerClass', function () {
   });
 
   describe('createOwnerClass', function () {
-    it('should invoke React.createClass with the passed in props', function () {
-      var someMockProp = React.createClass.mock.calls[0][0].someMockProp;
+    it('should invoke owneeClass with the passed in props', function () {
+      var someMockProp = owneeClass.mock.calls[0][0].someMockProp;
       expect(someMockProp).toEqual(mockOwnerClassProps.someMockProp);
     });
 
-    it('should invoke React.createClass with a copy of the passed in object but not the object itself', function () {
-      var ownerClassProps = React.createClass.mock.calls[0][0];
+    it('should invoke owneeClass with a copy of the passed in object but not the object itself', function () {
+      var ownerClassProps = owneeClass.mock.calls[0][0];
       expect(ownerClassProps).not.toEqual(mockOwnerClassProps);
     });
 
     it('should attach the __tuxIsOwnerComponent__ prop', function () {
-      var __tuxIsOwnerComponent__ = React.createClass.mock.calls[0][0].__tuxIsOwnerComponent__;
+      var __tuxIsOwnerComponent__ = owneeClass.mock.calls[0][0].__tuxIsOwnerComponent__;
       expect(__tuxIsOwnerComponent__).toBeTruthy();
-    });
-
-    it('should add the getOwnerPropsMixin', function () {
-      var getOwnerPropsMixin = React.createClass.mock.calls[0][0].mixins[0];
-      expect(getOwnerPropsMixin).toEqual(mockGetOwnerPropsMixin);
     });
 
     it('should invoke storeMixinGenerator with the connectOwnerToStore key', function () {
@@ -54,8 +47,8 @@ describe('TuxOwnerClass', function () {
       tuxOwnerClass = createOwnerClass(mockOwnerClassProps);
       //expect the mock for store mixin generator to have been called and expect the result to have been mixed in to the return React class
       expect(mockStoreMixinGenerator.mock.calls[0][0]).toEqual(mockConnectOwnerToStore);
-      var mixins = React.createClass.mock.calls[1][0].mixins;
-      expect(mixins[1]).toEqual(mockStoreMixin);
+      var mixins = owneeClass.mock.calls[1][0].mixins;
+      expect(mixins[0]).toEqual(mockStoreMixin);
     });
 
     it('should not invoke storeMixinGenerator if the key connectOwnerToStore is not passed in', function () {
@@ -68,7 +61,7 @@ describe('TuxOwnerClass', function () {
       //add mock passed in mixins
       mockOwnerClassProps.mixins = mockMixins;
       tuxOwnerClass = createOwnerClass(mockOwnerClassProps);
-      var mixins = React.createClass.mock.calls[1][0].mixins;
+      var mixins = owneeClass.mock.calls[1][0].mixins;
       //it should not be the original mixin array but should have its properties
       expect(mixins).not.toEqual(mockMixins);
       expect(mixins[mixins.length - 2]).toEqual(mockMixins[0]);

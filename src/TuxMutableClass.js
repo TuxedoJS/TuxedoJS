@@ -1,7 +1,6 @@
 'use strict';
 
-var React = require('react');
-var getOwnerPropsMixin = require('./TuxGetOwnerPropsMixin');
+var owneeClass = require('./TuxOwneeClass');
 var pureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
 var mutableRenderMixin = require('./TuxMutableRenderMixin');
 var assign = require('object-assign');
@@ -26,9 +25,7 @@ var assign = require('object-assign');
       // }
 var mixinsToAdd, mutableTraits, mixins;
 var TuxMutableClass = function (mutableClassProps) {
-  // add mixins that do not need to be generated via passed in props
-  // getOwnerPropsMixin: allow Mutable to access the ownerProps of the nearest Owner through the key nearestOwnerProps
-  mixinsToAdd = [getOwnerPropsMixin];
+  mixinsToAdd = [];
 
   // if mutableTraits is defined than add the mutableRenderMixin, else use the pureRenderMixin
   mutableTraits = mutableClassProps.mutableTraits;
@@ -44,8 +41,8 @@ var TuxMutableClass = function (mutableClassProps) {
     mixinsToAdd = mixinsToAdd.concat(mixins);
   }
 
-  // return React.createClass with augmented class properties
-  return React.createClass(assign({}, mutableClassProps, {
+  //pass in props to owneeClass to get base tux mixins
+  return owneeClass(assign({}, mutableClassProps, {
     mixins: mixinsToAdd
   }));
 };

@@ -1,0 +1,53 @@
+'use strict';
+
+var moduleToTest = '../TuxPropTypeCheckerMixin';
+
+jest.dontMock(moduleToTest);
+
+describe('propTypeCheckerMixin', function () {
+  var propTypeCheckerMixin, mockComponent;
+  beforeEach(function () {
+    propTypeCheckerMixin = require(moduleToTest);
+    mockComponent = {
+      //provide mock function to be invoked on componentWillMount
+      _checkPropTypes: jest.genMockFn()
+    };
+  });
+
+  it('should submit component.nearestOwnerPropTypes and nearestOwnerProps to _checkPropTypes on componentWillMount if nearestOwnerPropTypes is defined on the component', function () {
+    //define nearestOwnerPropTypes on the component
+    mockComponent.nearestOwnerPropTypes = {};
+    //define nearestOwnerProps on the component
+    mockComponent.nearestOwnerProps = {};
+    //invoke componentWillMount passing in the mockComponent as the context
+    propTypeCheckerMixin.componentWillMount.call(mockComponent);
+    //check inputs to _checkPropTypes
+    var checkPropTypesCall = mockComponent._checkPropTypes.mock.calls[0];
+    expect(checkPropTypesCall[0]).toEqual(mockComponent.nearestOwnerPropTypes);
+    expect(checkPropTypesCall[1]).toEqual(mockComponent.nearestOwnerProps);
+    expect(checkPropTypesCall[2]).toEqual('nearestOwnerProps');
+  });
+
+  it('should submit component.anyPropTypes and nearestOwnerProps extended with props to _checkPropTypes on componentWillMount if anyPropTypes is defined on the component', function () {
+    //define anyPropTypes on the component
+    mockComponent.anyPropTypes = {};
+    //define nearestOwnerProps and props that can be merged together
+    mockComponent.nearestOwnerProps = {
+      prop1: {},
+      prop2: {}
+    };
+    mockComponent.props = {
+      //define prop2 on props as well to test that props is overwriting nearestOwnerProps
+      prop2: {}
+    };
+    //invoke componentWillMount passing in the mockComponent as the context
+    propTypeCheckerMixin.componentWillMount.call(mockComponent);
+    //check inputs to _checkPropTypes
+    var checkPropTypesCall = mockComponent._checkPropTypes.mock.calls[0];
+    expect(checkPropTypesCall[0]).toEqual(mockComponent.anyPropTypes);
+    expect(checkPropTypesCall[1].prop1).toEqual(mockComponent.nearestOwnerProps.prop1);
+    //props should overwrite nearestOwnerProps
+    expect(checkPropTypesCall[1].prop2).toEqual(mockComponent.props.prop2);
+    expect(checkPropTypesCall[2]).toEqual('props or nearestOwnerProps');
+  });
+});
