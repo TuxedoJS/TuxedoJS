@@ -1,1 +1,1 @@
-module.exports = require('../node_modules/react-router/modules/components/DefaultRoute');
+module.exports = require('react-router/modules/components/DefaultRoute');

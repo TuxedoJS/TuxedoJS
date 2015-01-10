@@ -1,1 +1,1 @@
-module.exports = require('../node_modules/react-router/modules/utils/runRouter');
+module.exports = require('react-router/modules/utils/runRouter');

@@ -1,1 +1,1 @@
-module.exports = require('../node_modules/react-router/modules/behaviors/ScrollToTopBehavior');
+module.exports = require('react-router/modules/behaviors/ScrollToTopBehavior');

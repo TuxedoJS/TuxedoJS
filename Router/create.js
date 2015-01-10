@@ -1,1 +1,1 @@
-module.exports = require('../node_modules/react-router/modules/utils/createRouter');
+module.exports = require('react-router/modules/utils/createRouter');
