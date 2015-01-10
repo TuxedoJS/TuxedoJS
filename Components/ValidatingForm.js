@@ -1,1 +1,1 @@
-module.exports = require('../node_modules/react-validating-form/src/validating_form');
+module.exports = require('react-validating-form/src/validating_form');

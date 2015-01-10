@@ -28,7 +28,7 @@ Tux.Router = require('react-router');
 Tux.Components = {};
 
 //Form
-Tux.Components.Form = require('./node_modules/react-validating-form');
+Tux.Components.Form = require('react-validating-form');
 
 //Animations object provides react animation components and createAnimation method for creating custom animations
 //recommend accessing a specific animation component via require('tux/Animations/DESIRED ANIMATION COMPONENT')
