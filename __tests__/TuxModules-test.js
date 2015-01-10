@@ -2,8 +2,7 @@
 
 //since these tests are for module structure and are based on requiring modules, those modules should not be mocked out in order to make sure that the comparisons are valid
 jest.autoMockOff();
-//this test is commented out because the test takes an extremely long time to run and could interrupt normal workflow
-xdescribe('Individual Tux Modules', function () {
+describe('Individual Tux Modules', function () {
   describe('Actions', function () {
     it('should expose the module in tux/src/TuxActions.js', function () {
       expect(require('tux/Actions')).toBe(require('tux/src/TuxActions'));
@@ -37,6 +36,10 @@ xdescribe('Individual Tux Modules', function () {
 
     it('should expose the module in tux/src/TuxMutableClass under the method createMutableClass', function () {
       expect(require('tux/React').createMutableClass).toBe(require('tux/src/TuxMutableClass'));
+    });
+
+    it('should expose the specific React addon that the user requires in', function () {
+      expect(require('tux/React/LinkedStateMixin')).toBe(require('react/lib/LinkedStateMixin'));
     });
   });
 
