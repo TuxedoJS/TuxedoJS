@@ -98,7 +98,7 @@ describe('architect', function () {
     expect(leaf21Store.__tuxArchitecture__.length).toBe(1);
   });
 
-  it('should allow a store to output multiple outputs', function () {
+  it('should allow a store to have multiple outputs', function () {
     //create dependency chain wherein all leaves and branch2 need branch1
     architect(branch1Store).itOutputs(['branch1Output', 'branch1Output2'], 'branch1Output3').and('branch1Output4');
     architect(leaf11Store).itNeeds('branch1Output');

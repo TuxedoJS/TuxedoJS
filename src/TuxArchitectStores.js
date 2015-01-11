@@ -12,12 +12,13 @@ var ArchitectChain = function (storeToArchitect) {
 
 //prototype methods
 //itNeeds FUNCTION: registers the input(s) and/or store(s) that the store will need to waitFor, returns this architectChain instance to allow for method chaining, updates "and" method to allow chaining via conjuction
-//@param inputOrStore STRING: input string to be checked against the architecture object for the corresponding store [ALTERNATE OBJECT: if a store is passed in than lookup __registerId__ on the passed in store] [ALTERNATE ARRAY: can pass in an array of inputs and/or stores to be registered, method chaining will still function properly in this case]
-//can accept any number of input arguments, either strings or objects or arrays of strings and/or objects
+//@param inputOrStore STRING: input string to be checked against the architecture object for the corresponding store or set of stores [ALTERNATE OBJECT: if a store is passed in then lookup __registerId__ on the passed in store] [ALTERNATE ARRAY: can pass in an array of inputs and/or stores to be registered, method chaining will still function properly in this case]
+//can accept any number of input arguments: strings, objects, or arrays of strings and/or objects
 ArchitectChain.prototype.itNeeds = function (inputOrStore) {
   var i;
   var argumentsLength = arguments.length;
-  if (arguments.length > 1) {
+  //if more than one argument was submitted and then invoke itNeeds with each argument
+  if (argumentsLength > 1) {
     for (i = 0; i < argumentsLength; i++) {
       this.itNeeds(arguments[i]);
     }
@@ -29,11 +30,11 @@ ArchitectChain.prototype.itNeeds = function (inputOrStore) {
       var inputOrStoreLength = inputOrStore.length;
       //concat each inputOrStore's __registerId__ or set of __registerId__'s
       for (i = 0; i < inputOrStoreLength; i++) {
-        waitForIds = waitForIds.concat(this._getRegisterId(inputOrStore[i]));
+        waitForIds = waitForIds.concat(getRegisterId(inputOrStore[i]));
       }
     } else {
       //if inputOrStore is not an array then concat its corresponding __registerId__ or set of __registerId__'s
-      waitForIds = waitForIds.concat(this._getRegisterId(inputOrStore));
+      waitForIds = waitForIds.concat(getRegisterId(inputOrStore));
     }
     //if the storeToArchitect has already been architected at some point than add waitForIds array on to existing array
     var tuxArchitecture = this.storeToArchitect.__tuxArchitecture__;
@@ -52,13 +53,14 @@ ArchitectChain.prototype.itNeeds = function (inputOrStore) {
   return this;
 };
 
-//itOutputs FUNCTION: registers the output(s) that the store will be mapped to in the architecture OBJECT, returns architectChain instance to allow for method chaining, updates "and" method to allow chaining via conjuction
+//itOutputs FUNCTION: registers the output(s) that the store will be mapped to in the architecture OBJECT, returns this architectChain instance to allow for method chaining, updates "and" method to allow chaining via conjuction
 //@param output STRING: output STRING to which storeToArchitect will be mapped to on the architecture OBJECT [ALTERNATE ARRAY: can pass in an array of output STRINGs to which store will be mapped to on the architecture OBJECT]
-//can accept any number of input arguments, either strings or arrays of strings
+//can accept any number of input arguments: strings or arrays of strings
 ArchitectChain.prototype.itOutputs = function (output) {
   var i;
   var argumentsLength = arguments.length;
-  if (arguments.length > 1) {
+  //if more than one argument was submitted and then invoke itOutputs with each argument
+  if (argumentsLength > 1) {
     for (i = 0; i < argumentsLength; i++) {
       this.itOutputs(arguments[i]);
     }
@@ -67,10 +69,10 @@ ArchitectChain.prototype.itOutputs = function (output) {
       //if output is an array than map each string in array to architecture OBJECT
       var outputLength = output.length;
       for (i = 0; i < outputLength; i++) {
-        this._registerOutputToArchitecture(output[i]);
+        registerOutputToArchitecture(output[i], this.storeToArchitect);
       }
     } else {
-      this._registerOutputToArchitecture(output);
+      registerOutputToArchitecture(output, this.storeToArchitect);
     }
   }
   //update "and" method so user can chain additional outputs with "and"
@@ -79,10 +81,10 @@ ArchitectChain.prototype.itOutputs = function (output) {
   return this;
 };
 
-//_getRegisterId FUNCTION: internal function, for getting the store or set of stores' __registerId__ or set of __registerId__'s from either the passed in store or the store/set of stores mapped to the passed in input
+//getRegisterId FUNCTION: internal function, for getting the store or set of stores' __registerId__ or set of __registerId__'s from either the passed in store or the store/set of stores mapped to the passed in input
 //@param inputOrStore STRING: input string to be checked against the architecture OBJECT for the corresponding store [ALTERNATE OBJECT: if a store is passed in then lookup __registerId__ on the passed in store]
-ArchitectChain.prototype._getRegisterId = function (inputOrStore) {
-  var storeOrStoresToWaitFor, storeRegistrationIdorIds;
+var getRegisterId = function (inputOrStore) {
+  var storeOrStoresToWaitFor, storeRegistrationIdOrIds;
   //if inputOrStore is a string
   if (typeof inputOrStore === 'string') {
     //lookup corresponding store or stores in the architecture object
@@ -94,14 +96,15 @@ ArchitectChain.prototype._getRegisterId = function (inputOrStore) {
     storeOrStoresToWaitFor = inputOrStore;
   }
   //return  __registerId__ or set of __registerId__'s from storeOrStoresToWaitFor
-  storeRegistrationIdorIds = this._returnOneOrMultipleRegisterIds(storeOrStoresToWaitFor);
-  return storeRegistrationIdorIds;
+  storeRegistrationIdOrIds = returnOneOrMultipleRegisterIds(storeOrStoresToWaitFor);
+  return storeRegistrationIdOrIds;
 };
 
-//_returnOneOrMultipleRegisterIds FUNCTION: internal function, used by _getRegisterId to return one or a set registerId's from a store or set of stores
+//returnOneOrMultipleRegisterIds FUNCTION: internal function, used by getRegisterId to return one or a set registerId's from a store or set of stores
 //@param storeOrStoresToWaitFor ARRAY or STRING: input string or array of strings representing all stores being waited on
-ArchitectChain.prototype._returnOneOrMultipleRegisterIds = function (storeOrStoresToWaitFor) {
+var returnOneOrMultipleRegisterIds = function (storeOrStoresToWaitFor) {
   var storeRegistrationId;
+  //error to throw if a store does not have a __registerId__ property
   var noRegisteredIdError = 'store is waiting for a store that has not been registered to any actions.';
   //if storeOrStoresToWaitFor is an array holding multiple stores
   if (Array.isArray(storeOrStoresToWaitFor)) {
@@ -124,19 +127,18 @@ ArchitectChain.prototype._returnOneOrMultipleRegisterIds = function (storeOrStor
   }
 };
 
-
-//_registerOutputToArchitecture FUNCTION: internal function, registers an output STRING key to the architecture OBJECT with the value of storeToArchitect so that the storeToArchitect can later be looked up by passing the same output STRING to itNeeds
+//registerOutputToArchitecture FUNCTION: internal function, registers an output STRING key to the architecture OBJECT with the value of storeToArchitect so that the storeToArchitect can later be looked up by passing the same output STRING to itNeeds
 //@param output STRING: output STRING to which storeToArchitect will be mapped to on the architecture OBJECT
-ArchitectChain.prototype._registerOutputToArchitecture = function (output) {
-  var mappedStoreOrStores = architecture[output];
+var registerOutputToArchitecture = function (output, storeToArchitect) {
+  var mappedStores = architecture[output];
   //if this output is already registered to architecture OBJECT
-  if (mappedStoreOrStores) {
+  if (mappedStores) {
     var outputArray = [];
-    //add this store as another registered output to architecture OBJECT
-    architecture[output] = outputArray.concat(mappedStoreOrStores, this.storeToArchitect);
+    //add storeToArchitect as another registered output to architecture OBJECT
+    architecture[output] = outputArray.concat(mappedStores, storeToArchitect);
   } else {
     //if this output is not already registered to architecture OBJECT, register it
-    architecture[output] = this.storeToArchitect;
+    architecture[output] = storeToArchitect;
   }
 };
 
