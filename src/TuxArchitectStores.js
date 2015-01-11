@@ -13,30 +13,39 @@ var ArchitectChain = function (storeToArchitect) {
 //prototype methods
 //itNeeds FUNCTION: registers the input(s) and/or store(s) that the store will need to waitFor, returns this architectChain instance to allow for method chaining, updates "and" method to allow chaining via conjuction
 //@param inputOrStore STRING: input string to be checked against the architecture object for the corresponding store [ALTERNATE OBJECT: if a store is passed in than lookup __registerId__ on the passed in store] [ALTERNATE ARRAY: can pass in an array of inputs and/or stores to be registered, method chaining will still function properly in this case]
+//can accept any number of input arguments, either strings or objects or arrays of strings and/or objects
 ArchitectChain.prototype.itNeeds = function (inputOrStore) {
-  //array of ids to register to the store
-  var waitForIds = [];
-  //if inputOrStore is array
-  if (Array.isArray(inputOrStore)) {
-    var inputOrStoreLength = inputOrStore.length;
-    //concat each inputOrStore's __registerId__ or set of __registerId__'s
-    for (var i = 0; i < inputOrStoreLength; i++) {
-      waitForIds = waitForIds.concat(this._getRegisterId(inputOrStore[i]));
+  var i;
+  var argumentsLength = arguments.length;
+  if (arguments.length > 1) {
+    for (i = 0; i < argumentsLength; i++) {
+      this.itNeeds(arguments[i]);
     }
   } else {
-    //if inputOrStore is not an array then concat its corresponding __registerId__ or set of __registerId__'s
-    waitForIds = waitForIds.concat(this._getRegisterId(inputOrStore));
+    //array of ids to register to the store
+    var waitForIds = [];
+    //if inputOrStore is array
+    if (Array.isArray(inputOrStore)) {
+      var inputOrStoreLength = inputOrStore.length;
+      //concat each inputOrStore's __registerId__ or set of __registerId__'s
+      for (i = 0; i < inputOrStoreLength; i++) {
+        waitForIds = waitForIds.concat(this._getRegisterId(inputOrStore[i]));
+      }
+    } else {
+      //if inputOrStore is not an array then concat its corresponding __registerId__ or set of __registerId__'s
+      waitForIds = waitForIds.concat(this._getRegisterId(inputOrStore));
+    }
+    //if the storeToArchitect has already been architected at some point than add waitForIds array on to existing array
+    var tuxArchitecture = this.storeToArchitect.__tuxArchitecture__;
+    if (tuxArchitecture) {
+      tuxArchitecture = tuxArchitecture.concat(waitForIds);
+    } else {
+      //if it has not been architected than just use waitForIds array
+      tuxArchitecture = waitForIds;
+    }
+    //attach architecture array to storeToArchitect at the key of __tuxArchitecture__
+    this.storeToArchitect.__tuxArchitecture__ = tuxArchitecture;
   }
-  //if the storeToArchitect has already been architected at some point then add waitForIds array on to existing array
-  var tuxArchitecture = this.storeToArchitect.__tuxArchitecture__;
-  if (tuxArchitecture) {
-    tuxArchitecture = tuxArchitecture.concat(waitForIds);
-  } else {
-    //if it has not been architected than just use waitForIds array
-    tuxArchitecture = waitForIds;
-  }
-  //attach architecture array to storeToArchitect at the key of __tuxArchitecture__
-  this.storeToArchitect.__tuxArchitecture__ = tuxArchitecture;
   //update "and" method so user can chain additional needed inputs with "and"
   this.and = this.itNeeds;
   //return this architectChain instance to enable method chaining
@@ -45,15 +54,23 @@ ArchitectChain.prototype.itNeeds = function (inputOrStore) {
 
 //itOutputs FUNCTION: registers the output(s) that the store will be mapped to in the architecture OBJECT, returns architectChain instance to allow for method chaining, updates "and" method to allow chaining via conjuction
 //@param output STRING: output STRING to which storeToArchitect will be mapped to on the architecture OBJECT [ALTERNATE ARRAY: can pass in an array of output STRINGs to which store will be mapped to on the architecture OBJECT]
+//can accept any number of input arguments, either strings or arrays of strings
 ArchitectChain.prototype.itOutputs = function (output) {
-  //if output is a string than register it to architecture OBJECT
-  if (typeof output === 'string') {
-    this._registerOutputToArchitecture(output);
+  var i;
+  var argumentsLength = arguments.length;
+  if (arguments.length > 1) {
+    for (i = 0; i < argumentsLength; i++) {
+      this.itOutputs(arguments[i]);
+    }
   } else {
-    //if output is an array than map each string in array to architecture OBJECT
-    var outputLength = output.length;
-    for (var i = 0; i < outputLength; i++) {
-      this._registerOutputToArchitecture(output[i]);
+    if (Array.isArray(output)) {
+      //if output is an array than map each string in array to architecture OBJECT
+      var outputLength = output.length;
+      for (i = 0; i < outputLength; i++) {
+        this._registerOutputToArchitecture(output[i]);
+      }
+    } else {
+      this._registerOutputToArchitecture(output);
     }
   }
   //update "and" method so user can chain additional outputs with "and"
