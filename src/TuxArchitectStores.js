@@ -19,12 +19,12 @@ ArchitectChain.prototype.itNeeds = function (inputOrStore) {
   //if inputOrStore is array
   if (Array.isArray(inputOrStore)) {
     var inputOrStoreLength = inputOrStore.length;
-    //concat each inputOrStore's __registerId__ into array
+    //concat each inputOrStore's __registerId__ or set of __registerId__'s
     for (var i = 0; i < inputOrStoreLength; i++) {
       waitForIds = waitForIds.concat(this._getRegisterId(inputOrStore[i]));
     }
   } else {
-    //if inputOrStore is not an array then concat its corresponding register id into array
+    //if inputOrStore is not an array then concat its corresponding __registerId__ or set of __registerId__'s
     waitForIds = waitForIds.concat(this._getRegisterId(inputOrStore));
   }
   //if the storeToArchitect has already been architected at some point then add waitForIds array on to existing array
@@ -62,7 +62,7 @@ ArchitectChain.prototype.itOutputs = function (output) {
   return this;
 };
 
-//_getRegisterId FUNCTION: internal function,for getting the store __registerId__ from either the passed in store or the store mapped to the passed in input
+//_getRegisterId FUNCTION: internal function, for getting the store or set of stores' __registerId__ or set of __registerId__'s from either the passed in store or the store/set of stores mapped to the passed in input
 //@param inputOrStore STRING: input string to be checked against the architecture OBJECT for the corresponding store [ALTERNATE OBJECT: if a store is passed in then lookup __registerId__ on the passed in store]
 ArchitectChain.prototype._getRegisterId = function (inputOrStore) {
   var storeOrStoresToWaitFor, storeRegistrationIdorIds;
@@ -76,25 +76,33 @@ ArchitectChain.prototype._getRegisterId = function (inputOrStore) {
     //if inputOrStore is a store use that
     storeOrStoresToWaitFor = inputOrStore;
   }
-  //return __register__id from storeOrStoresToWaitFor
-  storeRegistrationIdorIds = this._determineOneOrMultipleRegisterIds(storeOrStoresToWaitFor);
+  //return  __registerId__ or set of __registerId__'s from storeOrStoresToWaitFor
+  storeRegistrationIdorIds = this._returnOneOrMultipleRegisterIds(storeOrStoresToWaitFor);
   return storeRegistrationIdorIds;
 };
 
-ArchitectChain.prototype._determineOneOrMultipleRegisterIds = function(storeOrStoresToWaitFor) {
+//_returnOneOrMultipleRegisterIds FUNCTION: internal function, used by _getRegisterId to return one or a set registerId's from a store or set of stores
+//@param storeOrStoresToWaitFor ARRAY or STRING: input string or array of strings representing all stores being waited on
+ArchitectChain.prototype._returnOneOrMultipleRegisterIds = function (storeOrStoresToWaitFor) {
+  var storeRegistrationId;
+  var noRegisteredIdError = 'store is waiting for a store that has not been registered to any actions.';
   //if storeOrStoresToWaitFor is an array holding multiple stores
   if (Array.isArray(storeOrStoresToWaitFor)) {
     var storeRegistrationIds = [];
+    var storeOrStoresToWaitForLength = storeOrStoresToWaitFor.length;
     //grab the __registerId__ from each individual store and return them as an array
-    for (var i = 0; i < storeOrStoresToWaitFor.length; i++) {
-      storeRegistrationIds.push(storeOrStoresToWaitFor[i].__registerId__);
+    for (var i = 0; i < storeOrStoresToWaitForLength; i++) {
+      storeRegistrationId = storeOrStoresToWaitFor[i].__registerId__;
+      //if store does not have __registerId__ then it has not been registered to the dispatcher so throw an error
+      invariant(storeRegistrationId, noRegisteredIdError);
+      storeRegistrationIds.push(storeRegistrationId);
     }
     return storeRegistrationIds;
   } else {
     //return __registerId__ from storeOrStoresToWaitFor
-    var storeRegistrationId = storeOrStoresToWaitFor.__registerId__;
-    //if store does not have __registerId__ than it has not been registered to the dispatcher so throw an error
-    invariant(storeRegistrationId, 'store is waiting for a store that has not been registered to any actions.');
+    storeRegistrationId = storeOrStoresToWaitFor.__registerId__;
+    //if store does not have __registerId__ then it has not been registered to the dispatcher so throw an error
+    invariant(storeRegistrationId, noRegisteredIdError);
     return storeRegistrationId;
   }
 };
@@ -103,11 +111,12 @@ ArchitectChain.prototype._determineOneOrMultipleRegisterIds = function(storeOrSt
 //_registerOutputToArchitecture FUNCTION: internal function, registers an output STRING key to the architecture OBJECT with the value of storeToArchitect so that the storeToArchitect can later be looked up by passing the same output STRING to itNeeds
 //@param output STRING: output STRING to which storeToArchitect will be mapped to on the architecture OBJECT
 ArchitectChain.prototype._registerOutputToArchitecture = function (output) {
+  var mappedStoreOrStores = architecture[output];
   //if this output is already registered to architecture OBJECT
-  if (architecture[output]) {
+  if (mappedStoreOrStores) {
     var outputArray = [];
     //add this store as another registered output to architecture OBJECT
-    architecture[output] = outputArray.concat(architecture[output], this.storeToArchitect);
+    architecture[output] = outputArray.concat(mappedStoreOrStores, this.storeToArchitect);
   } else {
     //if this output is not already registered to architecture OBJECT, register it
     architecture[output] = this.storeToArchitect;

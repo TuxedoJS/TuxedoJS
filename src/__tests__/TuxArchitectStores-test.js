@@ -38,18 +38,18 @@ describe('architect', function () {
     architect(leaf21Store).itNeeds('branch2Output');
 
     //branch1 and branch2 should be architected to wait for only root1Store
-    expect(branch1Store.__tuxArchitecture__[0]).toEqual(root1Store.__registerId__);
-    expect(branch1Store.__tuxArchitecture__.length).toEqual(1);
-    expect(branch2Store.__tuxArchitecture__[0]).toEqual(root1Store.__registerId__);
-    expect(branch2Store.__tuxArchitecture__.length).toEqual(1);
+    expect(branch1Store.__tuxArchitecture__[0]).toBe(root1Store.__registerId__);
+    expect(branch1Store.__tuxArchitecture__.length).toBe(1);
+    expect(branch2Store.__tuxArchitecture__[0]).toBe(root1Store.__registerId__);
+    expect(branch2Store.__tuxArchitecture__.length).toBe(1);
     //leaf11 and leaf12 should be architected to wait for only branch1
-    expect(leaf11Store.__tuxArchitecture__[0]).toEqual(branch1Store.__registerId__);
-    expect(leaf11Store.__tuxArchitecture__.length).toEqual(1);
-    expect(leaf12Store.__tuxArchitecture__[0]).toEqual(branch1Store.__registerId__);
-    expect(leaf12Store.__tuxArchitecture__.length).toEqual(1);
+    expect(leaf11Store.__tuxArchitecture__[0]).toBe(branch1Store.__registerId__);
+    expect(leaf11Store.__tuxArchitecture__.length).toBe(1);
+    expect(leaf12Store.__tuxArchitecture__[0]).toBe(branch1Store.__registerId__);
+    expect(leaf12Store.__tuxArchitecture__.length).toBe(1);
     //leaf21 should be architected to wait for only branch2
-    expect(leaf21Store.__tuxArchitecture__[0]).toEqual(branch2Store.__registerId__);
-    expect(leaf21Store.__tuxArchitecture__.length).toEqual(1);
+    expect(leaf21Store.__tuxArchitecture__[0]).toBe(branch2Store.__registerId__);
+    expect(leaf21Store.__tuxArchitecture__.length).toBe(1);
   });
 
   it('should add the __tuxArchitecture__ prop to any store that needs another store directly', function () {
@@ -61,18 +61,18 @@ describe('architect', function () {
     architect(leaf21Store).itNeeds(branch2Store);
 
     //branch1 and branch2 should be architected to wait for only root1Store
-    expect(branch1Store.__tuxArchitecture__[0]).toEqual(root1Store.__registerId__);
-    expect(branch1Store.__tuxArchitecture__.length).toEqual(1);
-    expect(branch2Store.__tuxArchitecture__[0]).toEqual(root1Store.__registerId__);
-    expect(branch2Store.__tuxArchitecture__.length).toEqual(1);
+    expect(branch1Store.__tuxArchitecture__[0]).toBe(root1Store.__registerId__);
+    expect(branch1Store.__tuxArchitecture__.length).toBe(1);
+    expect(branch2Store.__tuxArchitecture__[0]).toBe(root1Store.__registerId__);
+    expect(branch2Store.__tuxArchitecture__.length).toBe(1);
     //leaf11 and leaf12 should be architected to wait for only branch1
-    expect(leaf11Store.__tuxArchitecture__[0]).toEqual(branch1Store.__registerId__);
-    expect(leaf11Store.__tuxArchitecture__.length).toEqual(1);
-    expect(leaf12Store.__tuxArchitecture__[0]).toEqual(branch1Store.__registerId__);
-    expect(leaf12Store.__tuxArchitecture__.length).toEqual(1);
+    expect(leaf11Store.__tuxArchitecture__[0]).toBe(branch1Store.__registerId__);
+    expect(leaf11Store.__tuxArchitecture__.length).toBe(1);
+    expect(leaf12Store.__tuxArchitecture__[0]).toBe(branch1Store.__registerId__);
+    expect(leaf12Store.__tuxArchitecture__.length).toBe(1);
     //leaf21 should be architected to wait for only branch2
-    expect(leaf21Store.__tuxArchitecture__[0]).toEqual(branch2Store.__registerId__);
-    expect(leaf21Store.__tuxArchitecture__.length).toEqual(1);
+    expect(leaf21Store.__tuxArchitecture__[0]).toBe(branch2Store.__registerId__);
+    expect(leaf21Store.__tuxArchitecture__.length).toBe(1);
   });
 
   it('should add the __tuxArchitecture__ props when a mix of stores and outputs is used', function () {
@@ -84,18 +84,18 @@ describe('architect', function () {
     architect(leaf21Store).itNeeds('branch2Output');
 
     //branch1 and branch2 should be architected to wait for only root1Store
-    expect(branch1Store.__tuxArchitecture__[0]).toEqual(root1Store.__registerId__);
-    expect(branch1Store.__tuxArchitecture__.length).toEqual(1);
-    expect(branch2Store.__tuxArchitecture__[0]).toEqual(root1Store.__registerId__);
-    expect(branch2Store.__tuxArchitecture__.length).toEqual(1);
+    expect(branch1Store.__tuxArchitecture__[0]).toBe(root1Store.__registerId__);
+    expect(branch1Store.__tuxArchitecture__.length).toBe(1);
+    expect(branch2Store.__tuxArchitecture__[0]).toBe(root1Store.__registerId__);
+    expect(branch2Store.__tuxArchitecture__.length).toBe(1);
     //leaf11 and leaf12 should be architected to wait for only branch1
-    expect(leaf11Store.__tuxArchitecture__[0]).toEqual(branch1Store.__registerId__);
-    expect(leaf11Store.__tuxArchitecture__.length).toEqual(1);
-    expect(leaf12Store.__tuxArchitecture__[0]).toEqual(branch1Store.__registerId__);
-    expect(leaf12Store.__tuxArchitecture__.length).toEqual(1);
+    expect(leaf11Store.__tuxArchitecture__[0]).toBe(branch1Store.__registerId__);
+    expect(leaf11Store.__tuxArchitecture__.length).toBe(1);
+    expect(leaf12Store.__tuxArchitecture__[0]).toBe(branch1Store.__registerId__);
+    expect(leaf12Store.__tuxArchitecture__.length).toBe(1);
     //leaf21 should be architected to wait for only branch2
-    expect(leaf21Store.__tuxArchitecture__[0]).toEqual(branch2Store.__registerId__);
-    expect(leaf21Store.__tuxArchitecture__.length).toEqual(1);
+    expect(leaf21Store.__tuxArchitecture__[0]).toBe(branch2Store.__registerId__);
+    expect(leaf21Store.__tuxArchitecture__.length).toBe(1);
   });
 
   it('should allow a store to output multiple outputs', function () {
@@ -106,12 +106,12 @@ describe('architect', function () {
     architect(leaf21Store).itNeeds('branch1Output3');
 
     //leaf11, leaf12, and leaf21 should be architected to wait for only branch1
-    expect(leaf11Store.__tuxArchitecture__[0]).toEqual(branch1Store.__registerId__);
-    expect(leaf11Store.__tuxArchitecture__.length).toEqual(1);
-    expect(leaf12Store.__tuxArchitecture__[0]).toEqual(branch1Store.__registerId__);
-    expect(leaf12Store.__tuxArchitecture__.length).toEqual(1);
-    expect(leaf21Store.__tuxArchitecture__[0]).toEqual(branch1Store.__registerId__);
-    expect(leaf21Store.__tuxArchitecture__.length).toEqual(1);
+    expect(leaf11Store.__tuxArchitecture__[0]).toBe(branch1Store.__registerId__);
+    expect(leaf11Store.__tuxArchitecture__.length).toBe(1);
+    expect(leaf12Store.__tuxArchitecture__[0]).toBe(branch1Store.__registerId__);
+    expect(leaf12Store.__tuxArchitecture__.length).toBe(1);
+    expect(leaf21Store.__tuxArchitecture__[0]).toBe(branch1Store.__registerId__);
+    expect(leaf21Store.__tuxArchitecture__.length).toBe(1);
   });
 
   it('should allow a store to need multiple stores and outputs', function () {
@@ -120,10 +120,10 @@ describe('architect', function () {
     architect(leaf21Store).itNeeds(['branch1Output', branch2Store]).and('root1Output');
 
     //leaf21 should be architected to wait for root1, branch1, and branch2
-    expect(leaf21Store.__tuxArchitecture__[0]).toEqual(branch1Store.__registerId__);
-    expect(leaf21Store.__tuxArchitecture__[1]).toEqual(branch2Store.__registerId__);
-    expect(leaf21Store.__tuxArchitecture__[2]).toEqual(root1Store.__registerId__);
-    expect(leaf21Store.__tuxArchitecture__.length).toEqual(3);
+    expect(leaf21Store.__tuxArchitecture__[0]).toBe(branch1Store.__registerId__);
+    expect(leaf21Store.__tuxArchitecture__[1]).toBe(branch2Store.__registerId__);
+    expect(leaf21Store.__tuxArchitecture__[2]).toBe(root1Store.__registerId__);
+    expect(leaf21Store.__tuxArchitecture__.length).toBe(3);
   });
 
   it('should throw an error if a store is waiting for an input that no store outputs', function () {
@@ -139,9 +139,17 @@ describe('architect', function () {
     }).toThrow(new Error('Invariant Violation: store is waiting for a store that has not been registered to any actions.'));
   });
 
-  it('should throw an error if a store attempts to output the same string another store is already outputing', function () {
-    expect(function () {
-      architect(branch1Store).itOutputs('root1Output');
-    }).toThrow(new Error('Invariant Violation: output: "root1Output" is already registered to a store.'));
+  it('should add multiple stores if multiple stores output what the store needs', function () {
+    //create dependency chain
+    architect(branch1Store).itOutputs('root2Output');
+    architect(branch2Store).itOutputs('root2Output');
+    architect(leaf21Store).itOutputs('root2Output');
+    architect(leaf11Store).itNeeds('root2Output');
+
+    //leaf11 store should be architected to wait for branch1, branch2, and leaf21
+    expect(leaf11Store.__tuxArchitecture__[0]).toBe(branch1Store.__registerId__);
+    expect(leaf11Store.__tuxArchitecture__[1]).toBe(branch2Store.__registerId__);
+    expect(leaf11Store.__tuxArchitecture__[2]).toBe(leaf21Store.__registerId__);
+    expect(leaf11Store.__tuxArchitecture__.length).toBe(3);
   });
 });
