@@ -40,6 +40,7 @@ describe('Individual Tux Modules', function () {
 
     it('should expose the specific React addon that the user requires in', function () {
       expect(require('tux/React/LinkedStateMixin')).toBe(require('react/lib/LinkedStateMixin'));
+      expect(require('tux/React/Perf')).toBe(require('react/lib/ReactDefaultPerf'));
     });
   });
 
