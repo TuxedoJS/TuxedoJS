@@ -95,6 +95,33 @@ describe('TuxStore', function () {
       });
     });
 
+    describe('register method', function () {
+      it('should invoke tux/Actions with the TuxStore and the result of the function at the register key.  The function should have a context of the TuxStore', function () {
+        //get the actions object
+        var Actions = require('tux/Actions');
+        TuxStoreConstructor = require('../TuxStore');
+        //create a mock object to pass into our Actions.register invocation
+        var mockObject = {};
+        //declare a context to test that our context is correct
+        var context;
+        //set context to this and return the mock object
+        var registerFunction = function () {
+          context = this;
+          return mockObject;
+        };
+
+        //create our TuxStore with the register key defined
+        TuxStore = TuxStoreConstructor({
+          register: registerFunction
+        });
+
+        //expect Actions.register to be invoked with TuxStore, mockObject
+        expect(Actions.register.mock.calls[0][0]).toBe(TuxStore);
+        expect(Actions.register.mock.calls[0][1]).toBe(mockObject);
+        //expect our context to be the TuxStore
+        expect(context).toBe(TuxStore);
+      });
+    });
   });
 
 });
