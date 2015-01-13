@@ -94,7 +94,5 @@ describe('TuxStore', function () {
         });
       });
     });
-
   });
-
 });

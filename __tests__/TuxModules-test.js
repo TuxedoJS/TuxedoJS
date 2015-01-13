@@ -51,8 +51,14 @@ describe('Individual Tux Modules', function () {
   });
 
   describe('Stores', function () {
-    it('should expose the module in tux/Store under the method createStore', function () {
+    it('should expose the module in src/TuxStore under the method createStore', function () {
       expect(require('tux/Stores').createStore).toBe(require('tux/src/TuxStore'));
+    });
+
+    describe('ActionStores', function () {
+      it('should expose the module in src/TuxActionStore under the method createStore', function () {
+        expect(require('tux/Stores/ActionStores').createStore).toBe(require('tux/src/TuxActionStore'));
+      });
     });
   });
 
