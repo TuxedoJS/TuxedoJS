@@ -23,7 +23,7 @@ var assign = require('object-assign');
       //   props: ['text', 'timestamp'],
       //   state: 'editing'
       // }
-      // OR it is possible to specify the hierarchy of keys to search through to improve performance/provide greater specificity regarding the rquired property
+      // OR it is possible to specify the hierarchy of keys to search through to improve performance of the one time deep search/provide greater specificity regarding the required property
       // eg: mutableClassProps.mutableTraits => {
       //   props: [
       //     ['message', 'text'],

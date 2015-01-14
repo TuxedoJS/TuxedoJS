@@ -44,7 +44,7 @@ describe('Animations', function () {
       <Fly id='id' />
     );
     //Need to use setProps here to pass in the component as a child of the animation component
-    ideaFlyComponent.setProps({children: <Idea idea={mocks.ideas[0]} />})
+    ideaFlyComponent.setProps({children: <Idea idea={mocks.ideas[0]} />});
     var ideaFly = TestUtils.findRenderedDOMComponentWithClass(ideaFlyComponent, 'fly');
     expect(ideaFly).toBeDefined();
   });
@@ -53,7 +53,7 @@ describe('Animations', function () {
     ideaFadeComponent = TestUtils.renderIntoDocument(
       <Fade id={['props', 'id']} />
     );
-    ideaFadeComponent.setProps({children: <Idea idea={mocks.ideas[0]} />})
+    ideaFadeComponent.setProps({children: <Idea idea={mocks.ideas[0]} />});
     var ideaFade = TestUtils.findRenderedDOMComponentWithClass(ideaFadeComponent, 'fade');
     expect(ideaFade).toBeDefined();
   });
@@ -62,7 +62,7 @@ describe('Animations', function () {
     ideaZoomComponent = TestUtils.renderIntoDocument(
       <Zoom id={['props', 'idea', 'id']} />
     );
-    ideaZoomComponent.setProps({children: <Idea idea={mocks.ideas[0]} />})
+    ideaZoomComponent.setProps({children: <Idea idea={mocks.ideas[0]} />});
     var ideaZoom = TestUtils.findRenderedDOMComponentWithClass(ideaZoomComponent, 'zoom');
     expect(ideaZoom).toBeDefined();
   });
@@ -71,7 +71,7 @@ describe('Animations', function () {
     ideaRotateComponent = TestUtils.renderIntoDocument(
       <Rotate id={['idea', 'id']} />
     );
-    ideaRotateComponent.setProps({children: <Idea idea={mocks.ideas[0]} />})
+    ideaRotateComponent.setProps({children: <Idea idea={mocks.ideas[0]} />});
     var ideaRotate = TestUtils.findRenderedDOMComponentWithClass(ideaRotateComponent, 'rotate');
     expect(ideaRotate).toBeDefined();
   });
@@ -81,7 +81,7 @@ describe('Animations', function () {
     ideaMyFadeComponent = TestUtils.renderIntoDocument(
       <MyFade />
     );
-    ideaMyFadeComponent.setProps({children: <Idea idea={mocks.ideas[0]} />})
+    ideaMyFadeComponent.setProps({children: <Idea idea={mocks.ideas[0]} />});
     var ideaMyFade = TestUtils.findRenderedDOMComponentWithClass(ideaMyFadeComponent, 'myFade');
     expect(ideaMyFade).toBeDefined();
   });

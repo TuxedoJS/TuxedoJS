@@ -23,7 +23,7 @@ Tux is a modular framework and as such it is possible to require only the minima
 The only other step to implementing a Tux animation is to wrap the element you want animated with the desired animation component within the render method of your `React.createClass` function.
 
 ```
-  render: function() {
+  render: function () {
     return (
       <Fly>
         <h1>Hello World</h1>
@@ -33,10 +33,10 @@ The only other step to implementing a Tux animation is to wrap the element you w
 ```
 
 #####Specifying an Animation Key via the Id Property - type: STRING, ARRAY of STRINGs, or NUMBER - optional
-Tux Animations work by concatting the children of the animation into an array and wrapping that in a ReactTransitionGroup.  Because of that it is beneficial to provide the animation with an id property, which will tell it where to look in its children for a key to use.  If no id is provided the animations will still work, but you will see warnings from React regarding the lack of a key.  You can specify a string or array of strings for the id propery:
+Tux Animations work by concatenating the children of the animation into an array and wrapping that in a ReactTransitionGroup.  Because of that it is beneficial to provide the animation with an id property, which will tell it where to look in its children for a key to use.  If no id is provided the animations will still work, but you will see warnings from React regarding the lack of a key.  You can specify a string or array of strings for the id property:
 
 ```
-  render: function() {
+  render: function () {
     var todo = {
       properties: {
         id: 1
@@ -49,7 +49,7 @@ Tux Animations work by concatting the children of the animation into an array an
     );
   } //or to provide specificity
 
-  render: function() {
+  render: function () {
     var todo = {
       properties: {
         id: 1
@@ -62,7 +62,7 @@ Tux Animations work by concatting the children of the animation into an array an
     );
   } //or to provide further specificity
 
-  render: function() {
+  render: function () {
     var todo = {
       properties: {
         id: 1
@@ -76,19 +76,19 @@ Tux Animations work by concatting the children of the animation into an array an
   }
 ```
 
-In every case the animation will use the value of the `id` property to find the `id` within the todo and use that to assign it a key.  We highly recommend providing more specificity (the last case) as it will improve performance.  Note that when providing an array you do not need to provide every string in the hierarchy you want to search.  We use the id to deep search the element one time and then store the value for reuse later.  Thus, providing additional specificity will improve the performance of the one time deep search.
+In every case the animation will use the value of the `id` property to find the `id` within the todo and use that to assign it a key.  We highly recommend providing more specificity (the last case) as it will improve performance.  We use the id to deep search the element one time and then store the value for reuse later.  Thus, providing additional specificity will improve the performance of the one time deep search.  Note that when providing an array you do not need to provide every string in the hierarchy you want to search.
 
 A numeric id can be specified, in which case all elements will receive that key.  Also, if there is only one element than it will automatically receive a key of 0
 
 ```
-  render: function() {
+  render: function () {
     return (
       <Fly id={0}>
         <h1>Hello World</h1>
       </Fly>
     );
   } //or
-  render: function() {
+  render: function () {
     return (
       <Fly>
         <h1>Hello World</h1>
