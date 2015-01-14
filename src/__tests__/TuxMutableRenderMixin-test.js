@@ -49,6 +49,17 @@ describe('TuxMutableRenderMixin', function () {
       expect(tuxMutableTraits[2]).toEqual(['state', 'editing']);
     });
 
+    it('should add the paths to the mutableTraits if an array of arrays is specified', function () {
+      tuxMutableRenderMixin.mutableTraits.props[0] = ['message', 'text'];
+      tuxMutableRenderMixin.componentWillMount();
+      tuxMutableTraits = tuxMutableRenderMixin.constructor.__tuxMutableTraits__;
+
+      expect(tuxMutableTraits.length).toEqual(3);
+      expect(tuxMutableTraits[0]).toEqual(['props', 'message', 'text']);
+      expect(tuxMutableTraits[1]).toEqual(['props', 'value']);
+      expect(tuxMutableTraits[2]).toEqual(['state', 'editing']);
+    });
+
     it('should not recreate mutable traits paths if the __tuxMutableTraits__ prop exists ', function () {
       // Establish initial __tuxMutableTraits__ value
       tuxMutableRenderMixin.componentWillMount();

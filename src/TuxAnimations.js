@@ -3,6 +3,7 @@
 var React = require('tux/React');
 var Arrival = require('arrival');
 var Easings = require('./TuxAnimationEasings');
+var deepSearch = require('tux/src/TuxDeepSearch');
 var ReactTransitionGroup = require('tux/React/TransitionGroup');
 
 //createAnimationClass FUNCTION: creates an animationClass which will animate based on the passed in transitions object
@@ -141,20 +142,52 @@ var createAnimationGroup = function (Animation, customClassName, tagToRender) {
     getInitialState: function () {
       return {
         toAnimate: []
-      }
+      };
     },
     //Used to update toAnimate
     componentWillReceiveProps: function (newProps) {
       this.setState({
         toAnimate: [].concat(newProps.children)
-      })
+      });
     },
 
     render: function () {
-      //Wrap each component in animation because ReactTransitionGroup only accepts one element. Here we store these animation components in toAnimate
+      //store this.props.id
+      var id = this.props.id;
+      //store toAnimate length
+      var stateToAnimateLength = this.state.toAnimate.length;
+      //Wrap each component in animation because ReactTransitionGroup only accepts one element. Store wrapped components in toAnimate
       var toAnimate = this.state.toAnimate.map(function (el) {
+        var key;
+        //check if id is a string
+        if (typeof id === 'string') {
+          //check if __tuxAnimationKey__ is defined, If it is not than build it out using deepSearch
+          var __tuxAnimationKey__ = this.__tuxAnimationKey__;
+          if (!__tuxAnimationKey__) {
+            __tuxAnimationKey__ = deepSearch(id, el);
+            //store the result at the key of __tuxAnimationKey__
+            this.__tuxAnimationKey__ = __tuxAnimationKey__;
+          }
+
+          //iterate through __tuxAnimationKey__ to find key property in el
+          var tuxAnimationKeyLength = __tuxAnimationKey__.length;
+          //start with el and search down from there
+          key = el;
+          for (var i = 0; i < tuxAnimationKeyLength; i++) {
+            key = key[__tuxAnimationKey__[i]];
+          }
+
+        //else if id is a number then set key equal to that
+        } else if (typeof id === 'number') {
+          key = id;
+
+        //else if stateToAnimate is one element then set the key value to 0
+        } else if (stateToAnimateLength) {
+          key = 0;
+        }
+
         //Pass in props to the Animation component
-        return <Animation animate={el} duration={this.props.duration} delay={this.props.delay} easing={this.props.easing} custom={this.props.custom} />
+        return <Animation animate={el} duration={this.props.duration} delay={this.props.delay} easing={this.props.easing} custom={this.props.custom} key={key} />
       }.bind(this));
 
       return (

@@ -1,40 +1,7 @@
 'use strict';
 
 var invariant = require('./TuxInvariant');
-
-// deepSearch FUNCTION: recursive function that creates an array of string keys to transverse the object specified by the @param mutableTrait key. Currently matches only the first path found.
-// @param mutableTrait STRING: trait to find the path of keys within the objectToSearch
-// @param objectToSearch OBJECT:
-  // expected keys ANY: this object can contain any keys, but is expected to contain the key specified in mutableTrait
-// @param currentPath STRING: either the string 'props' or 'state' [ALTERNATE ARRAY that contains either 'props' or 'state' at index 0]
-var deepSearch = function (mutableTrait, objectToSearch, currentPath) {
-  if (!Array.isArray(currentPath)) {
-    currentPath = [currentPath];
-  }
-
-  if (typeof objectToSearch === 'object' && objectToSearch !== undefined && objectToSearch !== null) {
-    if (objectToSearch.hasOwnProperty(mutableTrait)) {
-      // concat mutableTrait onto currentPath and return the result
-      return currentPath.concat(mutableTrait);
-    }
-
-    // declare reused variables
-    var key, newPath, possibleResultPath;
-
-    for (key in objectToSearch) {
-      if (objectToSearch.hasOwnProperty(key)) {
-        // add the new key onto currentPath
-        newPath = currentPath.concat(key);
-        // recurse over the item at objectToSearch[key] with newPath as the currentPath input
-        possibleResultPath = deepSearch(mutableTrait, objectToSearch[key], newPath);
-        // break out of loop if a single valid path has been found
-        if (possibleResultPath) {
-          return possibleResultPath;
-        }
-      }
-    }
-  }
-};
+var deepSearch = require('tux/src/TuxDeepSearch');
 
 // TuxMutableRenderMixin OBJECT: adds mixin to React class that will add componentWillMount and shouldComponentUpdate life cycle events to the component
 module.exports = {
