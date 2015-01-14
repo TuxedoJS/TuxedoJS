@@ -1,3 +1,3 @@
 TuxedoJS
 ========
-![Tuxedo Logo](https://github.com/sjstebbins/TuxedoJS/blob/master/website/Tux-logo.png "Tux-Logo")
+![Tux Logo](https://github.com/sjstebbins/TuxedoJS/blob/master/Tux-logo.svg "Tux-Logo")
