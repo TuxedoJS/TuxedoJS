@@ -154,6 +154,8 @@ var createAnimationGroup = function (Animation, customClassName, tagToRender) {
     render: function () {
       //store this.props.id
       var id = this.props.id;
+      //store toAnimate length
+      var stateToAnimateLength = this.state.toAnimate.length;
       //Wrap each component in animation because ReactTransitionGroup only accepts one element. Here we store these animation components in toAnimate
       var toAnimate = this.state.toAnimate.map(function (el) {
         var key;
@@ -178,6 +180,10 @@ var createAnimationGroup = function (Animation, customClassName, tagToRender) {
         //if id is a number then set key equal to that
         } else if (typeof id === 'number') {
           key = id;
+
+        //if stateToAnimate is one element then set the key value to 0
+        } else if (stateToAnimateLength) {
+          key = 0;
         }
 
         //Pass in props to the Animation component

@@ -37,6 +37,9 @@ var deepSearch = function (mutableTrait, objectToSearch, currentPath) {
       //concat iterationPath onto fullPath
       fullPath = fullPath.concat(iterationPath);
     }
+
+    //after looping through return the fullPath
+    return fullPath;
   }
 
   if (typeof objectToSearch === 'object' && objectToSearch !== undefined && objectToSearch !== null) {
