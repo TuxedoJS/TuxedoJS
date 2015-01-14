@@ -1,3 +1,3 @@
 module.exports = {
-  architect: require('../src/TuxArchitectStores')
+  architect: require('tux/src/TuxArchitectStores')
 };

@@ -1,6 +1,6 @@
 'use strict';
 
-var moduleToTest = '../TuxMutableRenderMixin';
+var moduleToTest = 'tux/src/TuxMutableRenderMixin';
 
 jest.dontMock(moduleToTest);
 

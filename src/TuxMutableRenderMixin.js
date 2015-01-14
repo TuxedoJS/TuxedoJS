@@ -1,6 +1,6 @@
 'use strict';
 
-var invariant = require('./TuxInvariant');
+var invariant = require('tux/src/TuxInvariant');
 var deepSearch = require('tux/src/TuxDeepSearch');
 
 // TuxMutableRenderMixin OBJECT: adds mixin to React class that will add componentWillMount and shouldComponentUpdate life cycle events to the component

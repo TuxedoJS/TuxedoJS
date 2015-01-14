@@ -15,7 +15,7 @@ describe('Animations', function () {
     //Reset animation components and modules before each test
     React = require('tux/React');
     createAnimation = require('tux/Animations').createAnimation;
-    Idea = require('./testComponents');
+    Idea = require('tux/src/__tests__/testComponents');
     Fade = require('tux/Animations/Fade');
     Fly = require('tux/Animations/Fly');
     Zoom = require('tux/Animations/Zoom');

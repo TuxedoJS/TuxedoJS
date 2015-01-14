@@ -1,8 +1,8 @@
 'use strict';
 
-var invariant = require('./TuxInvariant');
+var invariant = require('tux/src/TuxInvariant');
 //require in instance of Flux Dispatcher
-var Dispatcher = require('./Dispatcher.js');
+var Dispatcher = require('tux/src/Dispatcher.js');
 
 //Actions OBJECT
 var Actions = {};

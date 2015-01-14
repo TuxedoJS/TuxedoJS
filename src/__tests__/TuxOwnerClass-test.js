@@ -1,6 +1,6 @@
 'use strict';
 
-var moduleToTest = '../TuxOwnerClass';
+var moduleToTest = 'tux/src/TuxOwnerClass';
 
 jest.dontMock(moduleToTest);
 

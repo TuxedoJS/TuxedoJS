@@ -1,6 +1,6 @@
 'use strict';
 
-var moduleToTest = '../TuxActions.js';
+var moduleToTest = 'tux/src/TuxActions.js';
 
 jest.dontMock(moduleToTest);
 

@@ -1,4 +1,4 @@
-jest.dontMock('../TuxStore');
+jest.dontMock('tux/src/TuxStore');
 
 describe('TuxStore', function () {
   var TuxStore, methods, newStore, emitChange, callbackFunc, CHANGE_EVENT, NEW_CHANGE_EVENT;
