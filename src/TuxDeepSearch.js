@@ -23,11 +23,10 @@ var deepSearch = function (mutableTrait, objectToSearch, currentPath) {
   if (Array.isArray(mutableTrait)) {
     var mutableTraitLength = mutableTrait.length;
     //invoke deepSearch with each element in the array, build out path over each iteration
-    var fullPath = [];
+    var fullPath = currentPath;
     var iterationPath, iterationPathLength;
     for (var i = 0; i < mutableTraitLength; i++) {
-      iterationPath = deepSearch(mutableTrait[i], objectToSearch, currentPath);
-
+      iterationPath = deepSearch(mutableTrait[i], objectToSearch);
       //narrow down the objectToSearch by the iterationPath
       iterationPathLength = iterationPath.length;
       for (var j = 0; j < iterationPathLength; j++) {

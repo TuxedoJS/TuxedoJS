@@ -12,8 +12,8 @@ var assign = require('object-assign');
   // additional keys
     // mutableTraits OBJECT: traits will be registered [ALTERNATE ARRAY: array of objects with same keys as listed below]
       // expected keys:
-      // props STRING: a trait within the components props object [ALTERNATE ARRAY of trait strings to create paths for]
-      // state STRING: a trait within the components state object [ALTERNATE ARRAY of trait strings to create paths for]
+      // props STRING: a trait within the components props object [ALTERNATE ARRAY of trait strings to create paths for] [ALTERNATE ARRAY of ARRAYS of trait strings to create paths for]
+      // state STRING: a trait within the components state object [ALTERNATE ARRAY of trait strings to create paths for] [ALTERNATE ARRAY of ARRAYS of trait strings to create paths for]
       // eg: mutableClassProps.mutableTraits => {
       //   props: 'text',
       //   state: 'editing'
@@ -21,6 +21,14 @@ var assign = require('object-assign');
       // OR
       // eg: mutableClassProps.mutableTraits => {
       //   props: ['text', 'timestamp'],
+      //   state: 'editing'
+      // }
+      // OR it is possible to specify the hierarchy of keys to search through to improve performance/provide greater specificity regarding the rquired property
+      // eg: mutableClassProps.mutableTraits => {
+      //   props: [
+      //     ['message', 'text'],
+      //     ['message', 'timestamp']
+      //   ],
       //   state: 'editing'
       // }
 var mixinsToAdd, mutableTraits, mixins;
