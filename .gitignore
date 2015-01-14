@@ -2,3 +2,4 @@ node_modules
 *.log
 .floo
 .flooignore
+build/config.gypi

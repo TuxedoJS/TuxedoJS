@@ -1,12 +1,14 @@
 'use strict';
 
-var React = require('react/addons');
+var React = require('tux/React');
 var Arrival = require('arrival');
 var Easings = require('./TuxAnimationEasings');
+var ReactTransitionGroup = require('tux/React/TransitionGroup');
 
-//makeAnimation FUNCTION: creates animation for wrapped component based on props of wrapper component
+//createAnimationClass FUNCTION: creates an animationClass which will animate based on the passed in transitions object
   //@param transitions OBJECT: properties that define the default animation properties for the animation component wrapper
-var makeAnimation = function (transitions, customClassName) {
+  //@param customClassName STRING: sets className prop of created component
+var createAnimationClass = function (transitions, customClassName) {
   //If a second parameter is passed in as the desired class name for the animation, set this as className, othewise, use the animation's default class name
   var className;
   if (customClassName) {
@@ -14,7 +16,6 @@ var makeAnimation = function (transitions, customClassName) {
   } else {
     className = transitions.className;
   }
-
   //React.createClass FUNCTION: function to create animation component class
     //@param OBJECT: componentMounting and render
     //Required keys:
@@ -45,6 +46,63 @@ var makeAnimation = function (transitions, customClassName) {
         }.bind(this));
       }.bind(this));
     },
+
+    componentWillMount: function () {
+      //Change all custom props or add them if prop not defined in default
+      for (var action in transitions) {
+        if (action !== 'className') {
+          var transition = transitions[action];
+          for (var css in transition) {
+            //Duration prop work-----------------------------------------
+            var duration = this.props.duration;
+            //Use default if no duration prop defined
+            if (duration) {
+              //Case to accept if duration prop is a number
+              if (typeof duration === "number") {
+                duration = duration + "ms";
+              }
+              transition['transition-duration'] = duration;
+            }
+
+            //Easing prop work-------------------------------------------
+            var easing = this.props.easing;
+            //Use default if no easing prop defined
+            if (easing) {
+              //Check to see if easing exists in default Easings object from the AnimationEasings module
+              if (easing in Easings) {
+                //Set easing to value of correpsonding key from Easings module object
+                easing = Easings[easing];
+              }
+              transition['transition-timing-function'] =  easing;
+            }
+
+            //Delay prop work--------------------------------------------
+            var delay = this.props.delay;
+            //Use default if no delay prop defined
+            if (delay) {
+              //Case to accept if delay prop is a number
+              if (typeof delay === "number") {
+                delay = delay + "ms";
+              }
+              transition['transition-delay'] =  delay;
+            }
+
+            //Custom prop work-------------------------------------
+            var custom = this.props.custom;
+            if (custom) {
+              var enter = transitions['enter-active'];
+              var leave =transitions['enter-active'];
+              for (var cssElement in custom) {
+                var cssEl = custom[cssElement];
+                enter[cssElement] =  cssEl;
+                leave[cssElement] =  cssEl;
+              }
+            }
+          }//End for css in transitions[action]
+        }//End if action === className
+      }//End for loop for transitions
+    },
+
     componentWillEnter: function (callback) {
       this.setAnimationDomNode('enter', callback);
     },
@@ -54,66 +112,71 @@ var makeAnimation = function (transitions, customClassName) {
     },
 
     render: function () {
-      //Change all custom props or add them if prop not defined in default
-      for (var action in transitions) {
-        for (var css in transitions[action]) {
-
-          //Duration prop work-----------------------------------------
-          var duration = this.props.duration;
-          //Use default if no duration prop defined
-          if (duration) {
-            //Case to accept if duration prop is a number
-            if (typeof duration === "number") {
-              duration = duration + "ms";
-            }
-            transitions[action]['transition-duration'] = duration;
-          }
-
-          //Easing prop work-------------------------------------------
-          var easing = this.props.easing;
-          //Use default if no easing prop defined
-          if (easing) {
-            //Check to see if easing exists in default Easings object from the AnimationEasings module
-            if (easing in Easings) {
-              //Set easing to value of correpsonding key from Easings module object
-              easing = Easings[easing];
-            }
-            transitions[action]['transition-timing-function'] =  easing;
-          }
-
-          //Delay prop work--------------------------------------------
-          var delay = this.props.delay;
-          //Use default if no delay prop defined
-          if (delay) {
-            //Case to accept if delay prop is a number
-            if (typeof delay === "number") {
-              delay = delay + "ms";
-            }
-            transitions[action]['transition-delay'] =  delay;
-          }
-
-          //Custom properties work-------------------------------------
-          var custom = this.props.custom;
-          if (custom) {
-            for (var cssElement in custom) {
-              transitions['enterActive'][cssElement] =  custom[cssElement];
-              transitions['leave'][cssElement] =  custom[cssElement];
-            }
-          }
-        }
-      }//End for loop for transitions
-
       //Return new React.Dom element
       return (
         React.DOM.div(
           {
             className: className
           },
-           this.props.children
+          this.props.animate
         )
       );
     }
    });
 };
 
-module.exports = makeAnimation;
+// createAnimationGroup FUNCTION: wraps custom animation class
+  // @param Animation OBJECT: animation class based on custom properties
+  // @param customClassName STRING: className to apply to AnimationGroup
+  // @param tagToRender STRING: what tag the animationGroup will render as in the DOM - defaults to span
+var createAnimationGroup = function (Animation, customClassName, tagToRender) {
+
+  tagToRender = tagToRender || 'span';
+
+  //React.createClass FUNCTION: function to create animation component
+    //@param OBJECT: component setState, props, and render
+  return React.createClass({
+    // Set toAnimate initial state as an array that wraps custom Animation component
+    // *** toAnimate is an array because ReactTransitionGroup only accepts multiple elements if wrapped in a single array
+    getInitialState: function () {
+      return {
+        toAnimate: []
+      }
+    },
+    //Used to update toAnimate
+    componentWillReceiveProps: function (newProps) {
+      this.setState({
+        toAnimate: [].concat(newProps.children)
+      })
+    },
+
+    render: function () {
+      //Wrap each component in animation because ReactTransitionGroup only accepts one element. Here we store these animation components in toAnimate
+      var toAnimate = this.state.toAnimate.map(function (el) {
+        //Pass in props to the Animation component
+        return <Animation animate={el} duration={this.props.duration} delay={this.props.delay} easing={this.props.easing} custom={this.props.custom} />
+      }.bind(this));
+
+      return (
+        <ReactTransitionGroup className={customClassName} component={tagToRender}>
+          {toAnimate}
+        </ReactTransitionGroup>
+      );
+    }
+  });
+};
+
+// createAnimation FUNCTION: creates animation by creating a custom class based on the passed in props and transitions and wraps that class in a React Transition Group via the createAnimationGroup function
+  // @param transitions OBJECT: properties that define the default animation properties for the created animation class
+  // @param customClassName STRING: defines className of animation class
+  // @param tagToRender STRING: defines the type of tag the wrapping TransitionGroup will render as in the DOM
+var createAnimation = function (transitions, customClassName, tagToRender) {
+  //Create class based on defined transitions
+  var Animation = createAnimationClass(transitions, customClassName);
+  //Wrap created class
+  var AnimationGroup = createAnimationGroup(Animation, customClassName, tagToRender);
+  //Return TransitionGroup wrapped animation class
+  return AnimationGroup;
+};
+
+module.exports = createAnimation;

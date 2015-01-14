@@ -53,6 +53,14 @@ Tux.Animations.Zoom = require('./Animations/Zoom');
 //Fly
 Tux.Animations.Fly = require('./Animations/Fly');
 
+//Rotate
+Tux.Animations.Rotate = require('./Animations/Rotate');
+Tux.Animations.Rotate.ClockLeft = require('./Animations/Rotate/ClockLeft');
+Tux.Animations.Rotate.ClockUp = require('./Animations/Rotate/ClockUp');
+Tux.Animations.Rotate.CounterClock = require('./Animations/Rotate/CounterClock');
+Tux.Animations.Rotate.CounterClockRight = require('./Animations/Rotate/CounterClockRight');
+Tux.Animations.Rotate.CounterClockUp = require('./Animations/Rotate/CounterClockUp');
+
 //warn user not to use this object in console
 console.warn('Using the Tux object directly is not recommended as it will mean loading all modules even those you don\'t intend to use.  Please review the TuxedoJS documents for requiring only the individual pieces of TuxedoJS that you will need.');
 
