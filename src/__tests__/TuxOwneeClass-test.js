@@ -1,6 +1,6 @@
 'use strict';
 
-var moduleToTest = '../TuxOwneeClass';
+var moduleToTest = 'tux/src/TuxOwneeClass';
 
 jest.dontMock(moduleToTest);
 jest.mock('react');

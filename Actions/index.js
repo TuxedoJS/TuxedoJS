@@ -1,1 +1,1 @@
-module.exports = require('../src/TuxActions');
+module.exports = require('tux/src/TuxActions');

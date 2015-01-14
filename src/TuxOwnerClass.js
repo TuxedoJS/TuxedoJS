@@ -1,7 +1,7 @@
 'use strict';
 
-var owneeClass = require('./TuxOwneeClass');
-var StoreMixinGenerator = require('./TuxStoreMixinGenerator');
+var owneeClass = require('tux/src/TuxOwneeClass');
+var StoreMixinGenerator = require('tux/src/TuxStoreMixinGenerator');
 var assign = require('object-assign');
 
 //createOwnerClass FUNCTION: creates an owner Tux Class which is a type of React class designed to manage application state, interact with stores, manage route params, and pass props into its ownee components

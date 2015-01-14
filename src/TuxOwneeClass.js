@@ -1,6 +1,6 @@
 var React = require('react');
-var getOwnerPropsMixin = require('./TuxGetOwnerPropsMixin');
-var propTypeCheckerMixin = require('./TuxPropTypeCheckerMixin');
+var getOwnerPropsMixin = require('tux/src/TuxGetOwnerPropsMixin');
+var propTypeCheckerMixin = require('tux/src/TuxPropTypeCheckerMixin');
 var assign = require('object-assign');
 
 //createOwneeClass FUNCTION: creates an ownee Tux Class which is a type of React class not designed to manage any of its own state other than, in some cases, necessary state to implement two-way data-binding for input validation

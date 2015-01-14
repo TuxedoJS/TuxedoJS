@@ -1,5 +1,5 @@
 'use strict';
-var moduleToTest = '../TuxStoreMixinGenerator';
+var moduleToTest = 'tux/src/TuxStoreMixinGenerator';
 
 jest.dontMock(moduleToTest);
 

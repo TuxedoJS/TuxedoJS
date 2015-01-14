@@ -2,7 +2,7 @@
 
 var React = require('tux/React');
 var Arrival = require('arrival');
-var Easings = require('./TuxAnimationEasings');
+var Easings = require('tux/src/TuxAnimationEasings');
 var deepSearch = require('tux/src/TuxDeepSearch');
 var ReactTransitionGroup = require('tux/React/TransitionGroup');
 

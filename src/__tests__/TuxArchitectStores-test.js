@@ -1,6 +1,6 @@
 'use strict';
 
-var moduleToTest = '../TuxArchitectStores.js';
+var moduleToTest = 'tux/src/TuxArchitectStores';
 
 jest.dontMock(moduleToTest);
 

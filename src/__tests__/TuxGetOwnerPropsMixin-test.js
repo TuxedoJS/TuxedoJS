@@ -1,6 +1,6 @@
 'use strict';
 
-var moduleToTest = '../TuxGetOwnerPropsMixin.js';
+var moduleToTest = 'tux/src/TuxGetOwnerPropsMixin';
 
 jest.dontMock(moduleToTest);
 

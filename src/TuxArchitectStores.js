@@ -1,6 +1,6 @@
 'use strict';
 
-var invariant = require('./TuxInvariant');
+var invariant = require('tux/src/TuxInvariant');
 //architecture OBJECT: stores will register their outputs to this object so that store inputs can lookup those outputs later
 var architecture = {};
 

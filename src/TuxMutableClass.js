@@ -1,8 +1,8 @@
 'use strict';
 
-var owneeClass = require('./TuxOwneeClass');
+var owneeClass = require('tux/src/TuxOwneeClass');
 var pureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
-var mutableRenderMixin = require('./TuxMutableRenderMixin');
+var mutableRenderMixin = require('tux/src/TuxMutableRenderMixin');
 var assign = require('object-assign');
 
 // createMutableClass FUNCTION: creates a mutable Tux Class which is a type of React class designed to compare specified mutable traits to determine if a component should re-render

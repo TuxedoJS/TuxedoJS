@@ -1,6 +1,6 @@
 'use strict';
 
-var moduleToTest = '../TuxPropTypeCheckerMixin';
+var moduleToTest = 'tux/src/TuxPropTypeCheckerMixin';
 
 jest.dontMock(moduleToTest);
 
