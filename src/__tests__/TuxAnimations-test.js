@@ -41,37 +41,37 @@ describe('Animations', function () {
 
   it("applies a class of 'fly' for a fly transition", function () {
     ideaFlyComponent = TestUtils.renderIntoDocument(
-      <Fly key={mocks.ideas[0].id} />
+      <Fly id='id' />
     );
     //Need to use setProps here to pass in the component as a child of the animation component
-    ideaFlyComponent.setProps({children: <Idea key={mocks.ideas[0].id} />})
+    ideaFlyComponent.setProps({children: <Idea idea={mocks.ideas[0]} />})
     var ideaFly = TestUtils.findRenderedDOMComponentWithClass(ideaFlyComponent, 'fly');
     expect(ideaFly).toBeDefined();
   });
 
   it("applies a class of 'fade' for a fade transition", function () {
     ideaFadeComponent = TestUtils.renderIntoDocument(
-      <Fade key={mocks.ideas[0].id} />
+      <Fade id='id' />
     );
-    ideaFadeComponent.setProps({children: <Idea key={mocks.ideas[0].id} />})
+    ideaFadeComponent.setProps({children: <Idea idea={mocks.ideas[0]} />})
     var ideaFade = TestUtils.findRenderedDOMComponentWithClass(ideaFadeComponent, 'fade');
     expect(ideaFade).toBeDefined();
   });
 
   it("applies a class of 'zoom' for a zoom transition", function () {
     ideaZoomComponent = TestUtils.renderIntoDocument(
-      <Zoom key={mocks.ideas[0].id} />
+      <Zoom id='id' />
     );
-    ideaZoomComponent.setProps({children: <Idea key={mocks.ideas[0].id} />})
+    ideaZoomComponent.setProps({children: <Idea idea={mocks.ideas[0]} />})
     var ideaZoom = TestUtils.findRenderedDOMComponentWithClass(ideaZoomComponent, 'zoom');
     expect(ideaZoom).toBeDefined();
   });
 
   it("applies a class of 'rotate' for a rotate transition", function () {
     ideaRotateComponent = TestUtils.renderIntoDocument(
-      <Rotate key={mocks.ideas[0].id} />
+      <Rotate id='id' />
     );
-    ideaRotateComponent.setProps({children: <Idea key={mocks.ideas[0].id} />})
+    ideaRotateComponent.setProps({children: <Idea idea={mocks.ideas[0]} />})
     var ideaRotate = TestUtils.findRenderedDOMComponentWithClass(ideaRotateComponent, 'rotate');
     expect(ideaRotate).toBeDefined();
   });
@@ -79,9 +79,9 @@ describe('Animations', function () {
   it("applies a class of 'myFade' for a myFade transition", function () {
     var MyFade = createAnimation(Fade, 'myFade');
     ideaMyFadeComponent = TestUtils.renderIntoDocument(
-      <MyFade key={mocks.ideas[0].id} />
+      <MyFade id='id' />
     );
-    ideaMyFadeComponent.setProps({children: <Idea key={mocks.ideas[0].id} />})
+    ideaMyFadeComponent.setProps({children: <Idea idea={mocks.ideas[0]} />})
     var ideaMyFade = TestUtils.findRenderedDOMComponentWithClass(ideaMyFadeComponent, 'myFade');
     expect(ideaMyFade).toBeDefined();
   });

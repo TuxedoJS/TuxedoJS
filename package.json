@@ -63,6 +63,7 @@
     ],
     "unmockedModulePathPatterns": [
       "src/TuxInvariant",
+      "src/TuxDeepSearch",
       "node_modules/react/",
       "node_modules/object-assign/",
       "Animations/Common"
