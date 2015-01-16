@@ -19,8 +19,8 @@ module.exports = {
       }
       owner = owner._owner;
     }
-    //if this component is a owner component
-    if (this.__tuxIsOwnerComponent__) {
+    //if this component is an owner component and its ownerProps have not been registered already
+    if (this.__tuxIsOwnerComponent__ && !this.__tuxOwnerProps__) {
       //invoke registerOwnerProps after getting nearestOwnerProps so that owner can cascade down nearestOwnerProps to its direct Ownees
       var __tuxOwnerProps__ = this.registerOwnerProps.call(this);
       //assign object to key of __tuxOwnerProps__ on component
