@@ -1,3 +1,3 @@
 TuxedoJS
 ========
-![Tux Logo](./Tux-logo.svg "Tux-Logo")
+![Tux Logo](Tux-full-logo.png "Tux-Logo")
