@@ -1,0 +1,32 @@
+{
+  "data": [
+    {
+      "section": "TuxActions",
+      "docs": []
+    },
+    {
+      "section": "TuxAnimations",
+      "docs": []
+    },
+    {
+      "section": "TuxArchitecture",
+      "docs": []
+    },
+    {
+      "section": "TuxComponents",
+      "docs": []
+    },
+    {
+      "section": "TuxReact",
+      "docs": []
+    },
+    {
+      "section": "TuxRouter",
+      "docs": []
+    },
+    {
+      "section": "TuxStores",
+      "docs": []
+    }
+  ]
+}
