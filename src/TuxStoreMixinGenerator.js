@@ -13,11 +13,13 @@ var TuxStoreMixinGenerator = function (props) {
 
     // add the events and listeners for the particular store to the componentDidMount React life cycle event
     storeConnections.componentDidMount = function () {
+      //slice a copy of the props for this component
+      var tuxStoreMixinProps = this.__tuxStoreMixinProps = props.slice();
       for (var i = 0; i < propsLength; i++) {
-        var prop = props[i];
+        var prop = tuxStoreMixinProps[i];
         //invoke the passed in function with the component's context and store the returned object back into the array and variable
         if (typeof prop === 'function') {
-          prop = props[i] = prop.call(this);
+          prop = tuxStoreMixinProps[i] = prop.call(this);
         }
         // map addChangeListeners, due to the second input argument set to true, to store, listeners, and events passed in
         mapListenersAndEventsToStore(prop, true);
@@ -26,21 +28,23 @@ var TuxStoreMixinGenerator = function (props) {
 
     // remove the events and listeners for the particular store to the componentWillUnmount React life cycle event
     storeConnections.componentWillUnmount = function () {
+      var tuxStoreMixinProps = this.__tuxStoreMixinProps;
       for (var i = 0; i < propsLength; i++) {
         // map removeChangeListeners, due to the second input argument set to false, to store, listeners, and events passed in
-        mapListenersAndEventsToStore(props[i], false);
+        mapListenersAndEventsToStore(tuxStoreMixinProps[i], false);
       }
     };
   } else if (typeof props === 'function') {
     storeConnections.componentDidMount = function () {
       if (typeof props === 'function') {
-        props = props.call(this);
+        //store the function on this component
+        this.__tuxStoreMixinProps = props.call(this);
       }
-      mapListenersAndEventsToStore(props, true);
+      mapListenersAndEventsToStore(this.__tuxStoreMixinProps, true);
     };
 
     storeConnections.componentWillUnmount = function () {
-      mapListenersAndEventsToStore(props, false);
+      mapListenersAndEventsToStore(this.__tuxStoreMixinProps, false);
     };
   }
 
