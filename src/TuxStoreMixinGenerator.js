@@ -16,7 +16,9 @@ var TuxStoreMixinGenerator = function (props) {
       for (var i = 0; i < propsLength; i++) {
         var prop = props[i];
         //invoke the passed in function with the component's context and store the returned object back into the array and variable
-        prop = props[i] = prop.call(this);
+        if (typeof prop === 'function') {
+          prop = props[i] = prop.call(this);
+        }
         // map addChangeListeners, due to the second input argument set to true, to store, listeners, and events passed in
         mapListenersAndEventsToStore(prop, true);
       }
@@ -31,7 +33,9 @@ var TuxStoreMixinGenerator = function (props) {
     };
   } else if (typeof props === 'function') {
     storeConnections.componentDidMount = function () {
-      props = props.call(this);
+      if (typeof props === 'function') {
+        props = props.call(this);
+      }
       mapListenersAndEventsToStore(props, true);
     };
 
