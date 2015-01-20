@@ -71,7 +71,7 @@ The only other step to implementing a Tux animation is to wrap the element you w
   }
 ```
 ##### <a id="Specifying-an-animation-key"></a>Specifying an Animation Key via the Id Property - type: STRING, ARRAY of STRINGs, or NUMBER - optional [#](#Specifying-an-animation-key)
-Tux Animations work by concatenating the children of the animation into an array and wrapping that in a ReactTransitionGroup.  Because of that it is beneficial to provide the animation with an id property, which will tell it where to look in its children for a key to use.  If no id is provided the animations will still work, but you will see warnings from React regarding the lack of a key.  You can specify a string or array of strings for the id property:
+Tux Animations work by concatenating the children of the animation into an array and wrapping that in a ReactTransitionGroup.  Because of that it is beneficial to provide the animation with an id property, which will tell it where to look in its children's `props` for a key to use.  If no id is provided the animations will still work as long as the children are not an array, but you will see warnings from React regarding the lack of a key.  You can specify a string or array of strings for the id property:
 
 ```
   render: function () {
@@ -98,25 +98,14 @@ Tux Animations work by concatenating the children of the animation into an array
         <Todo todo={todo} />
       </Fly>
     );
-  } //or to provide further specificity
-
-  render: function () {
-    var todo = {
-      properties: {
-        id: 1
-      }
-    };
-    return (
-      <Fly id={['props', 'properties', 'id']}>
-        <Todo todo={todo} />
-      </Fly>
-    );
   }
 ```
 
-In every case the animation will use the value of the `id` property to find the `id` within the todo and use that to assign it a key.  We highly recommend providing more specificity (the last case) as it will improve performance.  We use the id to deep search the element one time and then store the value for reuse later.  Thus, providing additional specificity will improve the performance of the one time deep search.  Note that when providing an array you do not need to provide every string in the hierarchy you want to search.
+In every case the animation will use the value of the `id` property to find the `id` within the todo `props` and use that to assign it a key.  We highly recommend providing more specificity (the last case) as it will improve performance.  We use the id to deep search the element one time and then store the value for reuse later.  Thus, providing additional specificity will improve the performance of the one time deep search.  Note that when providing an array you do not need to provide every string in the hierarchy you want to search.
 
-A numeric id can be specified, in which case all elements will receive that key.  Also, if there is only one element than it will automatically receive a key of 0
+A numeric id can be specified, in which case all elements will receive that key.  Also, if there is only one element than it will automatically receive a key of 0.
+
+**NOTE** that when we search for the id we always search within `props`.
 
 ![Animation 1](http://cdn.makeagif.com/media/1-12-2015/WjxMrn.gif)
 

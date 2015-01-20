@@ -51,7 +51,7 @@ describe('Animations', function () {
 
   it("applies a class of 'fade' for a fade transition", function () {
     ideaFadeComponent = TestUtils.renderIntoDocument(
-      <Fade id={['props', 'id']} />
+      <Fade id={['id']} />
     );
     ideaFadeComponent.setProps({children: <Idea idea={mocks.ideas[0]} />});
     var ideaFade = TestUtils.findRenderedDOMComponentWithClass(ideaFadeComponent, 'fade');
@@ -60,7 +60,7 @@ describe('Animations', function () {
 
   it("applies a class of 'zoom' for a zoom transition", function () {
     ideaZoomComponent = TestUtils.renderIntoDocument(
-      <Zoom id={['props', 'idea', 'id']} />
+      <Zoom id={['idea', 'id']} />
     );
     ideaZoomComponent.setProps({children: <Idea idea={mocks.ideas[0]} />});
     var ideaZoom = TestUtils.findRenderedDOMComponentWithClass(ideaZoomComponent, 'zoom');
@@ -69,7 +69,7 @@ describe('Animations', function () {
 
   it("applies a class of 'rotate' for a rotate transition", function () {
     ideaRotateComponent = TestUtils.renderIntoDocument(
-      <Rotate id={['idea', 'id']} />
+      <Rotate />
     );
     ideaRotateComponent.setProps({children: <Idea idea={mocks.ideas[0]} />});
     var ideaRotate = TestUtils.findRenderedDOMComponentWithClass(ideaRotateComponent, 'rotate');

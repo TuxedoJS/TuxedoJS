@@ -158,17 +158,16 @@ var createAnimationGroup = function (Animation, customClassName, tagToRender) {
       var stateToAnimateLength = this.state.toAnimate.length;
       //Wrap each component in animation because ReactTransitionGroup only accepts one element. Store wrapped components in toAnimate
       var toAnimate = this.state.toAnimate.map(function (el) {
-        var key;
-        //check if id is a string
-        if (typeof id === 'string') {
+        //check if id is a string or an array
+        if (typeof id === 'string' || Array.isArray(id)) {
           //check if __tuxAnimationKey__ is defined, If it is not than build it out using deepSearch
           var __tuxAnimationKey__ = this.__tuxAnimationKey__;
           if (!__tuxAnimationKey__) {
-            __tuxAnimationKey__ = deepSearch(id, el);
+            //search through props of the element for the id
+            __tuxAnimationKey__ = deepSearch(id, el.props, 'props');
             //store the result at the key of __tuxAnimationKey__
             this.__tuxAnimationKey__ = __tuxAnimationKey__;
           }
-
           //iterate through __tuxAnimationKey__ to find key property in el
           var tuxAnimationKeyLength = __tuxAnimationKey__.length;
           //start with el and search down from there
