@@ -44,7 +44,7 @@
 #### <a id="Requiring-Animations"></a>1) Requiring Animations Components [#](#Requiring-Animations)
 The Tux Animations interface which allows creating custom animations can be exposed via:
 
-```
+```javascript
   var Animations = require('tux/Animations');
 ```
 
@@ -53,7 +53,7 @@ Requiring the top level animations module as illustrated above, will expose the 
 ##### <a id="Require-what-you-need"></a>Require only what you need [#](#Require-what-you-need)
 Tux is a modular framework and as such it is possible to require only the minimal number of files needed in order to save space in your app. For Example, if you need access to the default Fly and FadeUp animations in your implementation, you need only to require those specific animations via:
 
-```
+```javascript
   var Fly = require('tux/Animations/Fly');
   var FadeUp = require('tux/Animations/Fade/Up');
 ```
@@ -61,7 +61,7 @@ Tux is a modular framework and as such it is possible to require only the minima
 #### <a id="Rendering-Animations"></a>2) Rendering Animation Components [#](#Rendering-Animations)
 The only other step to implementing a Tux animation is to wrap the element you want animated with the desired animation component within the render method of your `React.createClass` function.
 
-```
+```javascript
   render: function () {
     return (
       <Fly>
@@ -73,7 +73,7 @@ The only other step to implementing a Tux animation is to wrap the element you w
 ##### <a id="Specifying-an-animation-key"></a>Specifying an Animation Key via the Id Property - type: STRING, ARRAY of STRINGs, or NUMBER - optional [#](#Specifying-an-animation-key)
 Tux Animations work by concatenating the children of the animation into an array and wrapping that in a ReactTransitionGroup.  Because of that it is beneficial to provide the animation with an id property, which will tell it where to look in its children for a key to use.  If no id is provided the animations will still work, but you will see warnings from React regarding the lack of a key.  You can specify a string or array of strings for the id property:
 
-```
+```javascript
   render: function () {
     var todo = {
       properties: {
@@ -120,7 +120,7 @@ A numeric id can be specified, in which case all elements will receive that key.
 
 ![Animation 1](http://cdn.makeagif.com/media/1-12-2015/WjxMrn.gif)
 
-```
+```javascript
   render: function () {
     return (
       <Fly id={0}>
@@ -152,7 +152,7 @@ Tux also allows easy customization of default animation components via their pro
 ##### <a id="animationProps-duration"></a>Duration Property - type: STRING or NUMBER - optional [#](#animationProps-duration)
 The duration property, as the name would imply, determines the length of time for the animation sequence. Duration accepts a string with any standard CSS suffix or number input, but **beware** that numbers `will resolve in milliseconds`. The following two examples will both perform a 2 second long fly animation:
 
-```
+```javascript
   <Fly duration="2s">
     <h1>Hello World</h1>
   </Fly>  //or
@@ -164,7 +164,7 @@ The duration property, as the name would imply, determines the length of time fo
 ##### <a id="animationProps-delay"></a>Delay Property - type: STRING or NUMBER - optional [#](#animationProps-delay)
 The delay property sets a delay on the animation before it activates. The delay property is similar to the duration property in that it accepts either a string or number input. The following example will add a 1 second delay to our animation:
 
-```
+```javascript
   <Fly duration={2000} delay={1000}>
     <h1>Hello World</h1>
   </Fly>
@@ -173,7 +173,7 @@ The delay property sets a delay on the animation before it activates. The delay 
 ##### <a id="animationProps-easing"></a>Easing Property - type: STRING - optional [#](#animationProps-easing)
 The easing property determines what motion path the animation takes when presented. Easing only accepts a string which can take any custom cubic bezier animation path you wish. For example:
 
-```
+```javascript
   <Fly duration={3000} delay={1000} easing="cubic-bezier(0.680, -0.550, 0.265, 1.550)">
     <h1>Hello World</h1>
   </Fly>
@@ -181,7 +181,7 @@ The easing property determines what motion path the animation takes when present
 
 The Easing property also accepts any of the Tux default easings as a string:
 
-```
+```javascript
   <Fly duration={3000} delay={1000} easing="easeInOutBack">
     <h1>Hello World</h1>
   </Fly>
@@ -194,7 +194,7 @@ The Tux default easings and their motion paths are illustrated below. The 'Linea
 ##### <a id="animationProps-custom"></a>Custom Property - type: OBJECT - optional [#](#animationProps-custom)
 The custom property accepts an object as an input with any CSS properties you wish the animation to include in addition to the default CSS transitions inherent to the particular component. For Example, if you wanted the element you've wrapped with a Fly animation component to also animate to the color red and increase its font size to 14px, it's as easy as:
 
-```
+```javascript
   <Fly duration={3000} delay={1000} easing="easeOutInBack" custom={{'color': 'red', 'font-size': '14px'}}>
     <h1>Hello World</h1>
   </Fly>
@@ -207,7 +207,7 @@ Finally, let's see how the default Fly animation looks now that it has been cust
 #### <a id="Make-your-own-animation-components"></a>4) Make Your Own Animation Components [#](#Make-your-own-animation-components)
 Requiring Tux Animations exposes a createAnimation function which allows the creation of custom animation components. The createAnimation function creates a custom component based on a passed in transition object and then wraps that custom component in a ReactTransitionGroup. The createAnimation function has one required parameter: `transitions` and two optional parameters: `customClassName` and `tagToRender`.
 
-```
+```javascript
   createAnimation(transitions, customClassName, tagToRender);
 ```
 
@@ -224,7 +224,7 @@ The keys define the transition state and the values are objects that describe th
 ##### <a id="customAnimationParams-customClassName"></a>Parameter - `customClassName` - type: STRING - optional [#](#customAnimationParams-customClassName)
 The customClassName parameter requires a string that gives your component a custom className property so that it can be accessed easily via CSS or jQuery etc.. This way when your component is converted to a ReactElement, it is still accessible via this customClassName property:
 
-```
+```javascript
   <div class="zoom" data-reactid=".0.2.2.1.$=10:0"></div>
 ```
 
@@ -233,7 +233,7 @@ The customClassName parameter requires a string that gives your component a cust
 ##### <a id="customAnimationParams-tagToRender"></a>Parameter - `tagToRender` - type: STRING - optional [#](#customAnimationParams-tagToRender)
 The createAnimation function wraps custom animation components in a ReactTransitionGroup in order to properly animate and this TransitionGroup renders in the DOM as span tag by default. The tagToRender parameter allows the TransitionGroup render with whatever tag you prefer. For example:
 
-```
+```javascript
   createAnimation(Zoom, 'zoom', 'div');
 ```
 
@@ -241,7 +241,7 @@ In this implementation, the TransitionGroup that wraps our custom animation comp
 
 Now let's look at a complete implementation of the `createAnimation` function:
 
-```
+```javascript
   var Zoom = {
     className: 'zoom',
     'enter': {
@@ -274,7 +274,7 @@ Now let's look at a complete implementation of the `createAnimation` function:
 ##### <a id="use-your-custom-animation-component"></a>Use Your Custom Animation Component [#](#use-your-custom-animation-component)
 Just as with the default animation implementations, you can wrap whatever elements you wish to apply this custom animation to by nesting those elements within the component:
 
-```
+```javascript
   <Zoom>
     <h1>Hello World</h1>
   </Zoom>
@@ -285,7 +285,7 @@ This example uses default Tux Animation components, all of the customizable prop
 
 ![Animation 3](http://cdn.makeagif.com/media/1-12-2015/uif2JH.gif)
 
-```
+```javascript
   'use strict';
 
   var React = require('tux/React');
