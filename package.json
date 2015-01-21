@@ -68,5 +68,8 @@
       "node_modules/object-assign/",
       "Animations/Common"
     ]
+  },
+  "directories": {
+    "doc": "docs"
   }
 }
