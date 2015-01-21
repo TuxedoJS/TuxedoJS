@@ -10,7 +10,7 @@
 ## <a id="Implementation"></a>Implementation [#](#Implementation)
 Tux's modular nature allows you to only require specifics modules you need. For example, if you wanted to require React and the default Fade animation component in your particular project, you need only:
 
-```
+```javascript
   var React = require('tux/React');
   var Fade = require('tux/Animations/Fade');
 ```
