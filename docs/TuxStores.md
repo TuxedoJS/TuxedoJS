@@ -32,7 +32,7 @@
 ### <a id="Requiring-Stores"></a>Requiring Stores [#](#Requiring-Stores)
 Tux uses Facebook's [Flux](https://facebook.github.io/flux/) architecture and provides an interface for creating stores. This interface is exposed via:
 
-```
+```javascript
     var Stores = require('tux/Stores')
 ```
 
@@ -40,7 +40,7 @@ Tux uses Facebook's [Flux](https://facebook.github.io/flux/) architecture and pr
 The `Stores` object allows the user to create stores via invoking [Stores.createStore](#createStores). Stores are responsible for managing data and alerting views to when that data has changed in TuxedoJS. Pass in an object to the `createStore` method and it will return a new object that has been extended with the `emitChange`, `addChangeListener`, and `removeChangeListener` methods that are common to Flux stores. The Tux methods are added to the object being extended first, so if you want to overwrite Tux's implementation of one or all of those methods, you just need to provide your methods with those keys on the input object to `createStore`. Let's take a look at an example: [#](#create-store-example)
 <a id="create-store-example"></a>
 
-```
+```javascript
     var messageStore = Stores.createStore({
       _messages: {},
       getAll: function () {
@@ -53,7 +53,7 @@ Below is the API documentation for this method.
 
 ### <a id="Stores-createStore"></a>Stores.createStore [#](#Stores-createStore)
 
-```
+```javascript
     var store = Stores.createStore(methods);
 ```
 
@@ -69,7 +69,7 @@ The store has the following methods:
 #### <a id="store-emitChange"></a>Method `store.emitChange` - type: FUNCTION [#](#store-emitChange)
 Normally, it is common to invoke `emitChange` after data in the store is updated to alert the views that are listening to this store to request the new data. The change event can be either the default event string `CHANGE` or one provided by the user.
 
-```
+```javascript
     store.emitChange(EVENT_TYPE); // OR
     store.emitChange(); // will emit the default change event type string: 'CHANGE'
 ```
@@ -77,7 +77,7 @@ Normally, it is common to invoke `emitChange` after data in the store is updated
 ##### <a id="emitChange-EVENT_TYPE"></a>Parameter - `EVENT_TYPE` - type: STRING - optional [#](#emitChange-EVENT_TYPE)
 Change event type string that will be broadcast by the store. Will trigger callbacks that are listening for this event type on the store. If no `EVENT_TYPE` is specified the default value of `CHANGE` will be used.
 
-```
+```javascript
     var newEventType = 'NEW_EVENT_TYPE';
     store.emitChange(newEventType);
 ```
@@ -93,7 +93,7 @@ The `addChangListener` method will invoke the provided callback function when th
 ##### <a id="addChangeListener-callback"></a>Parameter - `callback` - type: FUNCTION - required [#](#addChangeListener-callback)
 The callback to invoke when the corresponding event is triggered.
 
-```
+```javascript
     var listenerCallback = function () {
       this.setState({ messages: MessageStore.all() });
     };
@@ -104,7 +104,7 @@ The callback to invoke when the corresponding event is triggered.
 ##### <a id="addChangeListener-EVENT_TYPE"></a>Parameter - `EVENT_TYPE` - type: STRING - optional [#](#addChangeListener-EVENT_TYPE)
 Event string to add a listener callback to. If no event is passed in than the listener will be added to the default `CHANGE` event.
 
-```
+```javascript
     var listenerCallback = function () {
       this.setState({ messages: MessageStore.all() });
     };
@@ -117,14 +117,14 @@ Event string to add a listener callback to. If no event is passed in than the li
 ### <a id="store-removeChangeListener"></a>Method `store.removeChangeListener` - type: FUNCTION [#](#store-removeChangeListener)
 Removes the passed in listener callback from the passed in event string. If no event is specified than the default `CHANGE` event is used.
 
-```
+```javascript
     store.removeChangeListener(callback, EVENT_TYPE);
 ```
 
 ##### <a id="removeChangeListener-callback"></a>Parameter - `callback` - type: FUNCTION - required [#](#removeChangeListener-callback)
 The callback function that will be removed from the store's set of listeners.
 
-```
+```javascript
     var listenerCallback = function () {
       this.setState({ messages: MessageStore.all() });
     };
@@ -136,7 +136,7 @@ The callback function that will be removed from the store's set of listeners.
 ##### <a id="removeChangeListener-EVENT_TYPE"></a>Parameter - `EVENT_TYPE` - type: STRING - optional [#](#removeChangeListener-EVENT_TYPE)
 Store event type string that the listener will be removed from. If no `EVENT_TYPE` is specified the default value of `CHANGE` will be used.
 
-```
+```javascript
     var listenerCallback = function () {
       this.setState({ messages: MessageStore.all() });
     };
@@ -155,7 +155,7 @@ Why are these approaches better? For event emitting, tracking down bugs that pop
 
 For the methods, it allows you to program declaratively since you are asking for precisely the data you need from the store and it also significantly reduces the likelihood of bugs popping up in your app since you won't have data manipulations scattered across your different views.
 
-```
+```javascript
     //BAD
     var messageStore = Stores.createStore({
       _messages: [],
@@ -203,7 +203,7 @@ For the methods, it allows you to program declaratively since you are asking for
 ## <a id="TuxStores-Complete-Example"></a>TuxStores Complete Example [#](#TuxStores-Complete-Example)
 Taking everything we have learned let's look at a more realistic example of using TuxStores.
 
-```
+```javascript
     var Stores = require('tux/Stores');
 
     var messageStore = Stores.createStore({
