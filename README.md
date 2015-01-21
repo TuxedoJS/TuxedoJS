@@ -41,6 +41,7 @@
 `Tux` provides all of the glue code needed to build stores and register them with the `TuxActions` dispatcher:
 
 ```javascript
+    var TodoActions = require('./TodoActions')
     var ActionStores = require('tux/Stores/ActionStores');
 
     var todoStore = ActionStores.createStore({
@@ -50,19 +51,11 @@
         return this._todos;
       },
 
-      onAdd: function (todo) {
-        this._todos.push({
-          text: todo.text,
-          id: this._todos.length
-        });
-        this.emitChange();
-      },
+      onAdd: function (todo) {/*handle creation of Todo*/},
 
-      onRemove: function (todo) {
-        this._todos.splice(todo.id, 1);
-        this.emitChange();
-      },
+      onRemove: function (todo) {/*handle removal of Todo*/},
 
+      //semantic method allows us to register our store with actions
       register: function () {
         return {
           todos: {
@@ -88,14 +81,7 @@ A high performance component:
         props: 'text'
       },
 
-      propTypes: {
-        todo: React.PropTypes.object.isRequired
-      },
-
-      nearestOwnerPropTypes: {
-        remove: React.PropTypes.func.isRequired
-      },
-
+      //tux provides tools for automatically sharing static properties and methods between components via nearestOwnerProps
       handleRemove: function (e) {
         e.preventDefault();
         this.nearestOwnerProps.remove(this.props.todo);
@@ -116,19 +102,11 @@ A standard `Tux` component:
 
 ```javascript
     var TodoCreateForm = React.createOwneeClass({
-      nearestOwnerPropTypes: {
-        add: React.PropTypes.func.isRequired
-      },
-
+      //again, using automatically shared static methods here via 'nearestOwnerProps'
       handleSubmit: function (e) {
         e.preventDefault();
         var todoTextInput = this.refs.textInput.getDOMNode();
-
-        this.nearestOwnerProps.add({
-          text: todoTextInput.value
-        });
-
-        todoTextInput.value = '';
+        this.nearestOwnerProps.add({text: todoTextInput.value});
       },
 
       render: function(){
@@ -153,11 +131,7 @@ A `Tux` class designed to manage state and pass down properties/methods:
     var TodoCreateForm = require('./TodoCreateForm');
 
     var TodoViewOwner = React.createOwnerClass({
-      getInitialState: function () {
-        return {
-          todos: todoStore.getAll()
-        };
-      },
+      getInitialState: function () {/*get Todos from store*/},
 
       connectOwnerToStore: function () {
         return {
@@ -177,9 +151,7 @@ A `Tux` class designed to manage state and pass down properties/methods:
 
       render: function () {
         var Todos = this.state.todos.map(function(todo) {
-          return (
-            <Todo todo={todo} />
-          );
+          return (<Todo todo={todo} />);
         });
 
         return (
@@ -239,7 +211,7 @@ Thus, feel free to fall back to `React` or `Flux` conventions as much or as litt
 
 Install `TuxedoJS` through npm:
 
-    npm install tuxedojs
+    npm install tux
 
 ### Tasks and Dependencies
 
