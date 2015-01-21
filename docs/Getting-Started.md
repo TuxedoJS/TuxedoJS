@@ -110,7 +110,7 @@ Here is the completed `package.json` file used for the `TuxTodoApp`:
     }
 ```
 
-## <a id="#TodoViewOwner"></a>TodoViewOwner.jsx [#](#TodoViewOwner)
+## <a id="TodoViewOwner"></a>TodoViewOwner.jsx [#](#TodoViewOwner)
 Let's start by creating the top level Todo component using `Tux's` `createOwnerClass`. The Owner class is responsible for the state of our Todo application. The `OwnerClass` possesses tools allowing it to automatically expose static methods and properties to its child components and listen to changes from stores. In this application we will use an `OwnerClass` to manage our todo components, trigger todo actions, and listen to todo store change events.
 
 **NOTE** We are going to build out the `todoStore`, `todoActions`, and the `TodoCreateForm` later in the Getting Started Guide.
@@ -169,7 +169,7 @@ Let's start by creating the top level Todo component using `Tux's` `createOwnerC
     module.exports = TodoViewOwner;
 ```
 
-## <a id="#Todo"></a>Todo.jsx [#](#Todo)
+## <a id="Todo"></a>Todo.jsx [#](#Todo)
 `Tux` also provides the ability to build high performance components out of the box. In our Todo application within the individual Todo component, a Todo's text is a `mutableTraits` property, that means that we can check to see if this property has updated and then the component will re-render. If it hasn't, we can skip the re-render since we know the component hasn't updated.
 
 ```javascript
@@ -209,7 +209,7 @@ Let's start by creating the top level Todo component using `Tux's` `createOwnerC
 
 ```
 
-## <a id="#TodoCreateForm"></a>TodoCreateForm.jsx [#](TodoCreateForm)
+## <a id="TodoCreateForm"></a>TodoCreateForm.jsx [#](TodoCreateForm)
 The `OwneeClass` is another form of opinionated `Tux` component. They receive their dynamic props through standard `this.props` sharing. They receive their static methods and props from their closest Owner component. The `TodoCreateForm` utilizes this by accessing the `add` method from its nearest owner component, which is the `TodoViewOwner`.
 
 ```javascript
@@ -246,7 +246,7 @@ The `OwneeClass` is another form of opinionated `Tux` component. They receive th
     module.exports = TodoCreateForm;
 ```
 
-## <a id="#todoActions"></a>todoActions.js [#](#todoActions)
+## <a id="todoActions"></a>todoActions.js [#](#todoActions)
 `Tux` leverages the `Flux` architecture but abstracts away all of the normal boilerplate associated with `Flux`. In `Tux` we build `actionCategories` and then we can invoke them in order to dispatch their actions and register with them in order to receive these actions. Here is the `todoActions` category that we required in from before.
 
 ```javascript
@@ -261,7 +261,7 @@ The `OwneeClass` is another form of opinionated `Tux` component. They receive th
     module.exports = todoActions;
 ```
 
-## <a id="#todoStore"></a>todoStore.js [#](#todoStore)
+## <a id="todoStore"></a>todoStore.js [#](#todoStore)
 `Tux` provides all of the glue code needed to build stores and register them with the `TuxActions` dispatcher. Now that we have created our actions and views. Let's create our store for our Todos that respond to our actions and provide the data for our views. `Tux` here again significantly reduces the boilerplate required to get a store up and running.
 
 ```javascript
@@ -303,7 +303,7 @@ The `OwneeClass` is another form of opinionated `Tux` component. They receive th
     module.exports = todoStore;
 ```
 
-## <a id="#TuxTodoApp-and-index"></a>TuxTodoApp.js and index.html [#](#TuxTodoApp-and-index)
+## <a id="TuxTodoApp-and-index"></a>TuxTodoApp.js and index.html [#](#TuxTodoApp-and-index)
 Finally after putting together all of the pieces, let's render the `TodoViewOwner` component to the DOM.
 
 ```javascript
@@ -329,10 +329,10 @@ Below is our `index.html` file. The `<div id="main"></div>` will be where our `T
     </body>
 ```
 
-## <a id=#Bundling-and-Serving></a>Bundling and Serving [#](#Bundling-and-Serving)
+## <a id=Bundling-and-Serving></a>Bundling and Serving [#](#Bundling-and-Serving)
 Once we have all of these pieces we can run the `npm start` command to get our JavaScript to bundle together. Following that we can either start a simple HTTP server or we can open the `index.html` page in our browser of choice. Now you should be able to add and delete Todos from your basic `TuxTodoApp`!
 
-## <a id="#Bundling-and-Serving"></a>Conclusion [#](#Conclusion)
+## <a id="Conclusion"></a>Conclusion [#](#Conclusion)
 This example should illustrate the versatility and semantic nature of `Tux`. Each of the opinionated components provides powerful convenience methods that allow you to do a multitude of operations. For one you have the ability to share properties and methods between components without using the standard `React` pass down syntax. You have the ability to harness the performance benefits of the Mutable class components. Then there is the ease in which you can declare your `Flux` actions, create your stores with reduced boilerplate, and register your stores with your Actions.
 
 For more documentation and examples in Tux check out the following resources:
