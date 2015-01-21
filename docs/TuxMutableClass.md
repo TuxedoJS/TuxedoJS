@@ -24,12 +24,16 @@
 ## <a id="Premise"></a>Premise [#](#Premise)
 >The `TuxMutableClass` is an opinionated type of [React](http://facebook.github.io/react/) class designed compare specified mutable traits to determine if a component should re-render.
 
+***
+
 ## <a id="Implementation"></a>Implementation [#](#Implementation)
 `Tux` determines if a mutable class component should re-render by taking advantage of the `componentWillMount` and `shouldComponentUpdate` lifecycle events. Specifically, in the `componentWillMount` lifecycle, the component will do a deep search of its `state` and `props` to create paths to the specified `mutableTraits`. The paths are then attached to the constructor's prototype, such that a deep search to create the paths only needs to be done once for a particular component class.
 
 These `mutableTraits` paths are then used in the `shouldComponentUpdate` lifecycle event to see if those properties have changed when comparing the current state and props to the next props and state of the component. If those state and/or props have not changed then `shouldComponentUpdate` will return false which indicates to React that it does not need to update the component in the DOM. By performing this check you can prevent the unneeded re-rendering of components within the virtual DOM each time a potential re-render is triggered.
 
 The mutable class in `Tux` is an extension of the `OwneeClass`, which is an implementation on top of React's `createClass` method. In laymen's terms this means that it has access to all of the same [lifecycle](http://facebook.github.io/react/docs/component-specs.html) methods as a normal React class. Additionally, it requires a `render` method just like any other React component.
+
+***
 
 ### <a id="Requiring-TuxMutableClass"></a>1) Requiring TuxMutableClass [#](#Requiring-TuxMutableClass)
 The `TuxMutableClass` method `createMutableClass` is exposed by requiring the `Tux` React module, which can be required via:
@@ -40,7 +44,9 @@ The `TuxMutableClass` method `createMutableClass` is exposed by requiring the `T
 
 **Note that at this time for `Tux` to be compiled by the JSX transformer, the `Tux` module must be assigned to the variable name `React`**
 
-### <a id="creating-mutable-class-components"></a>Creating Mutable Class Components [#](#creating-mutable-class-components)
+***
+
+### <a id="creating-mutable-class-components"></a>2) Creating Mutable Class Components [#](#creating-mutable-class-components)
 The `Tux` extended `React` object allows users to create mutable class components via invoking [React.createMutableClass](#createMutableClass). Pass in an object to the `createMutableClass` method and it will return a `TuxMutableClass` which is an extension of a generic React Class.
 
 Let's take a look at an example: [#](#create-mutable-class-example)
@@ -66,13 +72,17 @@ Let's take a look at an example: [#](#create-mutable-class-example)
 
 Below is the api documentation for this method.
 
-### <a id="React-createMutableClass"></a>React.createMutableClass [#](#React-createMutableClass)
+***
+
+### <a id="React-createMutableClass"></a>3) React.createMutableClass [#](#React-createMutableClass)
 
 ```javascript
   var Message = React.createMutableClass(mutableClassProps);
 ```
 
-#### <a id="createMutableClass-mutableClassProps"></a>Parameter - `mutableClassProps` - type: OBJECT - required [#](#createMutableClass-mutableClassProps)
+***
+
+#### <a id="createMutableClass-mutableClassProps"></a>3.1) Parameter - `mutableClassProps` - type: OBJECT - required [#](#createMutableClass-mutableClassProps)
 Methods and properties to extend the returned `mutableClass` object with. Expected keys:
 
 ##### <a id="mutableClassProps-mutableTraits"></a>Property - `mutableClassProps.mutableTraits` - type: OBJECT - optional [#](#mutableClassProps-mutableTraits)
@@ -111,7 +121,9 @@ A trait, or array of traits, or an array of arrays of traits, within the compone
     };
 ```
 
-#### <a id="mutableClassProps-render"></a>Parameter - `mutableClassProps.render` - type: FUNCTION - required [#](#mutableClassProps-render)
+***
+
+#### <a id="mutableClassProps-render"></a>3.2) Parameter - `mutableClassProps.render` - type: FUNCTION - required [#](#mutableClassProps-render)
 As with any other `React` class, a [render](#http://facebook.github.io/react/docs/component-specs.html#render) method is required. This method is responsible for returning a `React Element` which can be rendered onto the DOM.
 
 ```javascript
@@ -124,7 +136,9 @@ As with any other `React` class, a [render](#http://facebook.github.io/react/doc
     };
 ```
 
-#### <a id="mutableClassProps-LIFECYCLE_AND_SPECS"></a>Methods/Properties - `mutableClassProps.LIFECYCLE_AND_SPECS` - type: FUNCTIONs - optional [#](#mutableClassProps-LIFECYCLE_AND_SPECS)
+***
+
+#### <a id="mutableClassProps-LIFECYCLE_AND_SPECS"></a>3.3) Methods/Properties - `mutableClassProps.LIFECYCLE_AND_SPECS` - type: FUNCTIONs - optional [#](#mutableClassProps-LIFECYCLE_AND_SPECS)
 As with any other `React` class, the `mutableClassProps` can optionally include `React` [lifecycle methods and specs](#http://facebook.github.io/react/docs/component-specs.html).
 
 ```javascript
@@ -136,10 +150,14 @@ As with any other `React` class, the `mutableClassProps` can optionally include 
 #### <a id="createMutableClass-mutableClass"></a>Return - `mutableClass` - type: OBJECT [#](#createMutableClass-mutableClass)
 Returns a React class augmented with special `Tux` mixins.
 
+***
+
 ## <a id="TuxMutableClass-Guidelines"></a>TuxMutableClass Guidelines [#](#TuxMutableClass-Guidelines)
 We recommend using the mutable class in situations where you are rendering many components of the same class, and only some of the state and props in those components will ever update.
 
 A specific example is if you have tens or hundreds of message components rendering on the screen. The mutable class would be beneficial at that point because most of those message components can update, but will not necessarily update with great frequency. Therefore having components that will check to see if they should re-render in the virtual DOM can result in a performance boost with the more messages that are on the screen. If someone edits the text of a message, instead of re-rendering all of the other messages in the virtual DOM, the mutable class will only re-render the message that has to update.
+
+***
 
 ## <a id="TuxMutableClass-Complete-Example"></a>TuxMutableClass Complete Example [#](#TuxMutableClass-Complete-Example)
 Taking all that we have learned so far let's take a look at a more realistic example.

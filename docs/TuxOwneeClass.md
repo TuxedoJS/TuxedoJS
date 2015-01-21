@@ -26,6 +26,8 @@
 ## <a id="Premise"></a>Premise [#](#Premise)
 >The `OwneeClass` is an opinionated [React](http://facebook.github.io/react/) class that is not designed to manage any of its own state other than, in some cases, necessary state to implement two-way data-binding for input validation. Instead the `OwneeClass` uses dynamic properties passed down by `props` as per the normal `React` workflow, and static properties and methods shared automatically by the nearest parent `OwnerClass` component. The `OwnerClass` shares these properties and methods with the `OwneeClass` without having to cascade those properties down as per the usual `React` workflow.
 
+***
+
 ## <a id="Implementation"></a>Implementation [#](#Implementation)
 An `OwnerClass` will use the `registerOwnerProps` method to specifiy methods and `props` that they want to share with their children. Then when an `OwneeClass` component mounts, they automatically receive the `nearestOwnerProps` object.
 
@@ -78,7 +80,9 @@ Returns an `OwneeClass` based on the passed in `owneeClassProps`
     var OwneeClass = React.createOwneeClass(owneeClassProps);
 ```
 
-#### <a id="createOwneeClass-owneeClassProps"></a>Parameter - `owneeClassProps` - type: OBJECT - required [#](#createOwneeClass-owneeClassProps)
+***
+
+#### <a id="createOwneeClass-owneeClassProps"></a>3.1) Parameter - `owneeClassProps` - type: OBJECT - required [#](#createOwneeClass-owneeClassProps)
 Properties of the `OwneeClass` to be created. Expected keys:
 
 ##### <a id="owneeClassProps-render"></a>Property - `owneeClassProps.render` - type: FUNCTION - required [#](#owneeClassProps-render)
@@ -137,7 +141,7 @@ The `nearestOwnerProps` should be static, if you need to pass in dynamic `props`
 
 ***
 
-##### <a id="TuxOwneeClass-Guidelines"></a>4) TuxOwneeClass Guidelines [#](#TuxOwneeClass-Guidelines)
+### <a id="TuxOwneeClass-Guidelines"></a>4) TuxOwneeClass Guidelines [#](#TuxOwneeClass-Guidelines)
 It is quite possible to never take advantage of the versatility that is provided by using the `nearestsOwnerProps`. Yet you would be missing out on the benefits that it provides. Passing properties down through a multitude of components is error prone, as it is easy to forget to pass all properties or methods that you need. Part of this difficulty can be alleviated by using `propTypes` to validate a component's prop inputs and using the `React Spread` syntax to cascade down properties. However, even with those tools prop sharing is difficult and fragile. Additionally, it significantly hurts our ability to reuse components since our components now have to request `props` that they would not normally need just so that they can share those `props` with their children. Finally, cascading down `props` makes your `React` components vulnerable to refactoring/changes in component structure since you have to make sure you have the correct `props` in the correct places whenever you want to restructure your components. With `Tux`, as long as the `nearestOwnerClasss` to the component doesn't change you can freely refactor your `React` structure without having to worry about losing access to your needed properties.
 
 ```javascript
