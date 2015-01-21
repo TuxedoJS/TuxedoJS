@@ -13,16 +13,12 @@
       "docs": []
     },
     {
-      "section": "TuxComponents",
-      "docs": []
-    },
-    {
       "section": "TuxModularity",
       "docs": []
     },
     {
       "section": "TuxReact",
-      "docs": []
+      "docs": ["TuxOwneeClass", "TuxOwnerClass", "TuxMutableClass"]
     },
     {
       "section": "TuxRouter",
@@ -30,7 +26,7 @@
     },
     {
       "section": "TuxStores",
-      "docs": []
+      "docs": ["TuxActionStores"]
     }
   ]
 }
