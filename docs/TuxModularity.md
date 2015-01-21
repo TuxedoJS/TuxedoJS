@@ -1,5 +1,5 @@
-#Tux Modularity
-##Table of Contents
+# Tux Modularity
+## Table of Contents
 <ol>
   <li><a href="#Premise">Premise</a></li>
   <li><a href="#Implementation">Implementation</a></li>
