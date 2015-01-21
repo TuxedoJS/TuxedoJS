@@ -10,6 +10,8 @@
 ## <a id="Premise"></a>Premise [#](#Premise)
 >The Tux Router simply exposes the functionality of the amazing `react-router` module and allows it to be easily accessible in your Tux projects. This documentation is borrowed from the `react-router` docs and is only slightly adjusted. To read more about the fabulous `react-router` visit the [`react-router` Github page.](https://github.com/rackt/react-router)
 
+***
+
 ## <a id="Implementation"></a>Implementation [#](#Implementation)
 To use the `react-router` in Tux, simply require the components you need. In this case, the `Route` and `RouterHandler` components.
 
@@ -19,6 +21,8 @@ To use the `react-router` in Tux, simply require the components you need. In thi
 ```
 
 Tux breaks up the `react-router` into individual modules. Thus, in tux you can require the component you need through the `tux/Router/ROUTER_COMPONENT` path structure. For a full guide on all of `react-router's` components and implementation, please refer to the [React Router Guide.](https://github.com/rackt/react-router/blob/master/docs/guides/overview.md)
+
+***
 
 ## <a id="Complete-Example"></a>Complete Example [#](#Complete-Example)
 

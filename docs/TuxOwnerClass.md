@@ -26,6 +26,8 @@
 ## <a id="Premise"></a>Premise [#](#Premise)
 >The `OwnerClass` is an opinionated [React](http://facebook.github.io/react/) class designed to manage state in an application. It is also an excellent class to use as an endpoint for a client side route in the app. The `OwnerClass` possesses methods that allow it to more easily connect with a store or stores and expose its properties to child components without having to cascade those properties down as per the usual `React` workflow.
 
+***
+
 ## <a id="Implementation"></a>Implementation [#](#Implementation)
 The `OwnerClass` is an extension on top of the `OwneeClass` and thus has all of the same methods and properties as well as those listed below. Please see the `OwneeClass` docs for further information on these properties.
 
@@ -94,7 +96,9 @@ Returns an `OwnerClass` based on the passed in `ownerClassProps`
     var OwnerClass = React.createOwnerClass(ownerClassProps);
 ```
 
-#### <a id="createOwnerClass-ownerClassProps"></a>Parameter - `ownerClassProps` - type: OBJECT - required [#](#createOwnerClass-ownerClassProps)
+***
+
+#### <a id="createOwnerClass-ownerClassProps"></a>3.1) Parameter - `ownerClassProps` - type: OBJECT - required [#](#createOwnerClass-ownerClassProps)
 Properties of the `OwnerClass` to be created. Expected keys:
 
 ##### <a id="ownerClassProps-render"></a>Property - `ownerClassProps.render` - type: FUNCTION - required [#](#ownerClassProps-render)

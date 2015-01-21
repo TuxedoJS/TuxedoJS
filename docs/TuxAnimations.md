@@ -39,6 +39,8 @@
 ## <a id="Premise"></a>Premise [#](#Premise)
 >Tux Animations is a library of easy to use default animation components and easings. These default animations can also be customized via their properties. Additionally Tux Animations includes the `createAnimation` function which can be used to create custom animation components.
 
+***
+
 ## <a id="Implementation"></a>Implementation [#](#Implementation)
 
 #### <a id="Requiring-Animations"></a>1) Requiring Animations Components [#](#Requiring-Animations)
@@ -57,6 +59,8 @@ Tux is a modular framework and as such it is possible to require only the minima
   var Fly = require('tux/Animations/Fly');
   var FadeUp = require('tux/Animations/Fade/Up');
 ```
+
+***
 
 #### <a id="Rendering-Animations"></a>2) Rendering Animation Components [#](#Rendering-Animations)
 The only other step to implementing a Tux animation is to wrap the element you want animated with the desired animation component within the render method of your `React.createClass` function.
@@ -129,6 +133,8 @@ A numeric id can be specified, in which case all elements will receive that key.
 ##### <a id="Default-Animations"></a>Default Animations [#](#Default-Animations)
 In this implementation, the Fly component will inherit its default CSS transitions because no additional properties are defined. Each default animation component has its own default CSS transitions which you can view in the source code of the animation. To view all default animations, please visit the documentation under the Tux/Animations folder.
 
+***
+
 #### <a id="Customize-Animation-Properties"></a>3) Customize Default Animation Properties [#](#Customize-Animation-Properties)
 
 Tux also allows easy customization of default animation components via their properties. Each animation component has 4 properties which are customizable and are completely optional.
@@ -192,6 +198,8 @@ The custom property accepts an object as an input with any CSS properties you wi
 Finally, let's see how the default Fly animation looks now that it has been customized via its 4 default properties:
 
 ![Animation 2](http://cdn.makeagif.com/media/1-12-2015/9Hqmtk.gif)
+
+***
 
 #### <a id="Make-your-own-animation-components"></a>4) Make Your Own Animation Components [#](#Make-your-own-animation-components)
 Requiring Tux Animations exposes a createAnimation function which allows the creation of custom animation components. The createAnimation function creates a custom component based on a passed in transition object and then wraps that custom component in a ReactTransitionGroup. The createAnimation function has one required parameter: `transitions` and two optional parameters: `customClassName` and `tagToRender`.
@@ -268,6 +276,8 @@ Just as with the default animation implementations, you can wrap whatever elemen
     <h1>Hello World</h1>
   </Zoom>
 ```
+
+***
 
 ## <a id="Complete-Example"></a>Complete Tux Animations Example [#](#Complete-Example)
 This example uses default Tux Animation components, all of the customizable properties, and implements a custom animation via the `createAnimation` function.

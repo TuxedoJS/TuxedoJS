@@ -25,20 +25,24 @@
 ## <a id="Premise"></a>Premise [#](#Premise)
 >TuxedoJS provides a novel approach for describing the dependencies between stores. In Flux, store dependencies are defined via the `Dispatcher.waitFor` syntax. This allows stores to define the order at which they will receive events from the dispatcher. While this syntax is workable, we consider it to be flawed due to the fact that it requires each store to separately manage the stores it needs to waitFor. This can result in distributed app architectures that are difficult to reason about. For an engineer to understand all the store relationships in an app, he/she would need to step through every store file and draw out a map of the stores that it is dependent on. TuxedoJS tackles this problem by centralizing waitFor statements and providing a more semantic interface for building waitFor relationships.
 
+***
+
 ## <a id="Implementation"></a>Implementation [#](#Implementation)
 TuxedoJS provides two major innovations for defining store dependencies:
 
 1. It allows you to write all of your store dependencies in a single location. This means that **one** file is responsible for managing your app's architecture.
 2. It allows you to describe your store dependencies in terms of the inputs to and outputs from each of your stores.
 
-### <a name="Requiring-Architecture"></a>Requiring Architecture [#](#Requiring-Architecture)
+### <a name="Requiring-Architecture"></a>1) Requiring Architecture [#](#Requiring-Architecture)
 The Architecture interface is exposed via:
 
 ```javascript
     var Architecture = require('tux/Architecture');
 ```
 
-### <a id="Architecting-Store-Dependencies"></a>Architecting Store Dependencies [#](#Architecting-Store-Dependencies)
+***
+
+### <a id="Architecting-Store-Dependencies"></a>2) Architecting Store Dependencies [#](#Architecting-Store-Dependencies)
 Let's take a look at an example. Imagine we want to describe the following network of store dependencies, where each store is dependent on the store it points to: [#](#Architecting-Store-Dependencies-Example)
 <a id="Architecting-Store-Dependencies-Example"></a>
 
@@ -104,14 +108,18 @@ While this approach is shorter it can be advantageous to use the string approach
 
 Below is the full API documentation for the `architect` method.
 
-#### <a id="Architecture-architect"></a>Architecture.architect [#](#Architecture-architect)
+***
+
+#### <a id="Architecture-architect"></a>2.1) Architecture.architect [#](#Architecture-architect)
 Accepts a store and returns an `architectureChain` instance to define the store's inputs and outputs.
 
 ```javascript
     var architectureChain = Architecture.architect(storeToArchitect);
 ```
 
-##### <a id="architect-storeToArchitect"></a>Parameter - `storeToArchitect` - type: OBJECT - required [#](#architect-storeToArchitect)
+***
+
+##### <a id="architect-storeToArchitect"></a>2.1.1) Parameter - `storeToArchitect` - type: OBJECT - required [#](#architect-storeToArchitect)
 Store to architect. The returned architectureChain instance will be able to add dependencies to this store, and define the outputs that other stores can use to add a dependency for this store.
 
 ```javascript
@@ -121,10 +129,14 @@ Store to architect. The returned architectureChain instance will be able to add 
 ##### <a id="architect-architectureChain"></a>Return - `architectureChain` - type: OBJECT [#](#architect-architectureChain)
 Object to chain architecture methods onto. It is defined below.
 
-#### <a id="architectureChain"></a>architectureChain - type: OBJECT [#](#architectureChain)
+***
+
+#### <a id="architectureChain"></a>2.2) architectureChain - type: OBJECT [#](#architectureChain)
 The `architectureChain` instance returned from the `Architecture.architect` method. It possesses the following methods, each of which return this same architectureChain instance in order to allow method chaining:
 
-##### <a id="architectureChain-itNeeds"></a>Method - `architectureChain.itNeeds` - type: FUNCTION [#](#architectureChain-itNeeds)
+***
+
+##### <a id="architectureChain-itNeeds"></a>2.2.1) Method - `architectureChain.itNeeds` - type: FUNCTION [#](#architectureChain-itNeeds)
 Accepts any number of inputs: stores, output strings, or arrays of stores and/or output strings. Adds a dependency to the `storeToArchitect` for each store mapped to the passed in inputs. Returns this `architectureChain` instance for continued method chaining.
 
 ```javascript
@@ -155,7 +167,9 @@ Returns this `architectureChain` instance to allow for continued method chaining
   console.assert(architectureChain === architectureChain.itNeeds('users'));
 ```
 
-##### <a id="architectureChain-itOutputs"></a>Method - `architectureChain.itOutputs` - type: FUNCTION [#](#architectureChain-itOutputs)
+***
+
+##### <a id="architectureChain-itOutputs"></a>2.2.2) Method - `architectureChain.itOutputs` - type: FUNCTION [#](#architectureChain-itOutputs)
 Accepts any number of inputs: strings to output or arrays of strings to output. Maps this `storeToArchitect` to the passed in output(s) so other stores can add dependencies for this store. If another store is already mapped to this output than stores that need the output will become dependent on both of these stores. Returns this `architectureChain` instance for continued method chaining.
 
 ```javascript
@@ -183,7 +197,9 @@ Returns this `architectureChain` instance to allow for continued method chaining
   console.assert(architectureChain === architectureChain.itOutputs('users'));
 ```
 
-##### <a id="architectureChain-and"></a>Method - `architectureChain.and` - type: FUNCTION [#](#architectureChain-and)
+***
+
+##### <a id="architectureChain-and"></a>2.2.3) Method - `architectureChain.and` - type: FUNCTION [#](#architectureChain-and)
 Clones the last invoked method for conjunctive method chaining. Thus, `and` will become the `itNeeds` method after `itNeeds` is invoked. After `itOuputs` is invoked `and` becomes the `itOutputs` method.
 
 ```javascript

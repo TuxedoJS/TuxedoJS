@@ -64,6 +64,8 @@ The crucial concept to understand in Tux Actions is the `actionCategory`. An `ac
 
 The `todoActions` object will possess all of the logic necessary to dispatch todo related events and tools for registering listeners for those events (registering can also be done through the `Actions` object). Below is the API documentation for this method.
 
+***
+
 ### <a id="Actions-createActionCategory"></a>4) Actions.createActionCategory [#](#Actions-createActionCategory)
 Returns an `actionCategory` instance based on the passed in `actionCategoryProps`.
 
@@ -236,6 +238,8 @@ The user can then register a listener to some or all of the verbs in one or mult
 ```
 
 Below is the API documentation for this method.
+
+***
 
 ### <a id="Actions-register"></a>7) Actions.register [#](#Actions-register)
 Registers the passed in store to the `Actions` object and maps store callbacks to action verbs. This method will throw an error if it cannot find a passed in category or action within a category.
