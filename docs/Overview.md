@@ -1,5 +1,5 @@
 # TuxedoJS In a Nutshell
->`TuxedoJS` is a client-side CommonJS based web development framework built on Facebook's awesome `React` view-layer and `Flux` Architecture. It provides a semantic interface for working with `Flux` and augmented `React` components for managing different aspects of the view logic. `Tux` also provides some powerful prebuilt animation components that make animating transitions in `React`  a synch. Lastly, `TuxedoJS` leverages CommonJS modules to provide a completely modular framework which means, unlike other popular frameworks, you only load the pieces of `Tux` you actually intend to use.
+>`TuxedoJS` is a client-side CommonJS based web development framework built on Facebook's awesome `React` view-layer and `Flux` Architecture. It provides a semantic interface for working with `Flux` and augmented `React` components for managing different aspects of the view logic. `Tuxx` also provides some powerful prebuilt animation components that make animating transitions in `React`  a synch. Lastly, `TuxedoJS` leverages CommonJS modules to provide a completely modular framework which means, unlike other popular frameworks, you only load the pieces of `Tuxx` you actually intend to use.
 
 ***
 
@@ -27,31 +27,31 @@ The Dispatcher manages all the view and server events (in `Flux` these are calle
 
 ***
 
-## Where Tux Fits In
+## Where Tuxx Fits In
 `React` and `Flux` are both very powerful. They are even more powerful when used together since the two pieces fit together perfectly to provide all the functionality needed for an app. However, currently there is substantial glue code associated with getting `React` and `Flux` up and running and communicating with each other. More importantly, the standard `Flux` implementation relies on string comparisons and switch statements both of which are extremely fragile and can introduce difficult to track down bugs in a codebase. Lastly, although `Flux` decouples stores as much as possible, sometimes stores will still dependent on each other and managing those dependencies in `Flux` can be an absolute nightmare.
 
-`TuxedoJS` solves these problems by wrapping `React` and `Flux` together into a single framework that abstracts away all of the boilerplate and complexity associated with getting a `Flux` application up and running and communicating with React. Additionally, `Tux` Provides powerful augmented `React` Classes that are designed to handle different aspects of the app frontend such as managing state and listening to events from stores. The `TuxedoJS` app architecture looks like the following:
+`TuxedoJS` solves these problems by wrapping `React` and `Flux` together into a single framework that abstracts away all of the boilerplate and complexity associated with getting a `Flux` application up and running and communicating with React. Additionally, `Tuxx` Provides powerful augmented `React` Classes that are designed to handle different aspects of the app frontend such as managing state and listening to events from stores. The `TuxedoJS` app architecture looks like the following:
 
-![Tux Architecture Diagram](http://i.imgur.com/ouk3Oa8.png "Tux Architecture Diagram")
+![Tuxx Architecture Diagram](http://i.imgur.com/ouk3Oa8.png "Tuxx Architecture Diagram")
 
 Let's dive in to what these different pieces actually represent.
 
 ***
 
 ### The Modular Framework Structure
-In the below examples we are using the `require` syntax associated with `CommonJS` modules. Of note is the fact that we are never writing the line `require('tux');`. That's because there is no global object to require for TuxedoJS. Instead, `Tux` is broken up into individual modules that handle a particular aspect of your application. What's the advantage of this?
+In the below examples we are using the `require` syntax associated with `CommonJS` modules. Of note is the fact that we are never writing the line `require('tuxx');`. That's because there is no global object to require for TuxedoJS. Instead, `Tuxx` is broken up into individual modules that handle a particular aspect of your application. What's the advantage of this?
 
-Firstly, it allows you to write semantic require statements that make it extremely clear what `Tux` modules you need for your individual app components.
+Firstly, it allows you to write semantic require statements that make it extremely clear what `Tuxx` modules you need for your individual app components.
 
-Secondly, it means that, unlike with other popular frameworks, `Tux` never adds any more weight to your app than what you need for your purposes. For example, `TuxedoJS` comes prepackaged with beautiful animations. If you don't want to use them however, they never get loaded and thus never add any bytes to your JavaScript files. Even better, if you want to use just one or some `TuxedoJS` prebuilt animations, simply require those animations and use them, no other animations will get bundled. If you don't need `Tux` Architecture for an app, simply don't require it and it will never get loaded.
+Secondly, it means that, unlike with other popular frameworks, `Tuxx` never adds any more weight to your app than what you need for your purposes. For example, `TuxedoJS` comes prepackaged with beautiful animations. If you don't want to use them however, they never get loaded and thus never add any bytes to your JavaScript files. Even better, if you want to use just one or some `TuxedoJS` prebuilt animations, simply require those animations and use them, no other animations will get bundled. If you don't need `Tuxx` Architecture for an app, simply don't require it and it will never get loaded.
 
 ```javascript
-    var Actions = require('tux/Actions');
-    var Stores = require('tux/Stores');
-    var React = require('tux/React');
-    var Architecture = require('tux/Architecture');
-    var Fly = require('tux/Animations/Fly');
-    var FadeDownBig = require('tux/Animations/Fade/DownBig');
+    var Actions = require('tuxx/Actions');
+    var Stores = require('tuxx/Stores');
+    var React = require('tuxx/React');
+    var Architecture = require('tuxx/Architecture');
+    var Fly = require('tuxx/Animations/Fly');
+    var FadeDownBig = require('tuxx/Animations/Fade/DownBig');
 ```
 
 ***
@@ -66,7 +66,7 @@ This turns the process of managing store relationships from frustrating and diff
     var userStore = require('./stores/userStore');
     var messageStore = require('./stores/messageStore');
 
-    var architect = require('tux/Architecture').architect;
+    var architect = require('tuxx/Architecture').architect;
 
     architect(userStore).itOutputs('usernames');
     architect(roomStore).itNeeds('usernames').itOutputs('message rooms');
@@ -79,7 +79,7 @@ This turns the process of managing store relationships from frustrating and diff
 This allows you to dispatch and listen for actions in a declarative, simple, and safe fashion. Additionally, unlike in `Flux` where it is necessary to use Action Helpers to manage async requests with actions, `TuxedoJS` provides a powerful and semantic `before` method syntax, allowing an action to decide for itself what callbacks need to be invoked before it can dispatch its action.
 
 ```javascript
-    var Actions = require('tux/Actions');
+    var Actions = require('tuxx/Actions');
 
     var roomActions = Actions.createActionCategory({
       category: 'rooms',
@@ -103,7 +103,7 @@ This allows you to dispatch and listen for actions in a declarative, simple, and
 `TuxedoJS` abstracts away all of the boilerplate associated with creating stores and makes it easy to connect stores with actions and views.
 
 ```javascript
-    var Stores = require('tux/Stores');
+    var Stores = require('tuxx/Stores');
     var roomActions = require('../actions/roomActions');
 
     var roomStore = Stores.createStore({
@@ -130,16 +130,16 @@ This allows you to dispatch and listen for actions in a declarative, simple, and
 ***
 
 ### TuxedoJS provides powerful augmented `React` syntax which makes it extremely easy to connect your state managing views with your stores
-`TuxedoJS` provides opinionated `React` classes with built in convenience methods for performing distinct operations in your app. The augmented class in the example below possesses tools for easily and semantically connecting with `Tux` Stores.
+`TuxedoJS` provides opinionated `React` classes with built in convenience methods for performing distinct operations in your app. The augmented class in the example below possesses tools for easily and semantically connecting with `Tuxx` Stores.
 
-**NOTE** here that we are storing the result of `require('tux/React')` in a variable called `React` here. This is to take advantage of React's beautiful JSX syntax, which automatically converts JSX to `React.METHOD NAME`.
+**NOTE** here that we are storing the result of `require('tuxx/React')` in a variable called `React` here. This is to take advantage of React's beautiful JSX syntax, which automatically converts JSX to `React.METHOD NAME`.
 
 ```javascript
-    var React = require('tux/React');
+    var React = require('tuxx/React');
     var roomStore = require('../stores/roomStore');
     var roomActions = require('../actions/roomActions');
 
-    //for this example let's imagine we have created a Rooms and RoomCreateForm TuxReact class
+    //for this example let's imagine we have created a Rooms and RoomCreateForm TuxxReact class
     var Rooms = require('./Rooms');
     var RoomCreateForm = require('./RoomCreateForm');
 
@@ -150,7 +150,7 @@ This allows you to dispatch and listen for actions in a declarative, simple, and
         };
       },
 
-      //TuxOwnerClasses have a connectOwnerToStore method that allows them to easily define the store they listening to the callback to invoke when the store data updates
+      //TuxxOwnerClasses have a connectOwnerToStore method that allows them to easily define the store they listening to the callback to invoke when the store data updates
       connectOwnerToStore: function () {
         return {
           store: roomStore,
@@ -162,7 +162,7 @@ This allows you to dispatch and listen for actions in a declarative, simple, and
         };
       },
 
-      //TuxOwnerClasses can automatically share static props and methods with any level of child component as long as there is not another OwnerClass between the two. In this case all children beneath the RoomViewOwner will automatically have access to the delete and edit methods under this.nearestOwnerProps
+      //TuxxOwnerClasses can automatically share static props and methods with any level of child component as long as there is not another OwnerClass between the two. In this case all children beneath the RoomViewOwner will automatically have access to the delete and edit methods under this.nearestOwnerProps
       registerOwnerProps: function () {
         return {
           delete: roomActions.delete,
@@ -185,10 +185,10 @@ This allows you to dispatch and listen for actions in a declarative, simple, and
     module.exports = RoomViewOwner;
 ```
 
-`Tux` even provides a class designed to take advantage of the performance boosting tools in `React` for performance critical components in your application.
+`Tuxx` even provides a class designed to take advantage of the performance boosting tools in `React` for performance critical components in your application.
 
 ```javascript
-    var React = require('tux/React');
+    var React = require('tuxx/React');
 
     var Room = React.createMutableClass({
       propTypes: {
@@ -226,4 +226,4 @@ This allows you to dispatch and listen for actions in a declarative, simple, and
 ***
 
 ## Next Steps
-Hopefully now you are a little excited about `TuxedoJS` and how you can use it in your apps. From here you can head to [getting started](./getting-started) to build a basic Todo app in `Tux`. Alternatively, take a look at our deployed [Tux Chat App](TuxedoJS.github.io/TuxChatApp) and [Tux Todo App](TuxedoJS.github.io/TuxTodoApp). Lastly, check out our [api documentation](./docs) to get a deep dive with `Tux`.
+Hopefully now you are a little excited about `TuxedoJS` and how you can use it in your apps. From here you can head to [getting started](./getting-started) to build a basic Todo app in `Tuxx`. Alternatively, take a look at our deployed [Tuxx Chat App](TuxedoJS.github.io/TuxxChatApp) and [Tuxx Todo App](TuxedoJS.github.io/TuxxTodoApp). Lastly, check out our [api documentation](./docs) to get a deep dive with `Tuxx`.

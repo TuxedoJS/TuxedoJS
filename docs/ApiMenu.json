@@ -1,32 +1,32 @@
 {
   "data": [
     {
-      "section": "TuxActions",
+      "section": "TuxxActions",
       "docs": []
     },
     {
-      "section": "TuxAnimations",
+      "section": "TuxxAnimations",
       "docs": []
     },
     {
-      "section": "TuxArchitecture",
+      "section": "TuxxArchitecture",
       "docs": []
     },
     {
-      "section": "TuxModularity",
+      "section": "TuxxModularity",
       "docs": []
     },
     {
-      "section": "TuxReact",
-      "docs": ["TuxOwneeClass", "TuxOwnerClass", "TuxMutableClass"]
+      "section": "TuxxReact",
+      "docs": ["TuxxOwneeClass", "TuxxOwnerClass", "TuxxMutableClass"]
     },
     {
-      "section": "TuxRouter",
+      "section": "TuxxRouter",
       "docs": []
     },
     {
-      "section": "TuxStores",
-      "docs": ["TuxActionStores"]
+      "section": "TuxxStores",
+      "docs": ["TuxxActionStores"]
     }
   ]
 }

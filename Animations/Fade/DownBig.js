@@ -1,8 +1,8 @@
 'use strict';
 
-var createAnimation = require('tux/Animations').createAnimation;
+var createAnimation = require('tuxx/Animations').createAnimation;
 var assign = require('object-assign');
-var CommonOpacityProps = require('tux/Animations/CommonOpacityProps');
+var CommonOpacityProps = require('tuxx/Animations/CommonOpacityProps');
 //Default FadeDownBig animation component
 var FadeDownBig = {
   //Class name given to the animation component once mounted
@@ -24,5 +24,5 @@ var FadeDownBig = {
     'transform': 'translateY(-200px)'
   })
 };
-//Use createAnimation function from main Tux Animation module to create wrapping animation component and pass in the default params
+//Use createAnimation function from main Tuxx Animation module to create wrapping animation component and pass in the default params
 module.exports = createAnimation(FadeDownBig);

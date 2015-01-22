@@ -1,4 +1,4 @@
-var React = require('tux/React');
+var React = require('tuxx/React');
 
 //Creates a simple component to be used for testing
 var Idea = React.createClass({

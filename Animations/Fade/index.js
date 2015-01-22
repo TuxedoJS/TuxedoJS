@@ -1,8 +1,8 @@
 'use strict';
 
-var createAnimation = require('tux/Animations').createAnimation;
+var createAnimation = require('tuxx/Animations').createAnimation;
 var assign = require('object-assign');
-var CommonOpacityProps = require('tux/Animations/CommonOpacityProps');
+var CommonOpacityProps = require('tuxx/Animations/CommonOpacityProps');
 //Default Fade animation component
 var Fade = {
   //Class name given to the animation component once mounted
@@ -16,5 +16,5 @@ var Fade = {
   //CSS for wrapped component when leave animation completes
   'leave-active': CommonOpacityProps['leave-active']
 };
-//Use createAnimation function from main Tux Animation module to create wrapping animation component and pass in the default params
+//Use createAnimation function from main Tuxx Animation module to create wrapping animation component and pass in the default params
 module.exports = createAnimation(Fade);
