@@ -1,4 +1,4 @@
-![Tux Logo](https://raw.githubusercontent.com/TuxedoJS/TuxedoJS/master/Tux-full-logo.png "Tux-Logo") <br />
+![Tuxx Logo](https://raw.githubusercontent.com/TuxedoJS/TuxedoJS/master/Tuxx-full-logo.png "Tuxx-Logo") <br />
 [![Build Status](https://semaphoreapp.com/api/v1/projects/12b19e4d-b5d5-4e16-8614-b08f651e51c5/323763/badge.png)](https://semaphoreapp.com/cheerazar/tuxedojs)
 
 > A Front-End Javascript Framework built on Facebook’s powerful React view layer and Flux architecture.
