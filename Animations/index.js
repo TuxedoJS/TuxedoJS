@@ -1,3 +1,3 @@
 module.exports = {
-  createAnimation: require('../src/TuxAnimations')
+  createAnimation: require('tuxx/src/TuxxAnimations')
 };

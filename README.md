@@ -1,4 +1,4 @@
-![Tux Logo](https://raw.githubusercontent.com/TuxedoJS/TuxedoJS/master/Tux-full-logo.png "Tux-Logo") <br />
+![Tuxx Logo](https://raw.githubusercontent.com/TuxedoJS/TuxedoJS/master/Tuxx-full-logo.png "Tuxx-Logo") <br />
 [![Build Status](https://semaphoreapp.com/api/v1/projects/12b19e4d-b5d5-4e16-8614-b08f651e51c5/323763/badge.png)](https://semaphoreapp.com/cheerazar/tuxedojs)
 
 > A Front-End Javascript Framework built on Facebook’s powerful React view layer and Flux architecture.
@@ -24,10 +24,10 @@
 
 ## Features and Examples
 
-`Tux` abstracts away the complexity of `Flux` with powerful `Actions` syntax:
+`Tuxx` abstracts away the complexity of `Flux` with powerful `Actions` syntax:
 
 ```javascript
-    var Actions = require('tux/Actions');
+    var Actions = require('tuxx/Actions');
 
     var todoActions = Actions.createActionCategory({
       category: 'todos',
@@ -38,11 +38,11 @@
     module.exports = todoActions;
 ```
 
-`Tux` provides all of the glue code needed to build stores and register them with the `TuxActions` dispatcher:
+`Tuxx` provides all of the glue code needed to build stores and register them with the `TuxxActions` dispatcher:
 
 ```javascript
     var TodoActions = require('./TodoActions')
-    var ActionStores = require('tux/Stores/ActionStores');
+    var ActionStores = require('tuxx/Stores/ActionStores');
 
     var todoStore = ActionStores.createStore({
       _todos: [],
@@ -69,19 +69,19 @@
     module.exports = todoStore;
 ```
 
-`Tux` provides powerful opinionated `React` classes that make connecting with your stores, sharing methods with child components, and building high performance components a synch.
+`Tuxx` provides powerful opinionated `React` classes that make connecting with your stores, sharing methods with child components, and building high performance components a synch.
 
 A high performance component:
 
 ```javascript
-    var React = require('tux/React');
+    var React = require('tuxx/React');
 
     var Todo = React.createMutableClass({
       mutableTraits: {
         props: 'text'
       },
 
-      //tux provides tools for automatically sharing static properties and methods between components via nearestOwnerProps
+      //tuxx provides tools for automatically sharing static properties and methods between components via nearestOwnerProps
       handleRemove: function (e) {
         e.preventDefault();
         this.nearestOwnerProps.remove(this.props.todo);
@@ -98,7 +98,7 @@ A high performance component:
     module.exports = Todo;
 ```
 
-A standard `Tux` component:
+A standard `Tuxx` component:
 
 ```javascript
     var TodoCreateForm = React.createOwneeClass({
@@ -122,7 +122,7 @@ A standard `Tux` component:
     module.exports = TodoCreateForm;
 ```
 
-A `Tux` class designed to manage state and pass down properties/methods:
+A `Tuxx` class designed to manage state and pass down properties/methods:
 
 ```javascript
     var todoStore = require('./todoStore');
@@ -164,12 +164,12 @@ A `Tux` class designed to manage state and pass down properties/methods:
     });
 ```
 
-`Tux` provides an entire library of semantic plug-and-play animations.
+`Tuxx` provides an entire library of semantic plug-and-play animations.
 
 ```javascript
-    var React = require('tux/React');
-    var Fly = require('tux/Animations/Fly');
-    var FadeUp = require('tux/Animations/Fade/Up');
+    var React = require('tuxx/React');
+    var Fly = require('tuxx/Animations/Fly');
+    var FadeUp = require('tuxx/Animations/Fade/Up');
 
     var Home = React.createClass({
       render: function () {
@@ -187,16 +187,16 @@ A `Tux` class designed to manage state and pass down properties/methods:
     });
 ```
 
-See our [TuxedoJS Doc Site](https://tuxedojs.org) for a full list of `Tux` features and functionality.
+See our [TuxedoJS Doc Site](https://tuxedojs.org) for a full list of `Tuxx` features and functionality.
 
 
 ## Graceful Degradation
 
-> Tux allows you to be as classy as you want.
+> Tuxx allows you to be as classy as you want.
 
-An integral facet of the `Tux` architecture is that you can use as much or as little of it as you want. `Tux` does absolutely no modifying of the underlying `React` and `Flux` components it is built upon, but rather extends their core functionality and provides more intuitive interfaces for leveraging their power.
+An integral facet of the `Tuxx` architecture is that you can use as much or as little of it as you want. `Tuxx` does absolutely no modifying of the underlying `React` and `Flux` components it is built upon, but rather extends their core functionality and provides more intuitive interfaces for leveraging their power.
 
-Furthermore, `Tux` was designed to be as modular as possible, allowing you to only use the specific parts you need. It is for this very reason that we don't pollute the global namespace with one large `Tux` object that holds unncessary Javascript.
+Furthermore, `Tuxx` was designed to be as modular as possible, allowing you to only use the specific parts you need. It is for this very reason that we don't pollute the global namespace with one large `Tuxx` object that holds unncessary Javascript.
 
 Thus, feel free to fall back to `React` or `Flux` conventions as much or as little as you desire. We hope you enjoy the flexibility.
 
@@ -211,11 +211,11 @@ Thus, feel free to fall back to `React` or `Flux` conventions as much or as litt
 
 Install `TuxedoJS` through npm:
 
-    npm install tux
+    `npm install tuxx`
 
 ### Tasks and Dependencies
 
-Tux is built with CommonJS and thus you will need a compiler such as `Browserify` or `webpack`. In our case, we use `Browserify` for compiling, `Reactify` for compiling JSX, `Envify` for accessing NODE_ENV variables in the browser (great for automatically turning dev tools on and off), and `Watchify` for automatic compiling.
+Tuxx is built with CommonJS and thus you will need a compiler such as `Browserify` or `webpack`. In our case, we use `Browserify` for compiling, `Reactify` for compiling JSX, `Envify` for accessing NODE_ENV variables in the browser (great for automatically turning dev tools on and off), and `Watchify` for automatic compiling.
 
     npm install --save browserify
     npm install --save envify

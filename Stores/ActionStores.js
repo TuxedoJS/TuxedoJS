@@ -1,3 +1,3 @@
 module.exports = {
-  createStore: require('../src/TuxActionStore')
+  createStore: require('tuxx/src/TuxxActionStore')
 };
