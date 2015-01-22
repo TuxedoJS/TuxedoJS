@@ -1,7 +1,7 @@
 ![Tuxx Logo](https://raw.githubusercontent.com/TuxedoJS/TuxedoJS/master/Tuxx-full-logo.png "Tuxx-Logo") <br />
 [![Build Status](https://semaphoreapp.com/api/v1/projects/12b19e4d-b5d5-4e16-8614-b08f651e51c5/323763/badge.png)](https://semaphoreapp.com/cheerazar/tuxedojs)
 
-> A Front-End JavaScript Framework built on Facebook’s powerful React view layer and Flux architecture.
+> A Front-End JavaScript Framework built on Facebook&#39;s powerful React view layer and Flux architecture.
 
 [React](https://github.com/facebook/react) and [Flux](https://github.com/facebook/flux) are two novel and exciting approaches to front-end development. Lots of people use `React` as the V in MVC, since it makes no assumptions about the rest of your technology stack and it uses a *virtual DOM* diff implementation for ultra-high performance.
 
