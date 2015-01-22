@@ -1,28 +1,32 @@
 ![Tuxx Logo](https://raw.githubusercontent.com/TuxedoJS/TuxedoJS/master/Tuxx-full-logo.png "Tuxx-Logo") <br />
 [![Build Status](https://semaphoreapp.com/api/v1/projects/12b19e4d-b5d5-4e16-8614-b08f651e51c5/323763/badge.png)](https://semaphoreapp.com/cheerazar/tuxedojs)
 
-> A Front-End Javascript Framework built on Facebook’s powerful React view layer and Flux architecture.
+> A Front-End JavaScript Framework built on Facebook’s powerful React view layer and Flux architecture.
 
 [React](https://github.com/facebook/react) and [Flux](https://github.com/facebook/flux) are two novel and exciting approaches to front-end development. Lots of people use `React` as the V in MVC, since it makes no assumptions about the rest of your technology stack and it uses a *virtual DOM* diff implementation for ultra-high performance.
 
-`Flux` is an application architecture for `React` that remedies the problems with predicting application changes in two-way directional data flow by utilizing a *unidirectional data flow*, making it easier to understand and modify an application as it becomes more complicated. In `Flux`, the `Dispatcher` is a singleton that directs the flow of data and ensures that updates do not cascade. As an application grows, the `Dispatcher` becomes more vital, as it can also manage dependencies between stores by invoking the registered callbacks in a specific order. See this blog for more on [Flux](http://facebook.github.io/react/blog/2014/05/06/flux.html).
+`Flux` is an application architecture for `React` that remedies the problems associated with predicting changes in applications that use two-way directional data flows, instead utilizing a *unidirectional data flow* which makes it easier to understand and modify an application as it becomes more complicated. In `Flux`, the `Dispatcher` is a singleton that directs the flow of data and ensures that updates do not cascade. As an application grows, the `Dispatcher` becomes more vital, as it can also manage dependencies between stores by invoking the registered callbacks in a specific order. See this blog for more on [Flux](http://facebook.github.io/react/blog/2014/05/06/flux.html).
 
-'TuxedoJS' capitalizes on the performance benefits of `React` and simplified application architecture of `Flux`, abstracting away unnecessary complexity and implementing a more accessible and semantic interface for working with `Flux` and augmented `React` components in various aspects of the view logic.
+`TuxedoJS` capitalizes on the performance benefits of `React` and the simplified application architecture of `Flux`. It abstracts away unnecessary complexity and implements a more accessible and semantic interface for working with `Flux` and augmented `React` components in various aspects of the view logic.
 
 ## Table of Contents
+<ol>
+  <li><a href="#Features-and-Examples">Features and Examples</a></li>
+  <li><a href="#Graceful-Degradation">Graceful Degradation</a></li>
+  <li><a href="#Requirements">Requirements</a></li>
+  <li><a href="#Development">Development</a>
+    <ol style="list-style-type:upper-alpha">
+      <li><a href="#Installing-TuxedoJS">Installing TuxedoJS</a></li>
+      <li><a href="#Tasks-and-Dependencies">Tasks and Dependencies</a></li>
+      <li><a href="#Roadmap">Roadmap</a></li>
+    </ol>
+  </li>
+  <li><a href="#Credits-and-Tech-Stack">Credits and Tech Stack</a></li>
+  <li><a href="#Interested-in-Contributing">Interested in Contributing?</a></li>
+  <li><a href="#Team">Team</a></li>
+</ol>
 
-1. [Features](#features-and-examples)
-1. [Graceful Degradation](#graceful-degradation)
-1. [Requirements](#requirements)
-1. [Development](#development)
-    1. [Installing Dependencies](#installing-dependencies)
-    1. [Tasks](#tasks)
-    1. [Roadmap](#roadmap)
-1. [Credits and Tech Stack](#credits-and-tech-stack)
-1. [Contributing](#interested-in-contributing)
-1. [Team](#team)
-
-## Features and Examples
+## <a id="Features-and-Examples"></a>Features and Examples [#](#Features-and-Examples)
 
 `Tuxx` abstracts away the complexity of `Flux` with powerful `Actions` syntax:
 
@@ -90,7 +94,7 @@ A high performance component:
       render: function () {
         return (
           <p>{ this.props.todo.text }</p>
-          <button onClick={this.handleRemove}>Delete</buttion>
+          <button onClick={this.handleRemove}>Delete</button>
         );
       }
     });
@@ -102,6 +106,11 @@ A standard `Tuxx` component:
 
 ```javascript
     var TodoCreateForm = React.createOwneeClass({
+      //you can perform propType checking on nearestOwnerProps too
+      nearestOwnerPropTypes: {
+        add: React.PropTypes.func.isRequired
+      },
+
       //again, using automatically shared static methods here via 'nearestOwnerProps'
       handleSubmit: function (e) {
         e.preventDefault();
@@ -189,31 +198,37 @@ A `Tuxx` class designed to manage state and pass down properties/methods:
 
 See our [TuxedoJS Doc Site](https://tuxedojs.org) for a full list of `Tuxx` features and functionality.
 
+***
 
-## Graceful Degradation
+## <a id="Graceful-Degradation"></a>Graceful Degradation [#](#Graceful-Degradation)
 
 > Tuxx allows you to be as classy as you want.
 
 An integral facet of the `Tuxx` architecture is that you can use as much or as little of it as you want. `Tuxx` does absolutely no modifying of the underlying `React` and `Flux` components it is built upon, but rather extends their core functionality and provides more intuitive interfaces for leveraging their power.
 
-Furthermore, `Tuxx` was designed to be as modular as possible, allowing you to only use the specific parts you need. It is for this very reason that we don't pollute the global namespace with one large `Tuxx` object that holds unncessary Javascript.
+Furthermore, `Tuxx` was designed to be as modular as possible, allowing you to only use the specific parts you need. It is for this very reason that we don't pollute the global namespace with one large `Tuxx` object that holds unncessary JavaScript.
 
 Thus, feel free to fall back to `React` or `Flux` conventions as much or as little as you desire. We hope you enjoy the flexibility.
 
+***
 
-## Requirements
+## <a id="Requirements"></a>Requirements [#](#Requirements)
 
 - Node 0.10.x
 
-## Development
+***
 
-### Installing TuxedoJS
+## <a id="Development"></a>Development [#](#Development)
+
+### <a id="Installing-TuxedoJS"></a>Installing TuxedoJS [#](#Installing-TuxedoJS)
 
 Install `TuxedoJS` through npm:
 
-    `npm install tuxx`
+    npm install tuxx
 
-### Tasks and Dependencies
+***
+
+### <a id="Tasks-and-Dependencies"></a>Tasks and Dependencies [#](#Tasks-and-Dependencies)
 
 Tuxx is built with CommonJS and thus you will need a compiler such as `Browserify` or `webpack`. In our case, we use `Browserify` for compiling, `Reactify` for compiling JSX, `Envify` for accessing NODE_ENV variables in the browser (great for automatically turning dev tools on and off), and `Watchify` for automatic compiling.
 
@@ -249,17 +264,21 @@ After adding this code, run
 
     npm start
 
-during development to automatically compile all JSX and Javascript syntax into one `bundle.js` which you can then directly link to your `index.html` file. Use
+during development to automatically compile all JSX and JavaScript syntax into one `bundle.js` which you can then directly link to your `index.html` file. Use
 
     npm run build
 
 to compile a production ready bundle of your code.
 
-### Roadmap
+***
+
+### <a id="Roadmap"></a>Roadmap [#](#Roadmap)
 
 View the project roadmap [here](https://github.com/TuxedoJS/TuxedoJS/issues).
 
-## Credits and Tech Stack
+***
+
+## <a id="Credits-and-Tech-Stack"></a>Credits and Tech Stack [#](#Credits-and-Tech-Stack)
 
 - [React](https://github.com/facebook/react)
 - [React-Tools](https://www.npmjs.com/package/react-tools)
@@ -274,11 +293,15 @@ View the project roadmap [here](https://github.com/TuxedoJS/TuxedoJS/issues).
 - [Envify](https://github.com/hughsk/envify)
 - [object-assign](https://github.com/sindresorhus/object-assign)
 
-## Interested in Contributing?
+***
+
+## <a id="Interested-in-Contributing"></a>Interested in Contributing? [#](#Interested-in-Contributing)
 
 Please review [CONTRIBUTING.md](CONTRIBUTING.md).
 
-## Team
+***
+
+## <a id="Team"></a>Team [#](#Team)
 
   - __Team Lead__: [Dmitri Rabinowitz](https://github.com/drabinowitz)
   - __Scrum Master__: [Gunnari Auvinen](https://github.com/Cheerazar)
