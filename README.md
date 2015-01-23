@@ -206,7 +206,7 @@ See our [TuxedoJS Doc Site](https://tuxedojs.org) for a full list of `Tuxx` feat
 
 An integral facet of the `Tuxx` architecture is that you can use as much or as little of it as you want. `Tuxx` does absolutely no modifying of the underlying `React` and `Flux` components it is built upon, but rather extends their core functionality and provides more intuitive interfaces for leveraging their power.
 
-Furthermore, `Tuxx` was designed to be as modular as possible, allowing you to only use the specific parts you need. It is for this very reason that we don't pollute the global namespace with one large `Tuxx` object that holds unncessary JavaScript.
+Furthermore, `Tuxx` was designed to be as modular as possible, allowing you to only use the specific parts you need. It is for this very reason that we don't pollute the global namespace with one large `Tuxx` object that holds unnecessary JavaScript.
 
 Thus, feel free to fall back to `React` or `Flux` conventions as much or as little as you desire. We hope you enjoy the flexibility.
 
