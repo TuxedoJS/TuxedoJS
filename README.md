@@ -184,9 +184,9 @@ A `Tuxx` class designed to manage state and pass down properties/methods:
       render: function () {
         return (
           <div>
-            <FadeDown>
+            <FadeUp>
               <h1>Hello World</h1>
-            </FadeDown>
+            </FadeUp>
             <Fly>
               <h3>Hello, Classier World</h3>
             </Fly>
