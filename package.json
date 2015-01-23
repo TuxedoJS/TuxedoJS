@@ -44,6 +44,7 @@
     "flux": "^2.0.1",
     "object-assign": "^2.0.0",
     "react": "^0.12.2",
+    "react-d3": "0.0.13",
     "react-router": "^0.11.6",
     "react-validating-form": "^0.1.1",
     "reactify": "^0.17.1",

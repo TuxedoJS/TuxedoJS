@@ -61,6 +61,11 @@ Tuxx.Animations.Rotate.CounterClock = require('./Animations/Rotate/CounterClock'
 Tuxx.Animations.Rotate.CounterClockRight = require('./Animations/Rotate/CounterClockRight');
 Tuxx.Animations.Rotate.CounterClockUp = require('./Animations/Rotate/CounterClockUp');
 
+//Graphs
+Tux.Graphs.Area = require('tux/Graphs/Area');
+Tux.Graphs.Bar = require('tux/Graphs/Bar');
+Tux.Graphs.Pie = require('tux/Graphs/Pie');
+
 //warn user not to use this object in console
 console.warn('Using the Tuxx object directly is not recommended as it will mean loading all modules even those you don\'t intend to use.  Please review the TuxedoJS documents for requiring only the individual pieces of TuxedoJS that you will need.');
 
