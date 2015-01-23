@@ -4,8 +4,8 @@ var createAnimation = require('tuxx/Animations').createAnimation;
 var assign = require('object-assign');
 var CommonOpacityProps = require('tuxx/Animations/CommonOpacityProps');
 
-var CounterClockUp = {
-  className: 'counterClockUp',
+var RotateCounterClockUp = {
+  className: 'rotateCounterClockUp',
   //CSS for wrapped component on entry
   enter: assign({}, CommonOpacityProps.enter, {
     'transform': 'rotate(90deg)',
@@ -28,4 +28,4 @@ var CounterClockUp = {
   })
 };
 //Use createAnimation function from main Tuxx Animation module to create wrapping animation component and pass in the default params
-module.exports = createAnimation(CounterClockUp);
+module.exports = createAnimation(RotateCounterClockUp);
