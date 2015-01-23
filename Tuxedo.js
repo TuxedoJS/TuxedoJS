@@ -47,8 +47,17 @@ Tuxx.Animations.Fade.RightBig = require('./Animations/Fade/RightBig');
 Tuxx.Animations.Fade.Up = require('./Animations/Fade/Up');
 Tuxx.Animations.Fade.UpBig = require('./Animations/Fade/UpBig');
 
-//Zoom
-Tuxx.Animations.Zoom = require('./Animations/Zoom');
+//Scale
+Tuxx.Animations.Scale = require('./Animations/Scale');
+Tuxx.Animations.Scale.Up = require('./Animations/Scale/Up');
+Tuxx.Animations.Scale.Down = require('./Animations/Scale/Down');
+
+//Scale
+Tuxx.Animations.Slide = require('./Animations/Slide');
+Tuxx.Animations.Slide.Up = require('./Animations/Slide/Up');
+Tuxx.Animations.Slide.Down = require('./Animations/Slide/Down');
+Tuxx.Animations.Slide.Left = require('./Animations/Slide/Left');
+Tuxx.Animations.Slide.Right = require('./Animations/Slide/Right');
 
 //Fly
 Tuxx.Animations.Fly = require('./Animations/Fly');
