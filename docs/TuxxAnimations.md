@@ -222,25 +222,25 @@ The keys define the transition state and the values are objects that describe th
 The customClassName parameter requires a string that gives your component a custom className property so that it can be accessed easily via CSS or jQuery etc.. This way when your component is converted to a ReactElement, it is still accessible via this customClassName property:
 
 ```javascript
-  <div class="zoom" data-reactid=".0.2.2.1.$=10:0"></div>
+  <div class="scaleUp" data-reactid=".0.2.2.1.$=10:0"></div>
 ```
 
-**Note:** All default animation components have a default class of the camelCase version of the animation name. Thus, Zoom has the className 'zoom' as in the example above, FadeDownBig has the className 'fadeDownBig', etc... However, even default class names can be overwritten via the customClassName parameter.
+**Note:** All default animation components have a default class of the camelCase version of the animation name. Thus, ScaleUp has the className 'scaleUp' as in the example above, FadeDownBig has the className 'fadeDownBig', etc... However, even default class names can be overwritten via the customClassName parameter.
 
 ##### <a id="customAnimationParams-tagToRender"></a>Parameter - `tagToRender` - type: STRING - optional [#](#customAnimationParams-tagToRender)
 The createAnimation function wraps custom animation components in a ReactTransitionGroup in order to properly animate and this TransitionGroup renders in the DOM as span tag by default. The tagToRender parameter allows the TransitionGroup render with whatever tag you prefer. For example:
 
 ```javascript
-  createAnimation(Zoom, 'zoom', 'div');
+  createAnimation(ScaleUp, 'scaleUp', 'div');
 ```
 
-In this implementation, the TransitionGroup that wraps our custom animation component would render in DOM as a div tag with a class of 'zoom'.
+In this implementation, the TransitionGroup that wraps our custom animation component would render in DOM as a div tag with a class of 'scaleUp'.
 
 Now let's look at a complete implementation of the `createAnimation` function:
 
 ```javascript
-  var Zoom = {
-    className: 'zoom',
+  var ScaleUp = {
+    className: 'scaleUp',
     'enter': {
       'opacity': '0.01',
       'transform': 'scale(.1)',
@@ -263,18 +263,18 @@ Now let's look at a complete implementation of the `createAnimation` function:
     }
   };
 
-  Zoom = createAnimation(Zoom);
+  ScaleUp = createAnimation(ScaleUp);
 ```
 
-**Note:** This is a copy of the default zoom animation component.
+**Note:** This is a copy of the default scaleUp animation component.
 
 ##### <a id="use-your-custom-animation-component"></a>Use Your Custom Animation Component [#](#use-your-custom-animation-component)
 Just as with the default animation implementations, you can wrap whatever elements you wish to apply this custom animation to by nesting those elements within the component:
 
 ```javascript
-  <Zoom>
+  <ScaleUp>
     <h1>Hello World</h1>
-  </Zoom>
+  </ScaleUp>
 ```
 
 ***
@@ -293,8 +293,9 @@ This example uses default Tuxx Animation components, all of the customizable pro
   var FadeUp = require('tuxx/Animations/Fade/Up');
   var FadeDown = require('tuxx/Animations/Fade/Up');
 
-  //Custom Zoom transitions object
-  var CustomZoom = {
+  //Custom ScaleUp transitions object
+  var CustomScaleUp = {
+    'className': 'scaleUp',
     'enter': {
       'opacity': '0.01',
       'transform': 'scale(.1)',
@@ -317,8 +318,8 @@ This example uses default Tuxx Animation components, all of the customizable pro
     }
   };
 
-  //Make Custom Zoom Animation Component
-  CustomZoom = Animations.createAnimation(Zoom, 'customZoom');
+  //Make Custom ScaleUp Animation Component
+  CustomScaleUp = Animations.createAnimation(ScaleUp, 'customScaleUp');
 
   //React component to render with animations
   var Home = React.createClass({
@@ -331,9 +332,9 @@ This example uses default Tuxx Animation components, all of the customizable pro
           <Fly delay="1s" easing="easeOutInBack" custom={{'font-size': '32px'}}>
             <h3>Tuxx Animations are so organized and classy</h3>
           </Fly>
-          <CustomZoom delay={3000}>
+          <CustomScaleUp delay={3000}>
             <p>I think Tuxx is my new favorite framework</p>
-          </CustomZoom>
+          </CustomScaleUp>
         </div>
       );  // end return
     }   //end render
