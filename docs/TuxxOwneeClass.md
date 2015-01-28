@@ -23,8 +23,9 @@
   <li><a href="#TuxxOwneeClass-Guidelines">TuxxOwneeClass Guidelines</a>
   <li><a href="#TuxxOwneeClass-Complete-Example">TuxxOwneeClass Complete Example</a>
 </ol>
+
 ## <a id="Premise"></a>Premise [#](#Premise)
->The `OwneeClass` is an opinionated [React](http://facebook.github.io/react/) class that is not designed to manage any of its own state other than, in some cases, necessary state to implement two-way data-binding for input validation. Instead the `OwneeClass` uses dynamic properties passed down by `props` as per the normal `React` workflow, and static properties and methods shared automatically by the nearest parent `OwnerClass` component. The `OwnerClass` shares these properties and methods with the `OwneeClass` without having to cascade those properties down as per the usual `React` workflow.
+>The `OwneeClass` is an opinionated [React](http://facebook.github.io/react) class that is not designed to manage any of its own state other than, in some cases, necessary state to implement two-way data-binding for input validation. Instead the `OwneeClass` uses dynamic properties passed down by `props` as per the normal `React` workflow, and static properties and methods shared automatically by the nearest parent `OwnerClass` component. The `OwnerClass` shares these properties and methods with the `OwneeClass` without having to cascade those properties down as per the usual `React` workflow.
 
 ***
 
