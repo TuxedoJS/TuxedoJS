@@ -23,8 +23,9 @@
   </li>
   <li><a href="#TuxxOwnerClass-Complete-Example">TuxxOwnerClass Complete Example</a>
 </ol>
+
 ## <a id="Premise"></a>Premise [#](#Premise)
->The `OwnerClass` is an opinionated [React](http://facebook.github.io/react/) class designed to manage state in an application. It is also an excellent class to use as an endpoint for a client side route in the app. The `OwnerClass` possesses methods that allow it to more easily connect with a store or stores and expose its properties to child components without having to cascade those properties down as per the usual `React` workflow.
+>The `OwnerClass` is an opinionated [React](http://facebook.github.io/react) class designed to manage state in an application. It is also an excellent class to use as an endpoint for a client side route in the app. The `OwnerClass` possesses methods that allow it to more easily connect with a store or stores and expose its properties to child components without having to cascade those properties down as per the usual `React` workflow.
 
 ***
 

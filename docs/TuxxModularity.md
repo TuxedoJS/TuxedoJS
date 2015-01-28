@@ -4,6 +4,7 @@
   <li><a href="#Premise">Premise</a></li>
   <li><a href="#Implementation">Implementation</a></li>
 </ol>
+
 ## <a id="Premise"></a>Premise [#](#Premise)
 >Tuxx is a completely modular framework. This means that you can use as much or as little of Tuxx as you want in your own development projects. Whereas, most other frameworks have your require the whole framework every time you want to use a feature of it, with Tuxx you only have to require the Tuxx module you need and not the entire framework.
 
