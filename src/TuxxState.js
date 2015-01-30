@@ -8,8 +8,9 @@ var invariant = require('tuxx/src/TuxxInvariant');
 // @param newProps OBJECT: an object holding keys that should match those in currentState and whose values will each be passed to callback
 // @param callback FUNCTION: optional callback argument that will be executed once setState is completed and the component is re-rendered
 var buildNewState = function (currentState, newProps, callback) {
-  // create a shallow copy of the currentstate
-  var newState = assign({}, currentState);
+  // create empty object which will be used to build the eventual state object that will be passed in to setState after our callback has been invoked on the proper deep keys
+  // NOTE: React's setState method makes a shallow copy of the keys at the top-most level, so we don't need to make a shallow copy of the top-most keys here, but rather, make shallow copies of keys at every level EXCEPT for the top
+  var newState = {};
 
   // recurseKeys FUNCTION: traverses through keys in a heavily nested object, building our newState object as we iterate through potential nested objects and setting the deepest keys passed by newProps to be the result of invoking our callback on the deepest keys in the newProps and corresponding currentState keys
   // @param currentST OBJECT: properties of the currentState
@@ -22,7 +23,7 @@ var buildNewState = function (currentState, newProps, callback) {
         var stAtKey = currentSt[key];
         // if the value at this newProps key is defined and is an object, and if it matches the corresponding key in the current state which is also defined and is an object
         if (valAtKey !== null && typeof valAtKey === 'object' && !Array.isArray(valAtKey) && stAtKey !== null && typeof stAtKey === 'object' && !Array.isArray(stAtKey)) {
-          // shallow copy the keys from the current state into our newState so that there are no duplicates or references to the currentState keys, but both are identical
+          // shallow copy the keys from the currentState into our newState so that there are no references to the currentState keys, but our newState contains identical values
           newSt[key] = assign({}, stAtKey);
           // invoke recurseKeys with the nested objects inside the current key
           recurseKeys(stAtKey, newSt[key], valAtKey);
