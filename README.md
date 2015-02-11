@@ -73,7 +73,7 @@
     module.exports = todoStore;
 ```
 
-`Tuxx` provides powerful opinionated `React` classes that make connecting with your stores, sharing methods with child components, and building high performance components a synch.
+`Tuxx` provides powerful opinionated `React` classes that make connecting with your stores, sharing methods with child components, and building high performance components a cinch.
 
 A high performance component:
 
