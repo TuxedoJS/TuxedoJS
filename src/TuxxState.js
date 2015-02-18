@@ -80,6 +80,7 @@ var invariantArgCheck = function (input) {
 
 // mixin to React class that will provide convenience methods for updating state
 module.exports = {
+
   // addState FUNCTION: adds the values of the deepest keys in the passed in object to the corresponding deepest keys in the current state or throws an error if keys don't match
   // @param propsToAdd OBJECT: required object argument where the deepest keys are numbers or strings
   // @param callback FUNCTION: optional callback argument that will be executed once setState is completed and the component is re-rendered
@@ -97,55 +98,55 @@ module.exports = {
     this.setState(newState, callback);
   },
 
+  // performArithmeticNumberOperations FUNCTION: internal function to perform some arithmetic number operation on the deepest keys in the passed in object from the deepest keys in the current state or throws an error if keys dont match
+  // @param props OBJECT: required object argument where the deepest keys are numbers
+  // @param operation FUNCTION: required function argument, the result of which will be set to the newState at each deep key
+  // @param callback FUNCTION: optional callback argument that will be executed once setState is completed and the component is re-rendered
+  _performArithmeticNumberOperation: function (props, operation, callback) {
+    // throw error if props is undefined or not an object
+    invariantArgCheck(props);
+    // build new state object
+    var newState = buildNewState(this.state, props, function (newState, key, currentStateAtKey, newPropsAtKey) {
+      // throw error if newPropsAtKey is not a number
+      invariantNumberCheck(newPropsAtKey);
+      // set the newState at this deep key to be the result of invoking operation on the corresponding deep keys
+      newState[key] = operation(currentStateAtKey, newPropsAtKey);
+    });
+    // update state with new values and pass callback (if provided), triggering re-render
+    this.setState(newState, callback);
+  },
+
   // subtractState FUNCTION: subtracts the values of the deepest keys in the passed in object from the corresponding deepest keys in the current state or throws an error if keys don't match
   // @param propsToSubtract OBJECT: required object argument where the deepest keys are numbers
   // @param callback FUNCTION: optional callback argument that will be executed once setState is completed and the component is re-rendered
   subtractState: function(propsToSubtract, callback) {
-    // throw error if propsToSubtract is undefined or not an object
-    invariantArgCheck(propsToSubtract);
-    // build new state object
-    var newState = buildNewState(this.state, propsToSubtract, function (newState, key, currentStateAtKey, newPropsAtKey) {
-      // throw error if newPropsAtKey is not a number
-      invariantNumberCheck(newPropsAtKey);
-      // perform subtraction on the corresponding deep keys
-      newState[key] = currentStateAtKey - newPropsAtKey;
-    });
-    // update state with new values and pass callback (if provided), triggering re-render
-    this.setState(newState, callback);
+    // invoke internal arithmetic function with appropriate subtraction logic
+    this._performArithmeticNumberOperation(propsToSubtract, function (currentStateAtKey, newPropsAtKey) {
+      // subtract the corresponding deep keys and return the result
+      return currentStateAtKey - newPropsAtKey;
+    }, callback);
   },
 
   // multiplyState FUNCTION: multiply the values of the deepest keys in the passed in object by the corresponding deepest keys in the current state or throws an error if keys don't match
   // @param propsToMultiply OBJECT: required object argument where the deepest keys are numbers
   // @param callback FUNCTION: optional callback argument that will be executed once setState is completed and the component is re-rendered
   multiplyState: function (propsToMultiply, callback) {
-    // throw error if propsToMultiply is undefined or not an object
-    invariantArgCheck(propsToMultiply);
-    // build new state object
-    var newState = buildNewState(this.state, propsToMultiply, function (newState, key, currentStateAtKey, newPropsAtKey) {
-      // throw error if newPropsAtKey is not a number
-      invariantNumberCheck(newPropsAtKey);
-      // perform multiplication on the corresponding deep keys
-      newState[key] = currentStateAtKey * newPropsAtKey;
-    });
-    // update state with new values and pass callback (if provided), triggering re-render
-    this.setState(newState, callback);
+    // invoke internal arithmetic function with appropriate multiplication logic
+    this._performArithmeticNumberOperation(propsToMultiply, function (currentStateAtKey, newPropsAtKey) {
+      // multiply the corresponding deep keys and return result
+      return currentStateAtKey * newPropsAtKey;
+    }, callback);
   },
 
   // divideState FUNCTION: divide the values of the deepest keys in the current state by the values of corresponding deepest keys in the passed in object or throws an error if keys don't match
   // @param propsToDivide OBJECT: required object argument where the deepest keys are numbers
   // @param callback FUNCTION: optional callback argument that will be executed once setState is completed and the component is re-rendered
   divideState: function (propsToDivide, callback) {
-    // throw error if propsToDivide is undefined or not an object
-    invariantArgCheck(propsToDivide);
-    // build new state object
-    var newState = buildNewState(this.state, propsToDivide, function (newState, key, currentStateAtKey, newPropsAtKey) {
-      // throw error if newPropsAtKey is not a number
-      invariantNumberCheck(newPropsAtKey);
-      // perform division on the corresponding deep keys
-      newState[key] = currentStateAtKey / newPropsAtKey;
-    });
-    // update state with new values and pass callback (if provided), triggering re-render
-    this.setState(newState, callback);
+    // invoke internal arithmetic function with appropriate division logic
+    this._performArithmeticNumberOperation(propsToDivide, function (currentStateAtKey, newPropsAtKey) {
+      // divide the corresponding deep keys and return result
+      return currentStateAtKey / newPropsAtKey;
+    }, callback);
   },
 
   // omitState FUNCTION: removes the deepest keys in the passed in object from the corresponding deepest keys in the current state or throws an error if keys don't match
