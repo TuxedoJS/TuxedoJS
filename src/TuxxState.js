@@ -13,24 +13,27 @@ var buildNewState = function (currentState, newProps, callback) {
   var newState = {};
 
   // recurseKeys FUNCTION: traverses through keys in a heavily nested object, building our newState object as we iterate through potential nested objects and setting the deepest keys passed by newProps to be the result of invoking our callback on the deepest keys in the newProps and corresponding currentState keys
-  // @param currentST OBJECT: properties of the currentState
-  // @param newST OBJECT: properties of the newState
-  // @param newPR OBJECT: properties of the newProps
-  var recurseKeys = function (currentSt, newSt, newPr) {
-    for (var key in newPr) {
-      if (newPr.hasOwnProperty(key)) {
-        var valAtKey = newPr[key];
-        var stAtKey = currentSt[key];
-        // if the value at this newProps key is defined and is an object, and if it matches the corresponding key in the current state which is also defined and is an object
-        if (valAtKey !== null && typeof valAtKey === 'object' && !Array.isArray(valAtKey) && stAtKey !== null && typeof stAtKey === 'object' && !Array.isArray(stAtKey)) {
+  // @param currentState OBJECT: properties of currentState
+  // @param newState OBJECT: properties of newState
+  // @param nextProps OBJECT: properties of newProps
+  var recurseKeys = function (currentState, newState, nextProps) {
+    var valAtKey, stAtKey;
+    for (var key in nextProps) {
+      // ensure nextProps and currentState hasOwnProperty key, otherwise it will walk up the prototype chain
+      if (nextProps.hasOwnProperty(key) && currentState.hasOwnProperty(key)) {
+        valAtKey = nextProps[key];
+        stAtKey = currentState[key];
+        // if the value at this nextProps key is defined and is an object, and if it matches the corresponding key in the current state which is also defined and is an object
+        if (valAtKey !== undefined && typeof(valAtKey) === 'object' && !Array.isArray(valAtKey) && stAtKey !== undefined && typeof(stAtKey) === 'object' && !Array.isArray(stAtKey)) {
           // shallow copy the keys from the currentState into our newState so that there are no references to the currentState keys, but our newState contains identical values
-          newSt[key] = assign({}, stAtKey);
+          newState[key] = assign({}, stAtKey);
           // invoke recurseKeys with the nested objects inside the current key
-          recurseKeys(stAtKey, newSt[key], valAtKey);
-        } else {
-          // we have found a deep key in newProps and all keys match so far, so we invoke our callback, which sets the result of invoking our callback with these deep keys to be the value at the corresponding key in our newState
-          callback(newSt, key, stAtKey, valAtKey);
+          recurseKeys(stAtKey, newState[key], valAtKey);
+        } else { // we have found a deep key in nextProps and all keys match so far, so we invoke our callback, which sets the result of invoking our callback with these deep keys to be the value at the corresponding key in our newState
+          callback(newState, key, stAtKey, valAtKey);
         }
+      } else { // if either nextProps at this key or currentState at this key is undefined, the keys don't match up, so throw an error
+        invariant(!key, 'The keys passed in do not match up with the corresponding keys in the current state.');
       }
     }
   };
@@ -42,48 +45,42 @@ var buildNewState = function (currentState, newProps, callback) {
 // invariantNumberCheck FUNCTION: internal function that ensures a given value is a number or throws an error
 // @param input UNKNOWN: value we are performing invariant check upon
 var invariantNumberCheck = function (input) {
-  if (typeof(input) !== "number") {
-    invariant(!input, 'Cannot perform operation on "%s" because it is not of type number.', input);
-  };
+  var isNumber = typeof(input) === "number";
+  invariant(isNumber, 'Cannot perform operation on "%s" because it is not of type number.', input);
 };
 
 // invariantArrayCheck FUNCTION: internal function that ensures a given value is an array or throws an error
 // @param input UNKNOWN: value we are performing invariant check upon
 var invariantArrayCheck = function (input) {
-  if (!Array.isArray(input)) {
-    invariant(!input, 'Cannot perform operation on "%s" because it is not an array.', input);
-  };
+  var isArray = Array.isArray(input);
+  invariant(isArray, 'Cannot perform operation on "%s" because it is not an array.', input);
 };
+
 
 // invariantValueCheck FUNCTION: internal function that ensures a given value is not stored in an array or an object
 // @param input UNKNOWN: value we are performing invariant check upon
 var invariantValueCheck = function (input) {
-  if (typeof(input) === "object") {
-    invariant(!input, 'Cannot perform operation on "%s" because it must not be an array or object.', input);
-  }
+  var isObject = typeof(input) === "object";
+  invariant(!isObject, 'Cannot perform operation on "%s" because it must not be an array or object.', input);
 };
 
 // invariantNumberOrStringCheck FUNCTION: internal function that ensures a given value is a number or string or throws an error
 // @param input UNKNOWN: value we are performing invariant check upon
 var invariantNumberOrStringCheck = function (input) {
-  if (typeof(input) !== "number" && typeof(input) !== "string") {
-    invariant(!input, 'Cannot perform operation on "%s" because it is not of type number or of type string.', input);
-  };
+  var isNumberOrString = typeof(input) === "number" || typeof(input) === "string";
+  invariant(isNumberOrString, 'Cannot perform operation on "%s" because it is not of type number or of type string.', input);
 };
 
 // invariantArgCheck FUNCTION: internal function that ensures a given value is defined and is an object or throws an error
 // @param input UNKNOWN: value we are performing invariant check upon
 var invariantArgCheck = function (input) {
-  if (!input) {
-    invariant(input, 'This function requires an object as an argument.');
-  } else if (Object.prototype.toString.call(input) !== '[object Object]') {
-    invariant(!input, 'This function requires an object as an argument.');
-  }
+  var isObjectArgument = Object.prototype.toString.call(input) === '[object Object]';
+  invariant(isObjectArgument, 'This function requires an object as an argument.');
 };
 
 // mixin to React class that will provide convenience methods for updating state
 module.exports = {
-  // addState FUNCTION: adds the values of the deepest keys in the passed in object to the corresponding deepest keys in the current state, or throws an error if keys don't match
+  // addState FUNCTION: adds the values of the deepest keys in the passed in object to the corresponding deepest keys in the current state or throws an error if keys don't match
   // @param propsToAdd OBJECT: required object argument where the deepest keys are numbers or strings
   // @param callback FUNCTION: optional callback argument that will be executed once setState is completed and the component is re-rendered
   addState: function (propsToAdd, callback) {
@@ -100,7 +97,7 @@ module.exports = {
     this.setState(newState, callback);
   },
 
-  // subtractState FUNCTION: subtracts the values of the deepest keys in the passed in object from the corresponding deepest keys in the current state, or throws an error if keys don't match
+  // subtractState FUNCTION: subtracts the values of the deepest keys in the passed in object from the corresponding deepest keys in the current state or throws an error if keys don't match
   // @param propsToSubtract OBJECT: required object argument where the deepest keys are numbers
   // @param callback FUNCTION: optional callback argument that will be executed once setState is completed and the component is re-rendered
   subtractState: function(propsToSubtract, callback) {
@@ -117,7 +114,7 @@ module.exports = {
     this.setState(newState, callback);
   },
 
-  // multiplyState FUNCTION: multiply the values of the deepest keys in the passed in object by the corresponding deepest keys in the current state, or throws an error if keys don't match
+  // multiplyState FUNCTION: multiply the values of the deepest keys in the passed in object by the corresponding deepest keys in the current state or throws an error if keys don't match
   // @param propsToMultiply OBJECT: required object argument where the deepest keys are numbers
   // @param callback FUNCTION: optional callback argument that will be executed once setState is completed and the component is re-rendered
   multiplyState: function (propsToMultiply, callback) {
@@ -134,7 +131,7 @@ module.exports = {
     this.setState(newState, callback);
   },
 
-  // divideState FUNCTION: divide the values of the deepest keys in the current state by the values of corresponding deepest keys in the passed in object, or throws an error if keys don't match
+  // divideState FUNCTION: divide the values of the deepest keys in the current state by the values of corresponding deepest keys in the passed in object or throws an error if keys don't match
   // @param propsToDivide OBJECT: required object argument where the deepest keys are numbers
   // @param callback FUNCTION: optional callback argument that will be executed once setState is completed and the component is re-rendered
   divideState: function (propsToDivide, callback) {
@@ -151,7 +148,7 @@ module.exports = {
     this.setState(newState, callback);
   },
 
-  // omitState FUNCTION: removes the deepest keys in the passed in object from the corresponding deepest keys in the current state, or throws an error if keys don't match
+  // omitState FUNCTION: removes the deepest keys in the passed in object from the corresponding deepest keys in the current state or throws an error if keys don't match
   // @param propsToOmit OBJECT: required object argument where the deepest keys are booleans
   // @param callback FUNCTION: optional callback that will be executed once setState is completed and the component is re-rendered
   omitState: function (propsToOmit, callback) {
@@ -169,7 +166,7 @@ module.exports = {
     this.replaceState(newState, callback);
   },
 
-  // extendState FUNCTION: overrides pre-existing keys and adds any new keys from the passed in object to the current state, or throws error if no outer keys in passed in object match any outer keys in the current state
+  // extendState FUNCTION: overrides pre-existing keys and adds any new keys from the passed in object to the current state or throws error if no outer keys in passed in object match any outer keys in the current state
   // @param propsToExtend OBJECT: required object argument with at least one outer key matching an outer key in the current state, and any additional keys being keys to add to the current state
   // @param callback FUNCTION: optional callback that will be executed once setState is completed and the component is re-rendered
   extendState: function (propsToExtend, callback) {
@@ -191,7 +188,7 @@ module.exports = {
     this.setState(newState, callback);
   },
 
-  // pushState FUNCTION: push the values at the deepest keys in the passed in object to the arrays at the corresponding deepest keys of the current state, or throws an error if keys don't match
+  // pushState FUNCTION: push the values at the deepest keys in the passed in object to the arrays at the corresponding deepest keys of the current state or throws an error if keys don't match
   // @param propsToPush OBJECT: required object argument where the deepest keys are single values
   // @param callback FUNCTION: optional callback argument that will be executed once setState is completed and the component is re-rendered
   pushState: function (propsToPush, callback) {
@@ -211,7 +208,7 @@ module.exports = {
     this.setState(newState, callback);
   },
 
-  // popState FUNCTION: match the values at the deepest keys in the passed in object and pop values off the arrays at the corresponding deepest keys of the current state, or throws an error if keys don't match
+  // popState FUNCTION: match the values at the deepest keys in the passed in object and pop values off the arrays at the corresponding deepest keys of the current state or throws an error if keys don't match
   // @param propsToPop OBJECT: required object argument where the deepest keys are booleans
   // @param callback FUNCTION: optional callback argument that will be executed once setState is completed and the component is re-rendered
   popState: function (propsToPop, callback) {
@@ -232,7 +229,7 @@ module.exports = {
     this.setState(newState, callback);
   },
 
-  // unshiftState FUNCTION: unshift the values at the deepest keys in the passed in object to the arrays at the corresponding deepest keys of the current state, or throws an error if keys don't match
+  // unshiftState FUNCTION: unshift the values at the deepest keys in the passed in object to the arrays at the corresponding deepest keys of the current state or throws an error if keys don't match
   // @param propsToUnshift OBJECT: required object argument where the deepest keys are single values
   // @param callback FUNCTION: optional callback argument that will be executed once setState is completed and the component is re-rendered
   unshiftState: function(propsToUnshift, callback) {
@@ -252,7 +249,7 @@ module.exports = {
     this.setState(newState, callback);
   },
 
-  // shiftState FUNCTION: match the values at the deepest keys in the passed in object and shift values off the arrays at the corresponding deepest keys of the current state, or throws an error if keys don't match
+  // shiftState FUNCTION: match the values at the deepest keys in the passed in object and shift values off the arrays at the corresponding deepest keys of the current state or throws an error if keys don't match
   // @param propsToShift OBJECT: required object argument where the deepest keys are booleans
   // @param callback FUNCTION: optional callback argument that will be executed once setState is completed and the component is re-rendered
   shiftState: function(propsToShift, callback) {
@@ -273,7 +270,7 @@ module.exports = {
     this.setState(newState, callback);
   },
 
-  // spliceState FUNCTION: invoke splice using the values at the deepest keys in the passed in object on the arrays at the corresponding deepest keys of the current state, or throws an error if keys don't match
+  // spliceState FUNCTION: invoke splice using the values at the deepest keys in the passed in object on the arrays at the corresponding deepest keys of the current state or throws an error if keys don't match
   // @param propsToSplice OBJECT: required object argument where the deepest keys are an array of arguments with which to invoke splice
   // @param callback FUNCTION: optional callback argument that will be executed once setState is completed and the component is re-rendered
   spliceState: function(propsToSplice, callback) {
@@ -291,7 +288,7 @@ module.exports = {
     this.setState(newState, callback);
   },
 
-  // concatToEndOfState FUNCTION: concat the values at the deepest keys in the passed in object to the end of the arrays at the corresponding deepest keys of the current state, or throws an error if keys don't match
+  // concatToEndOfState FUNCTION: concat the values at the deepest keys in the passed in object to the end of the arrays at the corresponding deepest keys of the current state or throws an error if keys don't match
   // @param propsToConcat OBJECT: required object argument where the deepest keys are an array of values
   // @param callback FUNCTION: optional callback argument that will be executed once setState is completed and the component is re-rendered
   concatToEndOfState: function(propsToConcat, callback) {
@@ -310,7 +307,7 @@ module.exports = {
     this.setState(newState, callback);
   },
 
-  // concatToFrontOfState FUNCTION: concat the values at the deepest keys in the passed in object to the front of the arrays at the corresponding deepest keys of the current state, or throws an error if keys don't match
+  // concatToFrontOfState FUNCTION: concat the values at the deepest keys in the passed in object to the front of the arrays at the corresponding deepest keys of the current state or throws an error if keys don't match
   // @param propsToConcat OBJECT: required object argument where the deepest keys are an array of values
   // @param callback FUNCTION: optional callback argument that will be executed once setState is completed and the component is re-rendered
   concatToFrontOfState: function(propsToConcat, callback) {

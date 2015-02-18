@@ -370,7 +370,7 @@ describe('TuxState', function () {
     });
   });
 
-  xdescribe('concatToEndOfState', function () {
+  describe('concatToEndOfState', function () {
     it('should call setState with the proper inputs', function () {
       var propsToConcat = {
         'Gunnari': {
@@ -543,7 +543,7 @@ describe('TuxState', function () {
       }).toThrow(new Error('Invariant Violation: At least one outer key must match an outer key in the current state. Use setState if you only wish to add new keys and not change existing keys.'));
     });
 
-    it('should throw an error when checking that the deepest keys must not be an array or object', function () {
+    it('should throw an error when checking that the deepest keys must not be an arrays or objects', function () {
       expect(function () {
         var propsToPush = {
           'Gunnari': {
@@ -559,9 +559,54 @@ describe('TuxState', function () {
             'turtles': {}
           }
         };
-
         stateMixin.unshiftState(propsToUnshift, callback);
       }).toThrow(new Error('Invariant Violation: Cannot perform operation on "[object Object]" because it must not be an array or object.'));
+    });
+
+    it('should throw an error when checking that the deepest keys must be arrays', function () {
+      expect(function () {
+        var propsToPush = {
+          'Dmitri': {
+            'cat': 'Snuggles'
+          }
+        };
+        stateMixin.pushState(propsToPush, callback);
+      }).toThrow(new Error('Invariant Violation: Cannot perform operation on "[object Object]" because it is not an array.'));
+
+      expect(function () {
+        var propsToUnshift = {
+          'Pat': {
+            'squirrel': ['Rocky', 'Fluffy']
+          }
+        };
+
+        stateMixin.unshiftState(propsToUnshift, callback);
+      }).toThrow(new Error('Invariant Violation: Cannot perform operation on "true" because it is not an array.'));
+    });
+
+    it('should throw an error when checking that every non-deep key in the passed in state matches the corresponding non-deep key in the current state', function () {
+      expect(function () {
+        var propsToPush = {
+          'Dmitri': {
+            'cat2': 'Snuggles'
+          }
+        };
+        stateMixin.pushState(propsToPush, callback);
+      }).toThrow(new Error('Invariant Violation: The keys passed in do not match up with the corresponding keys in the current state.'));
+
+      expect(function () {
+        var propsToUnshift = {
+          'Pat': {
+            'squirrel2': {
+              'hungry': {
+                'fat':true
+              }
+            }
+          }
+        };
+
+        stateMixin.unshiftState(propsToUnshift, callback);
+      }).toThrow(new Error('Invariant Violation: The keys passed in do not match up with the corresponding keys in the current state.'));
     });
   });
 });
