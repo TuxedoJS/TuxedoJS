@@ -10,19 +10,21 @@ describe('propTypeCheckerMixin', function () {
     propTypeCheckerMixin = require(moduleToTest);
     mockComponent = {
       //provide mock function to be invoked on componentWillMount
-      _checkPropTypes: jest.genMockFn()
+      _reactInternalInstance: {
+        _checkPropTypes: jest.genMockFn()
+      }
     };
   });
 
-  it('should submit component.nearestOwnerPropTypes and nearestOwnerProps to _checkPropTypes on componentWillMount if nearestOwnerPropTypes is defined on the component', function () {
+  it('should submit component.nearestOwnerPropTypes and nearestOwnerProps to _reactInternalInstance._checkPropTypes on componentWillMount if nearestOwnerPropTypes is defined on the component', function () {
     //define nearestOwnerPropTypes on the component
     mockComponent.nearestOwnerPropTypes = {};
     //define nearestOwnerProps on the component
     mockComponent.nearestOwnerProps = {};
     //invoke componentWillMount passing in the mockComponent as the context
     propTypeCheckerMixin.componentWillMount.call(mockComponent);
-    //check inputs to _checkPropTypes
-    var checkPropTypesCall = mockComponent._checkPropTypes.mock.calls[0];
+    //check inputs to _reactInternalInstance._checkPropTypes
+    var checkPropTypesCall = mockComponent._reactInternalInstance._checkPropTypes.mock.calls[0];
     expect(checkPropTypesCall[0]).toBe(mockComponent.nearestOwnerPropTypes);
     expect(checkPropTypesCall[1]).toBe(mockComponent.nearestOwnerProps);
     expect(checkPropTypesCall[2]).toBe('nearestOwnerProps');
@@ -42,8 +44,8 @@ describe('propTypeCheckerMixin', function () {
     };
     //invoke componentWillMount passing in the mockComponent as the context
     propTypeCheckerMixin.componentWillMount.call(mockComponent);
-    //check inputs to _checkPropTypes
-    var checkPropTypesCall = mockComponent._checkPropTypes.mock.calls[0];
+    //check inputs to _reactInternalInstance._checkPropTypes
+    var checkPropTypesCall = mockComponent._reactInternalInstance._checkPropTypes.mock.calls[0];
     expect(checkPropTypesCall[0]).toBe(mockComponent.anyPropTypes);
     expect(checkPropTypesCall[1].prop1).toBe(mockComponent.nearestOwnerProps.prop1);
     //props should overwrite nearestOwnerProps

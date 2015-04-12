@@ -1,1 +1,1 @@
-module.exports = require('react-router/modules/locations/HashLocation');
+module.exports = require('react-router/lib/locations/HashLocation');

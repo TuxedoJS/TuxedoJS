@@ -1,1 +1,1 @@
-module.exports = require('react-router/modules/components/Link');
+module.exports = require('react-router/lib/components/Link');

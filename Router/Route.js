@@ -1,1 +1,1 @@
-module.exports = require('react-router/modules/components/Route');
+module.exports = require('react-router/lib/components/Route');

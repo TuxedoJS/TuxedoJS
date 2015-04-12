@@ -8,14 +8,14 @@ module.exports = {
     //if nearestOwnerPropTypes is defined
     if (nearestOwnerPropTypes) {
       //check the nearestOwnerProps
-      this._checkPropTypes(nearestOwnerPropTypes, this.nearestOwnerProps, 'nearestOwnerProps');
+      this._reactInternalInstance._checkPropTypes(nearestOwnerPropTypes, this.nearestOwnerProps, 'nearestOwnerProps');
     }
     //get the anyPropTypes from the component
     var anyPropTypes = this.anyPropTypes;
     //if anyPropTypes is defined
     if (anyPropTypes) {
       //check both the nearestOwnerProps and props. Note that this.props is passed in last so that it overwrites matching keys with this.nearestOwnerProps
-      this._checkPropTypes(anyPropTypes ,assign({}, this.nearestOwnerProps, this.props), 'props or nearestOwnerProps');
+      this._reactInternalInstance._checkPropTypes(anyPropTypes ,assign({}, this.nearestOwnerProps, this.props), 'props or nearestOwnerProps');
     }
   }
 };

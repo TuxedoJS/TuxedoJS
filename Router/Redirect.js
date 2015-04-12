@@ -1,1 +1,1 @@
-module.exports = require('react-router/modules/components/Redirect');
+module.exports = require('react-router/lib/components/Redirect');

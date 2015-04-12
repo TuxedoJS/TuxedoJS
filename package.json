@@ -1,6 +1,6 @@
 {
   "name": "tuxx",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Framework built on React and Flux",
   "main": "Tuxedo.js",
   "scripts": {
@@ -43,8 +43,8 @@
     "events": "^1.0.2",
     "flux": "^2.0.1",
     "object-assign": "^2.0.0",
-    "react": "^0.12.2",
-    "react-router": "^0.11.6",
+    "react": "^0.13.1",
+    "react-router": "^0.13.2",
     "react-validating-form": "^0.1.1",
     "reactify": "^0.17.1",
     "watchify": "^2.2.1"

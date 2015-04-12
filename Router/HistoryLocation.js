@@ -1,1 +1,1 @@
-module.exports = require('react-router/modules/locations/HistoryLocation');
+module.exports = require('react-router/lib/locations/HistoryLocation');

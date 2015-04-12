@@ -10,7 +10,8 @@ describe('getOwnerPropsMixin', function () {
   beforeEach(function () {
     //reset getOwnerPropsMixin
     getOwnerPropsMixin = require(moduleToTest);
-    //construct chain of _owner objects tO = tuxxOwner
+    //construct chain of _reactInternalInstance._currentElement._owner objects tO = tuxxOwner
+    //and set the _instance property on each node to refer to itself
     /*
                 [root1 tO]
               /            \
@@ -20,37 +21,73 @@ describe('getOwnerPropsMixin', function () {
     */
     //reset Owners and Ownees
     root1Owner = {
-      __tuxxIsOwnerComponent__: true,
+      _reactInternalInstance: {
+        _currentElement: {
+          _owner: null
+        }
+      },
       mockOwnerProps: {},
+      __tuxxIsOwnerComponent__: true,
       registerOwnerProps: function () {
         return this.mockOwnerProps;
       }
     };
+    root1Owner._instance = root1Owner;
+
     branch1Owner = {
-      _owner: root1Owner,
-      __tuxxIsOwnerComponent__: true,
+      _reactInternalInstance: {
+        _currentElement: {
+          _owner: root1Owner
+        }
+      },
       mockOwnerProps: {},
+      __tuxxIsOwnerComponent__: true,
       registerOwnerProps: function () {
         return this.mockOwnerProps;
       }
     };
+    branch1Owner._instance = branch1Owner;
+
     branch2Ownee = {
-      _owner: root1Owner
+      _reactInternalInstance: {
+        _currentElement: {
+          _owner: root1Owner
+        }
+      }
     };
+    branch2Ownee._instance = branch2Ownee;
+
     leaf11Ownee = {
-      _owner: branch1Owner
+      _reactInternalInstance: {
+        _currentElement: {
+          _owner: branch1Owner
+        }
+      }
     };
+    leaf11Ownee._instance = leaf11Ownee;
+
     leaf12Owner = {
-      _owner: branch1Owner,
-      __tuxxIsOwnerComponent__: true,
+      _reactInternalInstance: {
+        _currentElement: {
+          _owner: branch1Owner
+        }
+      },
       mockOwnerProps: {},
+      __tuxxIsOwnerComponent__: true,
       registerOwnerProps: function () {
         return this.mockOwnerProps;
       }
     };
+    leaf12Owner._instance = leaf12Owner;
+
     leaf21Ownee = {
-      _owner: branch2Ownee
+      _reactInternalInstance: {
+        _currentElement: {
+          _owner: branch2Ownee
+        }
+      },
     };
+    leaf21Ownee._instance = leaf21Ownee;
   });
 
   it('should properly pass down the ownerProps to nearestOwnerProps from owner to owner and owner to ownee on componentWillMount', function () {
