@@ -113,8 +113,8 @@ Allows you to perform prop validation on the `nearestOwnerProps` object on this 
 
 ```javascript
     owneeClassProps.nearestOwnerPropTypes = {
-      deleteMessage: React.PropTypes.function.isRequired,
-      editMessage: React.PropTypes.function.isRequired,
+      deleteMessage: React.PropTypes.func.isRequired,
+      editMessage: React.PropTypes.func.isRequired,
     };
 ```
 
@@ -124,8 +124,8 @@ Allows you to perform prop validation on both the standard `props` of a componen
 ```javascript
     owneeClassProps.anyPropTypes = {
       message: React.PropTypes.object.isRequired,
-      deleteMessage: React.PropTypes.function.isRequired,
-      editMessage: React.PropTypes.function.isRequired
+      deleteMessage: React.PropTypes.func.isRequired,
+      editMessage: React.PropTypes.func.isRequired
     };
 ```
 
@@ -194,8 +194,8 @@ Taking all that we have learned so far let's take a look at a more realistic exa
       },
 
       nearestOwnerPropTypes: {
-        deleteMessage: React.PropTypes.function.isRequired,
-        editMessage: React.PropTypes.function.isRequired
+        deleteMessage: React.PropTypes.func.isRequired,
+        editMessage: React.PropTypes.func.isRequired
       },
 
       getInitialState: function () {
