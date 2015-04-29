@@ -1,1 +1,1 @@
-module.exports = require('react-router/modules/components/NotFoundRoute');
+module.exports = require('react-router/lib/components/NotFoundRoute');

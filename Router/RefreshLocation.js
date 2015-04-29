@@ -1,1 +1,1 @@
-module.exports = require('react-router/modules/locations/RefreshLocation');
+module.exports = require('react-router/lib/locations/RefreshLocation');

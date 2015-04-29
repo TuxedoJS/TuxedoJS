@@ -1,1 +1,1 @@
-module.exports = require('react-router/modules/utils/History');
+module.exports = require('react-router/lib/History');

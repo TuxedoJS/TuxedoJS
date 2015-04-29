@@ -45,8 +45,34 @@ describe('Individual Tuxx Modules', function () {
   });
 
   describe('Router', function () {
-    it('should expose only the specific router component that the user requires in', function () {
+    it('should expose only the specific router component or method that the user requires in', function () {
+      expect(require('tuxx/Router/DefaultRoute')).toBe(require('react-router').DefaultRoute);
+      expect(require('tuxx/Router/Link')).toBe(require('react-router').Link);
+      expect(require('tuxx/Router/NotFoundRoute')).toBe(require('react-router').NotFoundRoute);
+      expect(require('tuxx/Router/Redirect')).toBe(require('react-router').Redirect);
       expect(require('tuxx/Router/Route')).toBe(require('react-router').Route);
+      expect(require('tuxx/Router/RouteHandler')).toBe(require('react-router').RouteHandler);
+
+      expect(require('tuxx/Router/HashLocation')).toBe(require('react-router').HashLocation);
+      expect(require('tuxx/Router/HistoryLocation')).toBe(require('react-router').HistoryLocation);
+      expect(require('tuxx/Router/RefreshLocation')).toBe(require('react-router').RefreshLocation);
+      expect(require('tuxx/Router/StaticLocation')).toBe(require('react-router').StaticLocation);
+      expect(require('tuxx/Router/TestLocation')).toBe(require('react-router').TestLocation);
+
+      expect(require('tuxx/Router/ImitateBrowserBehavior')).toBe(require('react-router').ImitateBrowserBehavior);
+      expect(require('tuxx/Router/ScrollToTopBehavior')).toBe(require('react-router').ScrollToTopBehavior);
+
+      expect(require('tuxx/Router/History')).toBe(require('react-router').History);
+      expect(require('tuxx/Router/Navigation')).toBe(require('react-router').Navigation);
+      expect(require('tuxx/Router/State')).toBe(require('react-router').State);
+
+      expect(require('tuxx/Router/createRoute')).toBe(require('react-router').createRoute);
+      expect(require('tuxx/Router/createDefaultRoute')).toBe(require('react-router').createDefaultRoute);
+      expect(require('tuxx/Router/createNotFoundRoute')).toBe(require('react-router').createNotFoundRoute);
+      expect(require('tuxx/Router/createRedirect')).toBe(require('react-router').createRedirect);
+      expect(require('tuxx/Router/createRoutesFromReactChildren')).toBe(require('react-router').createRoutesFromReactChildren);
+      expect(require('tuxx/Router/create')).toBe(require('react-router').create);
+      expect(require('tuxx/Router/run')).toBe(require('react-router').run);
     });
   });
 

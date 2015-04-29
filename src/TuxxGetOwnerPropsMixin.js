@@ -5,9 +5,12 @@
 module.exports = {
   //add property under componentWillMount so that other lifecycle methods will be able to access it
   componentWillMount: function () {
-    var owner = this._owner;
+    var owner = this._reactInternalInstance._currentElement._owner;
     //if the owner is an OwnerComponent get its __tuxxOwnerProps__, otherwise get its nearestOwnerProps
     while (owner) {
+      // if there is an owner get its _instance
+      owner = owner._instance;
+
       //approach takes advantage of cascading order of componentWillMount invocations.  Since componentWillMount is called on an owner before its ownee, a component can just read from its owner to get the needed props
       var nearestOwnerProps = owner.nearestOwnerProps;
       if (owner.__tuxxIsOwnerComponent__) {
@@ -17,7 +20,7 @@ module.exports = {
         this.nearestOwnerProps = nearestOwnerProps;
         break;
       }
-      owner = owner._owner;
+      owner = owner._reactInternalInstance._currentElement._owner;
     }
     //if this component is an owner component and its ownerProps have not been registered already
     if (this.__tuxxIsOwnerComponent__ && !this.__tuxxOwnerProps__) {

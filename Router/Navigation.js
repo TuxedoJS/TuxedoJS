@@ -1,1 +1,1 @@
-module.exports = require('react-router/modules/mixins/Navigation');
+module.exports = require('react-router/lib/Navigation');
